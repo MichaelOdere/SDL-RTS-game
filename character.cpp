@@ -9,7 +9,7 @@ Character::Character(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passe
     MouseX = passed_MouseX;
     MouseY = passed_MouseY;
 
-    unit = new Sprite(sdl_setup->GetRenderer(), "images/character.png", 300, 150, 40, 50); //unit to move around
+    unit = new Sprite(sdl_setup->GetRenderer(), "images/character.png", 300, 150, 20, 25); //unit to move around
     unit->SetUpAnimation(3,4);
     unit->SetOrigin((unit->GetWidth())/2, (unit->GetHeight())/2); //allows for unit to stand directly over target instead of offset
 
@@ -51,7 +51,7 @@ void Character::Update()
             {
                 if (distance > 5) //allow buffer room
                 {
-                unit->Animation(0,2,3,200);
+                unit->Animation(0,2,3,200); //(start, end, selected animation, speed)
                 } else
                 {
                     unit->Animation(1,1,3,200); //Set unit to single state to stop animation
@@ -88,7 +88,7 @@ void Character::Update()
 
         if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN) //mouse button clicked
             {
-                if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT) //specifically, the left mouse button
+                if (sdl_setup->GetEv()->button.button == SDL_BUTTON_RIGHT) //specifically, the right mouse button
                 {
                     follow_point_x = *MouseX; //set target
                     follow_point_y = *MouseY; //set target

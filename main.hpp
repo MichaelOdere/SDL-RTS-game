@@ -6,6 +6,7 @@
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
 #include "character.hpp"
+#include "environment.hpp"
 
 class Main
 {
@@ -20,22 +21,16 @@ public:
 private:
 
     Character *unit;
+
+    Environment* grassArea;
     bool quit;
 
-    Sprite* grass;
+    Sprite* grass[21][16];
 
     SDL_Setup* sdl_setup;
 
-    int timeCheck;
     int MouseX;
     int MouseY;
-    bool follow;
-    int follow_point_x;
-    int follow_point_y;
-    float angle;
-    float distance;
-    bool stopAnimation;
-
 };
 
 
