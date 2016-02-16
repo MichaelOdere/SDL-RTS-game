@@ -9,8 +9,8 @@ Character::Character(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passe
     MouseX = passed_MouseX;
     MouseY = passed_MouseY;
 
-    unit = new Sprite(sdl_setup->GetRenderer(), "images/character.png", 300, 150, 20, 25); //unit to move around
-    unit->SetUpAnimation(3,4);
+    unit = new Sprite(sdl_setup->GetRenderer(), "images/villager.png", 300, 150, 30, 40); //unit to move around
+    unit->SetUpAnimation(9,4);
     unit->SetOrigin((unit->GetWidth())/2, (unit->GetHeight())/2); //allows for unit to stand directly over target instead of offset
 
     timeCheck = SDL_GetTicks();
@@ -51,34 +51,34 @@ void Character::Update()
             {
                 if (distance > 5) //allow buffer room
                 {
-                unit->Animation(0,2,3,200); //(start, end, selected animation, speed)
+                unit->Animation(0,8,0,200); //(start, end, selected animation, speed)
                 } else
                 {
-                    unit->Animation(1,1,3,200); //Set unit to single state to stop animation
+                    unit->Animation(1,1,0,200); //Set unit to single state to stop animation
                 }
             } else if (225 >= angle && angle > 135) //Walking Left
             {
                 if (distance > 5)
                 {
-                     unit->Animation(0,2,2,200);
+                     unit->Animation(0,8,3,200);
                 } else
                 {
-                    unit->Animation(1,1,2,200);
+                    unit->Animation(1,1,3,200);
                 }
             } else if (315 >= angle && angle > 225) //Walking Down
             {
                 if (distance > 5)
                 {
-                     unit->Animation(0,2,0,200);
+                     unit->Animation(0,8,2,200);
                 } else
                 {
-                    unit->Animation(1,1,0,200);
+                    unit->Animation(1,1,2,200);
                 }
             } else //Walking Right
             {
                 if (distance > 5)
                 {
-                     unit->Animation(0,2,1,200);
+                     unit->Animation(0,8,1,200);
                 } else
                 {
                     unit->Animation(1,1,1,200);
@@ -123,10 +123,6 @@ void Character::Update()
             } else {
                 follow = false;
             }
-
-
             timeCheck = SDL_GetTicks();
         }
-
 }
-

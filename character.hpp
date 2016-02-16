@@ -1,9 +1,6 @@
-
 #ifndef CHARACTER_HPP_INCLUDED
 #define CHARACTER_HPP_INCLUDED
-#include <iostream>
-#include <SDL.h>
-#include <SDL_image.h>
+#include "imports.hpp"
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
 #include <math.h>

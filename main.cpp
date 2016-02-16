@@ -7,16 +7,10 @@ Main::Main() //Constructor
     quit = false; //boolean for game loop
     sdl_setup = new SDL_Setup(&quit);
 
-    for (int i = 0; i < 21; i++)
-    {
-        for (int j = 0; j < 16; j++)
-        {
-            grass[i][j] = new Sprite(sdl_setup->GetRenderer(), "images/grass.bmp", i*50, j*50, 50, 50); //map
-        }
-    }
-
     MouseX = 0;
     MouseY = 0;
+
+    gameMap = new Environment(sdl_setup, &MouseX, &MouseY);
 
     unit = new Character(sdl_setup, &MouseX, &MouseY);
 
@@ -24,14 +18,10 @@ Main::Main() //Constructor
 Main::~Main() //Destructor
 {
     delete sdl_setup;
-    for (int i = 0; i < 21; i++)
-    {
-        for (int j = 0; j < 16; j++)
-        {
-            delete grass[i][j];
-        }
-    }
+
     delete unit;
+
+    delete gameMap;
 }
 
 
@@ -42,20 +32,12 @@ void Main::GameLoop()
         sdl_setup->Begin();
         SDL_GetMouseState(&MouseX, &MouseY);
 
-        for (int i = 0; i < 21; i++)
-        {
-            for (int j = 0; j < 16; j++)
-            {
-                grass[i][j]->Draw();
-            }
-        }
-
-
+        gameMap->DrawBack();
         unit->Draw();
 
         unit->Update();
+        gameMap->Update();
 
         sdl_setup->End();
-
     }
 }

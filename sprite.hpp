@@ -1,9 +1,7 @@
 #ifndef SPRITE_HPP_INCLUDED
 #define SPRITE_HPP_INCLUDED
 
-#include <iostream>
-#include <SDL.h>
-#include <SDL_image.h>
+#include "imports.hpp"
 
 class Sprite
 {

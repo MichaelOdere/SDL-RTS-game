@@ -1,9 +1,7 @@
 #ifndef SDL_SETUP_HPP_INCLUDED
 #define SDL_SETUP_HPP_INCLUDED
 
-#include <iostream>
-#include <SDL.h>
-#include <SDL_image.h>
+#include "imports.hpp"
 
 class SDL_Setup
 {

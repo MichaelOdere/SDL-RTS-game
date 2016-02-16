@@ -1,8 +1,6 @@
 #ifndef MAIN_HPP_INCLUDED
 #define MAIN_HPP_INCLUDED
-#include <iostream>
-#include <SDL.h>
-#include <SDL_image.h>
+#include "imports.hpp"
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
 #include "character.hpp"
@@ -22,7 +20,7 @@ private:
 
     Character *unit;
 
-    Environment* grassArea;
+    Environment* gameMap;
     bool quit;
 
     Sprite* grass[21][16];
