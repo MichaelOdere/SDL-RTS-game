@@ -12,6 +12,8 @@ class Building
 
         void DrawBuilding();
 
+        Sprite* GetBuilding() { return Structure; }
+
     private:
         Sprite* Structure;
 };

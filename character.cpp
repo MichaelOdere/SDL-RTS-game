@@ -2,14 +2,16 @@
 #include "main.hpp"
 #include <math.h>
 
-Character::Character(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_MouseY) //Constructor
+Character::Character(SDL_Setup* passed_SDL_Setup, std::string FilePath, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment) //Constructor
 {
+
+    environment = passed_environment;
 
     sdl_setup = passed_SDL_Setup;
     MouseX = passed_MouseX;
     MouseY = passed_MouseY;
 
-    unit = new Sprite(sdl_setup->GetRenderer(), "images/villager.png", 300, 150, 30, 40); //unit to move around
+    unit = new Sprite(sdl_setup->GetRenderer(), FilePath.c_str(), 300, 150, 30, 40, CollisionRectangle(15,10,5,15)); //unit to move around
     unit->SetUpAnimation(9,4);
     unit->SetOrigin((unit->GetWidth())/2, (unit->GetHeight())/2); //allows for unit to stand directly over target instead of offset
 
@@ -104,21 +106,56 @@ void Character::Update()
 
             if (distance != 0)
             {
-                if (unit->GetX() < follow_point_x) //left
+                bool colliding = false;
+
+                for (int i = 0; i < environment->getBuildings().size(); i++) //check for collision
                 {
-                    unit->SetX(unit->GetX() - ((unit->GetX()-follow_point_x)/distance) * 1.5f );
+                    if (unit->isColliding(environment->getBuildings()[i]->GetBuilding()->GetCollisionRect()))
+                    {
+                        //following if statements move character away from collision to avoid getting stuck on it
+                        if (unit->GetX() > follow_point_x)
+                        {
+                            unit->SetX(unit->GetX()+1);
+                            unit->SetY(unit->GetY()+1);
+                        }
+                        if (unit->GetX() < follow_point_x)
+                        {
+                            unit->SetX(unit->GetX()-1);
+                            unit->SetY(unit->GetY()-1);
+                        }
+                        if (unit->GetY() > follow_point_y)
+                        {
+                            unit->SetY(unit->GetY()+1);
+                            unit->SetX(unit->GetX()+1);
+                        }
+                        if (unit->GetY() > follow_point_y)
+                        {
+                            unit->SetY(unit->GetY()-1);
+                            unit->SetX(unit->GetX()-1);
+                        }
+
+                        colliding = true;
+                        distance = 0;
+                    }
                 }
-                if (unit->GetX() > follow_point_x) //right
+                if (!colliding)
                 {
-                    unit->SetX(unit->GetX() - ((unit->GetX()-follow_point_x)/distance) * 1.5f );
-                }
-                if (unit->GetY() < follow_point_y) //up
-                {
-                    unit->SetY(unit->GetY() - ((unit->GetY()-follow_point_y)/distance) * 1.5f );
-                }
-                if (unit->GetY() > follow_point_y) //down
-                {
-                    unit->SetY(unit->GetY() - ((unit->GetY()-follow_point_y)/distance) * 1.5f );
+                    if (unit->GetX() < follow_point_x) //left
+                    {
+                        unit->SetX(unit->GetX() - ((unit->GetX()-follow_point_x)/distance) * 1.5f );
+                    }
+                    if (unit->GetX() > follow_point_x) //right
+                    {
+                        unit->SetX(unit->GetX() - ((unit->GetX()-follow_point_x)/distance) * 1.5f );
+                    }
+                    if (unit->GetY() < follow_point_y) //up
+                    {
+                        unit->SetY(unit->GetY() - ((unit->GetY()-follow_point_y)/distance) * 1.5f );
+                    }
+                    if (unit->GetY() > follow_point_y) //down
+                    {
+                        unit->SetY(unit->GetY() - ((unit->GetY()-follow_point_y)/distance) * 1.5f );
+                    }
                 }
             } else {
                 follow = false;

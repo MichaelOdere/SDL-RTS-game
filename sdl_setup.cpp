@@ -18,6 +18,7 @@ SDL_Setup::SDL_Setup(bool* quit) //Constructor
 
 SDL_Setup::~SDL_Setup() //Destructor
 {
+    //avoids memory leaks
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
     delete ev;

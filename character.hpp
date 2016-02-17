@@ -3,39 +3,41 @@
 #include "imports.hpp"
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
+#include "environment.hpp"
 #include <math.h>
 
 class Character
 {
-public:
-    Character(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_MouseY);
-    ~Character();
+    public:
+        Character(SDL_Setup* passed_SDL_Setup, std::string FilePath, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment);
+        ~Character();
 
-    double GetDistance(int x1, int y1, int x2, int y2);
+        double GetDistance(int x1, int y1, int x2, int y2);
 
-    void Update();
-    void Draw();
+        void Update();
+        void Draw();
 
-private:
+    private:
 
-    int *MouseX;
-    int *MouseY;
+        Environment* environment;
 
-    SDL_Setup* sdl_setup;
+        int *MouseX;
+        int *MouseY;
 
-    Sprite* unit;
+        SDL_Setup* sdl_setup;
 
-    int timeCheck;
+        Sprite* unit;
 
-    bool follow;
-    int follow_point_x;
-    int follow_point_y;
+        int timeCheck;
 
-    float angle;
+        bool follow;
+        int follow_point_x;
+        int follow_point_y;
 
-    float distance;
-    bool stopAnimation;
+        float angle;
 
+        float distance;
+        bool stopAnimation;
 };
 
 

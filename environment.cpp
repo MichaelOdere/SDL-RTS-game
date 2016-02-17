@@ -10,11 +10,11 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     {
         for (int j = 0; j < 16; j++)
         {
-            grass[i][j] = new Sprite(sdl_setup->GetRenderer(), "images/grass.bmp", i*50, j*50, 50, 50); //map
+            grass[i][j] = new Sprite(sdl_setup->GetRenderer(), "images/grass.bmp", i*50, j*50, 50, 50, CollisionRectangle(0,0,0,0)); //map
         }
     }
 
-    houses.push_back(new Building(sdl_setup, 200, 200));
+    buildings.push_back(new Building(sdl_setup, 200, 200));
     goldMines.push_back(new Gold(sdl_setup, 50, 50));
     goldMines.push_back(new Gold(sdl_setup, 600, 200));
     goldMines.push_back(new Gold(sdl_setup, 550, 500));
@@ -34,12 +34,12 @@ Environment::~Environment()
     {
         delete (*i);
     }
-    for (std::vector<Building*>::iterator i = houses.begin(); i != houses.end(); ++i)
+    for (std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i)
     {
         delete (*i);
     }
     goldMines.clear();
-    houses.clear();
+    buildings.clear();
 }
 
 void Environment::DrawBack()
@@ -57,7 +57,7 @@ void Environment::DrawBack()
         (*i)->DrawGold();
     }
 
-    for (std::vector<Building*>::iterator i = houses.begin(); i != houses.end(); ++i)
+    for (std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i)
     {
         (*i)->DrawBuilding();
     }
@@ -69,7 +69,7 @@ void Environment::Update()
     {
         if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT)
         {
-            houses.push_back(new Building(sdl_setup, *MouseX, *MouseY));
+            buildings.push_back(new Building(sdl_setup, *MouseX-50, *MouseY-50));
         }
     }
 }

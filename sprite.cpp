@@ -1,15 +1,20 @@
 #include "sprite.hpp"
 
-Sprite::Sprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int y, int w, int h) //Constructor
+Sprite::Sprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int y, int w, int h, CollisionRectangle passed_collision_rect) //Constructor
 {
     renderer = passed_renderer;
     image = NULL;
     image = IMG_LoadTexture(renderer, FilePath.c_str());
+    collision_rect = passed_collision_rect;
+    collisionSDLRect = collision_rect.GetRectangle();
 
     if (image == NULL) //error checking
     {
         std::cout << "Could not load image" << std::endl;
     }
+
+    collisionImage = NULL;
+    collisionImage = IMG_LoadTexture(renderer, "images/collision_rectangle.png");
 
     //location and size
     rect.x = x;
@@ -73,7 +78,13 @@ void Sprite::Animation(int beginFrame, int endFrame, int row, float speed)
 
 void Sprite::Draw()
 {
+    collision_rect.SetX(rect.x);
+    collision_rect.SetY(rect.y);
+    collisionSDLRect = collision_rect.GetRectangle();
+
     SDL_RenderCopy(renderer, image, &crop, &rect);
+
+    //SDL_RenderCopy(renderer, collisionImage, NULL, &collisionSDLRect); //displays collision rectangle for debugging
 }
 
 void Sprite::SetX(float x)
@@ -119,4 +130,12 @@ int Sprite::GetWidth()
 int Sprite::GetHeight()
 {
     return rect.h;
+}
+
+bool Sprite::isColliding(CollisionRectangle collider)
+{
+    return !(collision_rect.GetRectangle().x + collision_rect.GetRectangle().w < collider.GetRectangle().x ||
+             collision_rect.GetRectangle().y + collision_rect.GetRectangle().h < collider.GetRectangle().y ||
+             collision_rect.GetRectangle().x > collider.GetRectangle().w + collider.GetRectangle().x ||
+             collision_rect.GetRectangle().y > collider.GetRectangle().y + collider.GetRectangle().h);
 }

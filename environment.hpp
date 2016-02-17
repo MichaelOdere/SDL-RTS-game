@@ -19,6 +19,9 @@ class Environment
 
         void Update();
 
+        std::vector<Building*> getBuildings() { return buildings; }
+        std::vector<Gold*> getGoldMines() { return goldMines; }
+
     private:
 
         int *MouseX;
@@ -27,7 +30,7 @@ class Environment
         SDL_Setup* sdl_setup;
         Sprite* grass[21][16];
         std::vector<Gold*> goldMines;
-        std::vector<Building*> houses;
+        std::vector<Building*> buildings;
 };
 
 #endif // ENVIRONMENT_H

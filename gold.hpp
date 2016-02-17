@@ -14,6 +14,7 @@ class Gold
 
     private:
         Sprite* Rock;
+        int resources;
 };
 
 #endif // GOLD_HPP_INCLUDED

@@ -2,11 +2,12 @@
 #define SPRITE_HPP_INCLUDED
 
 #include "imports.hpp"
+#include "collision_rectangle.hpp"
 
 class Sprite
 {
 public:
-    Sprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int y, int w, int h);
+    Sprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int y, int w, int h, CollisionRectangle passed_collision_rect);
     ~Sprite();
 
     void Draw();
@@ -27,6 +28,9 @@ public:
 
     void Animation(int beginFrame, int endFrame, int row, float speed);
 
+    bool isColliding(CollisionRectangle collider);
+
+    CollisionRectangle GetCollisionRect() { return collision_rect; }
 
 private:
     float X_pos;
@@ -36,8 +40,12 @@ private:
     float origin_y;
 
     SDL_Texture* image;
+    SDL_Texture* collisionImage;
     SDL_Rect rect;
     SDL_Rect crop;
+
+    CollisionRectangle collision_rect;
+    SDL_Rect collisionSDLRect;
 
     int img_width;
     int img_height;
