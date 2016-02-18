@@ -6,6 +6,8 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     MouseX = passed_MouseX;
     MouseY = passed_MouseY;
 
+    resources = 100;
+
     for (int i = 0; i < 21; i++)
     {
         for (int j = 0; j < 16; j++)
@@ -14,7 +16,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
         }
     }
 
-    buildings.push_back(new Building(sdl_setup, 200, 200));
+    buildings.push_back(new Building(sdl_setup, "images/house.png", 200, 200));
     goldMines.push_back(new Gold(sdl_setup, 50, 50));
     goldMines.push_back(new Gold(sdl_setup, 600, 200));
     goldMines.push_back(new Gold(sdl_setup, 550, 500));
@@ -63,13 +65,18 @@ void Environment::DrawBack()
     }
 }
 
+void Environment::AddResources()
+{
+    resources = resources + 0.005;
+}
+
 void Environment::Update()
 {
     if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN)
     {
         if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT)
         {
-            buildings.push_back(new Building(sdl_setup, *MouseX-50, *MouseY-50));
+            //buildings.push_back(new Building(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50));
         }
     }
 }

@@ -12,9 +12,15 @@ class Gold
 
         void DrawGold();
 
+        bool Mining();
+
+        float GetResources() { return resources; }
+
+        Sprite* GetGold() { return Mine; }
+
     private:
-        Sprite* Rock;
-        int resources;
+        Sprite* Mine;
+        float resources;
 };
 
 #endif // GOLD_HPP_INCLUDED

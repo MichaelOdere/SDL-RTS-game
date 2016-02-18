@@ -11,7 +11,7 @@ Character::Character(SDL_Setup* passed_SDL_Setup, std::string FilePath, int *pas
     MouseX = passed_MouseX;
     MouseY = passed_MouseY;
 
-    unit = new Sprite(sdl_setup->GetRenderer(), FilePath.c_str(), 300, 150, 30, 40, CollisionRectangle(15,10,5,15)); //unit to move around
+    unit = new Sprite(sdl_setup->GetRenderer(), FilePath.c_str(), 300, 150, 30, 40, CollisionRectangle(0,0,30,40)); //unit to move around
     unit->SetUpAnimation(9,4);
     unit->SetOrigin((unit->GetWidth())/2, (unit->GetHeight())/2); //allows for unit to stand directly over target instead of offset
 
@@ -106,6 +106,10 @@ void Character::Update()
 
             if (distance != 0)
             {
+
+
+
+
                 bool colliding = false;
 
                 for (int i = 0; i < environment->getBuildings().size(); i++) //check for collision
@@ -115,34 +119,41 @@ void Character::Update()
                         //following if statements move character away from collision to avoid getting stuck on it
                         if (unit->GetX() > follow_point_x)
                         {
-                            unit->SetX(unit->GetX()+1);
-                            unit->SetY(unit->GetY()+1);
+                            unit->SetX(unit->GetX()+5);
+                            unit->SetY(unit->GetY()+5);
                         }
                         if (unit->GetX() < follow_point_x)
                         {
-                            unit->SetX(unit->GetX()-1);
-                            unit->SetY(unit->GetY()-1);
+                            unit->SetX(unit->GetX()-5);
+                            unit->SetY(unit->GetY()-5);
                         }
                         if (unit->GetY() > follow_point_y)
                         {
-                            unit->SetY(unit->GetY()+1);
-                            unit->SetX(unit->GetX()+1);
+                            unit->SetY(unit->GetY()+5);
+                            unit->SetX(unit->GetX()+5);
                         }
                         if (unit->GetY() > follow_point_y)
                         {
-                            unit->SetY(unit->GetY()-1);
-                            unit->SetX(unit->GetX()-1);
+                            unit->SetY(unit->GetY()-5);
+                            unit->SetX(unit->GetX()-5);
                         }
 
                         colliding = true;
-                        distance = 0;
+                        distance = 0;   //stop unit on collision
+                        follow = false;
+                        follow_point_x = unit->GetX();
+                        follow_point_y = unit->GetY();
                     }
                 }
+
+
+
+
                 if (!colliding)
                 {
                     if (unit->GetX() < follow_point_x) //left
                     {
-                        unit->SetX(unit->GetX() - ((unit->GetX()-follow_point_x)/distance) * 1.5f );
+                        unit->SetX(unit->GetX() - ((unit->GetX()-follow_point_x)/distance) * 1.5f ); // * 1.5f is speed
                     }
                     if (unit->GetX() > follow_point_x) //right
                     {
@@ -161,5 +172,17 @@ void Character::Update()
                 follow = false;
             }
             timeCheck = SDL_GetTicks();
+        }
+
+        for (int i = 0; i < environment->getGoldMines().size(); i++) //check for collision with gold mines (mining)
+        {
+            if (unit->isColliding(environment->getGoldMines()[i]->GetGold()->GetCollisionRect()))
+            {
+                if (environment->getGoldMines()[i]->Mining()) //if resources successfully mined (ie gold mine isn't empty)
+                    {
+                        environment->AddResources();
+                        environment->PrintResources(); //for testing only
+                    }
+            }
         }
 }

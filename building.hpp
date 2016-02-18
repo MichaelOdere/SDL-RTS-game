@@ -7,7 +7,7 @@
 class Building
 {
     public:
-        Building(SDL_Setup* sdl_setup, int x, int y);
+        Building(SDL_Setup* sdl_setup, std::string FilePath, int x, int y);
         ~Building();
 
         void DrawBuilding();

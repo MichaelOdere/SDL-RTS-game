@@ -22,6 +22,12 @@ class Environment
         std::vector<Building*> getBuildings() { return buildings; }
         std::vector<Gold*> getGoldMines() { return goldMines; }
 
+        void AddResources();
+
+        void PrintResources() { std::cout << resources << std::endl; } //prints to command line, for testing only
+
+        float resources;
+
     private:
 
         int *MouseX;

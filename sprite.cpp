@@ -84,7 +84,7 @@ void Sprite::Draw()
 
     SDL_RenderCopy(renderer, image, &crop, &rect);
 
-    //SDL_RenderCopy(renderer, collisionImage, NULL, &collisionSDLRect); //displays collision rectangle for debugging
+    SDL_RenderCopy(renderer, collisionImage, NULL, &collisionSDLRect); //displays collision rectangle for debugging
 }
 
 void Sprite::SetX(float x)

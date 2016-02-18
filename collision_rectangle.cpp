@@ -1,6 +1,7 @@
 #include "collision_rectangle.hpp"
 
 //invisible rectangle around sprites to detect collisions
+//using to avoid walking through buildings, mining, attacking enemy units and showing selected unit
 CollisionRectangle::CollisionRectangle()
 {
     OffsetX = 0;
