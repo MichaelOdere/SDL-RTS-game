@@ -5,7 +5,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     sdl_setup = passed_sdl_setup;
     MouseX = passed_MouseX;
     MouseY = passed_MouseY;
-    
+
     showMenu = false;
     menuType = 1;
 
@@ -15,15 +15,23 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     {
         for (int j = 0; j < 16; j++)
         {
-            grass[i][j] = new Sprite(sdl_setup->GetRenderer(), "images/grass.bmp", i*50, j*50, 50, 50, CollisionRectangle(0,0,0,0)); //map
+            grass[i][j] = new Sprite(sdl_setup->GetRenderer(), "images/grass.bmp", i*50, j*50, 50, 50, CollisionRectangle(0,0,0,0)); //map, currently tiled, will eventually be one big grass tile
         }
     }
 
+    selectedCharacter = new Character(sdl_setup, "images/villager.png", 300, 150, MouseX, MouseY, this); //game begins with villager selected to avoid error of deselecting an unselected character below
+    selectedCharacter->unSelect();
+
+    characters.push_back(selectedCharacter);
+    characters.push_back(new Character(sdl_setup, "images/villager.png", 350, 150, MouseX, MouseY, this)); // "this" is instance of current class
     buildings.push_back(new Building(sdl_setup, "images/house.png", 200, 200));
     goldMines.push_back(new Gold(sdl_setup, 50, 50));
     goldMines.push_back(new Gold(sdl_setup, 600, 200));
     goldMines.push_back(new Gold(sdl_setup, 550, 500));
     goldMines.push_back(new Gold(sdl_setup, 720, 100));
+
+
+
 }
 
 Environment::~Environment()
@@ -66,6 +74,11 @@ void Environment::DrawBack()
     {
         (*i)->DrawBuilding();
     }
+
+        for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
+    {
+        (*i)->Draw();
+    }
 }
 
 void Environment::AddResources()
@@ -85,20 +98,40 @@ bool Environment::shouldMenu()
 
 void Environment::Update()
 {
+
+    for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
+    {
+        (*i)->Update();
+    }
+
     if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN)
     {
         if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT)
         {
+
             for(int i = 0; i < buildings.size(); i++){
                 if(*MouseX>buildings[i]->getStructureX() && *MouseX<(buildings[i]->getStructureX()+buildings[i]->getStructureW()) && *MouseY>buildings[i]->getStructureY() && *MouseY<(buildings[i]->getStructureY()+buildings[i]->getStructureH()))
                 {
-                    
+
                 }
             }
-            //buildings.push_back(new Building(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50));
+
+            for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
+            {
+                if(*MouseX >= ((*i)->getCharacterX()-15) && *MouseX <= ((*i)->getCharacterX()+(*i)->getCharacterW()-15) && *MouseY >= ((*i)->getCharacterY()-20) && *MouseY <= ((*i)->getCharacterY()+(*i)->getCharacterH()-20))
+                {
+                    selectedCharacter->unSelect(); //unselect previously selected
+                    (*i)->setSelected();
+                    selectedCharacter = (*i); //reassign selected character for future deselection
+                    break; //prevent selection of multiple characters in same area
+                }
+                selectedCharacter->unSelect(); //unselect previously selected
+            }
+            //buildings.push_back(new Building(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50)); //testing
+            //characters.push_back(new Character(sdl_setup, "images/villager.png", MouseX, MouseY, this)); //testing
         }
     }
-    
+
     if(sdl_setup->GetEv()->type == SDL_KEYDOWN){
        // if(sdl_setup->GetEv()->button.button == SDLK_SPACE){
             if(showMenu){
@@ -109,3 +142,5 @@ void Environment::Update()
         //}
     }
 }
+
+

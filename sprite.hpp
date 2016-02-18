@@ -32,6 +32,8 @@ public:
 
     CollisionRectangle GetCollisionRect() { return collision_rect; }
 
+    void DisplayRectangle();
+
 private:
     float X_pos;
     float Y_pos;

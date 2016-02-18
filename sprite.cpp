@@ -83,8 +83,6 @@ void Sprite::Draw()
     collisionSDLRect = collision_rect.GetRectangle();
 
     SDL_RenderCopy(renderer, image, &crop, &rect);
-
-    SDL_RenderCopy(renderer, collisionImage, NULL, &collisionSDLRect); //displays collision rectangle for debugging
 }
 
 void Sprite::SetX(float x)
@@ -130,6 +128,11 @@ int Sprite::GetWidth()
 int Sprite::GetHeight()
 {
     return rect.h;
+}
+
+void Sprite::DisplayRectangle()
+{
+    SDL_RenderCopy(renderer, collisionImage, NULL, &collisionSDLRect); //displays collision rectangle for debugging
 }
 
 bool Sprite::isColliding(CollisionRectangle collider)

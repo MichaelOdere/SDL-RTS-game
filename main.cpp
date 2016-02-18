@@ -12,21 +12,19 @@ Main::Main() //Constructor
 
     gameMap = new Environment(sdl_setup, &MouseX, &MouseY);
 
-    unit = new Character(sdl_setup, "images/villager.png", &MouseX, &MouseY, gameMap);
-    
     optionsMenu = new SubMenu(sdl_setup, &MouseX, &MouseY,0);
-    
+
     showMenu = false;
 
 }
+
 Main::~Main() //Destructor
 {
     //avoids memory leaks
     delete sdl_setup;
-    delete unit;
     delete gameMap;
+    delete optionsMenu;
 }
-
 
 void Main::GameLoop()
 {
@@ -36,13 +34,11 @@ void Main::GameLoop()
         SDL_GetMouseState(&MouseX, &MouseY); //sets x and y of mouse location for each loop
 
         gameMap->DrawBack();
-        unit->Draw(); //unit drawn after map so that unit is not behind map
-        //in future, only map will be drawn and updated, with unit drawn in environment class
-        unit->Update();
+
         gameMap->Update();
         menuType = gameMap->getMenuType();
         showMenu = gameMap->shouldMenu();
-        
+
         if(showMenu){
             optionsMenu->Draw();
         }

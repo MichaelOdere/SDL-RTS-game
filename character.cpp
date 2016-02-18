@@ -2,16 +2,18 @@
 #include "main.hpp"
 #include <math.h>
 
-Character::Character(SDL_Setup* passed_SDL_Setup, std::string FilePath, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment) //Constructor
+Character::Character(SDL_Setup* passed_SDL_Setup, std::string FilePath, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment) //Constructor
 {
 
     environment = passed_environment;
+
+    selected = false;
 
     sdl_setup = passed_SDL_Setup;
     MouseX = passed_MouseX;
     MouseY = passed_MouseY;
 
-    unit = new Sprite(sdl_setup->GetRenderer(), FilePath.c_str(), 300, 150, 30, 40, CollisionRectangle(0,0,30,40)); //unit to move around
+    unit = new Sprite(sdl_setup->GetRenderer(), FilePath.c_str(), starting_x, starting_y, 30, 40, CollisionRectangle(0,0,30,40)); //unit to move around
     unit->SetUpAnimation(9,4);
     unit->SetOrigin((unit->GetWidth())/2, (unit->GetHeight())/2); //allows for unit to stand directly over target instead of offset
 
@@ -88,15 +90,19 @@ void Character::Update()
             }
         }
 
-        if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN) //mouse button clicked
-            {
-                if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT) //specifically, the right mouse button
+         if (selected)
+         {
+             unit->DisplayRectangle(); //selection box around unit
+            if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN) //mouse button clicked
                 {
-                    follow_point_x = *MouseX; //set target
-                    follow_point_y = *MouseY; //set target
-                    follow = true;
+                    if (sdl_setup->GetEv()->button.button == SDL_BUTTON_RIGHT) //specifically, the right mouse button
+                    {
+                        follow_point_x = *MouseX; //set target
+                        follow_point_y = *MouseY; //set target
+                        follow = true;
+                    }
                 }
-            }
+         }
 
         if (timeCheck+10 < SDL_GetTicks() && follow)
         {
@@ -185,4 +191,20 @@ void Character::Update()
                     }
             }
         }
+}
+
+int Character::getCharacterX(){
+    return unit->GetX();
+}
+
+int Character::getCharacterY(){
+    return unit->GetY();
+}
+
+int Character::getCharacterW(){
+    return unit->GetWidth();
+}
+
+int Character::getCharacterH(){
+    return unit->GetHeight();
 }

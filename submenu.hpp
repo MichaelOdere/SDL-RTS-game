@@ -1,9 +1,7 @@
 
 #ifndef SUBMENU_HPP_INCLUDED
 #define SUBMENU_HPP_INCLUDED
-#include <iostream>
-#include <SDL2/SDL.h>
-#include <SDL2_image/SDL_image.h>
+#include "imports.hpp"
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
 #include <math.h>
@@ -25,9 +23,9 @@ private:
 
     int *MouseX;
     int *MouseY;
-    
+
     int type;
-    
+
     std::vector<char> options;
     std::vector<Sprite*> sprites;
 
