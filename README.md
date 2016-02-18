@@ -5,13 +5,9 @@ Contributors:
 
 
         Sam Cordes
-          
         Colin Meisner
-          
         Michael Odere
-          
         Zoe Olson
-          
         Charlie Quinn
   
 
