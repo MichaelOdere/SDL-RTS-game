@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <iostream>
-#include <SDL.h>
-#include <SDL_image.h>
 
+
+#include "imports.hpp"
 #include "main.hpp"
 
 int main(int argc, char *argv[])
