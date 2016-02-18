@@ -13,6 +13,10 @@ Main::Main() //Constructor
     gameMap = new Environment(sdl_setup, &MouseX, &MouseY);
 
     unit = new Character(sdl_setup, "images/villager.png", &MouseX, &MouseY, gameMap);
+    
+    optionsMenu = new SubMenu(sdl_setup, &MouseX, &MouseY,0);
+    
+    showMenu = false;
 
 }
 Main::~Main() //Destructor
@@ -36,6 +40,13 @@ void Main::GameLoop()
         //in future, only map will be drawn and updated, with unit drawn in environment class
         unit->Update();
         gameMap->Update();
+        menuType = gameMap->getMenuType();
+        showMenu = gameMap->shouldMenu();
+        
+        if(showMenu){
+            optionsMenu->Draw();
+        }
+        optionsMenu->UpdateType(menuType);
 
         sdl_setup->End();
     }

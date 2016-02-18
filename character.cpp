@@ -90,7 +90,7 @@ void Character::Update()
 
         if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN) //mouse button clicked
             {
-                if (sdl_setup->GetEv()->button.button == SDL_BUTTON_RIGHT) //specifically, the right mouse button
+                if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT) //specifically, the right mouse button
                 {
                     follow_point_x = *MouseX; //set target
                     follow_point_y = *MouseY; //set target

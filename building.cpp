@@ -15,3 +15,18 @@ void Building::DrawBuilding()
 {
     Structure->Draw();
 }
+
+int Building::getStructureX(){
+    return Structure->GetX();
+}
+
+int Building::getStructureY(){
+    return Structure->GetY();
+}
+int Building::getStructureW(){
+    return Structure->GetWidth();
+}
+
+int Building::getStructureH(){
+    return Structure->GetHeight();
+}

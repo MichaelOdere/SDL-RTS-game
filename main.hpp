@@ -5,6 +5,7 @@
 #include "sprite.hpp"
 #include "character.hpp"
 #include "environment.hpp"
+#include "submenu.hpp"
 
 class Main
 {
@@ -21,7 +22,11 @@ private:
     Character *unit;
 
     Environment* gameMap;
+    SubMenu *optionsMenu;
     bool quit;
+    bool showMenu;
+    
+    int menuType;
 
     Sprite* grass[21][16];
 

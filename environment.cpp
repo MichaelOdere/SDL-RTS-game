@@ -5,6 +5,9 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     sdl_setup = passed_sdl_setup;
     MouseX = passed_MouseX;
     MouseY = passed_MouseY;
+    
+    showMenu = false;
+    menuType = 1;
 
     resources = 100;
 
@@ -70,13 +73,39 @@ void Environment::AddResources()
     resources = resources + 0.005;
 }
 
+int Environment::getMenuType()
+{
+    return menuType;
+}
+
+bool Environment::shouldMenu()
+{
+    return showMenu;
+}
+
 void Environment::Update()
 {
     if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN)
     {
         if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT)
         {
+            for(int i = 0; i < buildings.size(); i++){
+                if(*MouseX>buildings[i]->getStructureX() && *MouseX<(buildings[i]->getStructureX()+buildings[i]->getStructureW()) && *MouseY>buildings[i]->getStructureY() && *MouseY<(buildings[i]->getStructureY()+buildings[i]->getStructureH()))
+                {
+                    
+                }
+            }
             //buildings.push_back(new Building(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50));
         }
+    }
+    
+    if(sdl_setup->GetEv()->type == SDL_KEYDOWN){
+       // if(sdl_setup->GetEv()->button.button == SDLK_SPACE){
+            if(showMenu){
+                showMenu = false;
+            }else{
+                showMenu = true;
+            }
+        //}
     }
 }

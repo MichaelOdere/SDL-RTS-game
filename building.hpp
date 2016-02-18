@@ -11,6 +11,11 @@ class Building
         ~Building();
 
         void DrawBuilding();
+    
+        int getStructureX();
+        int getStructureY();
+        int getStructureW();
+        int getStructureH();
 
         Sprite* GetBuilding() { return Structure; }
 
