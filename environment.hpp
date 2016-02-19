@@ -26,6 +26,7 @@ class Environment
 
         std::vector<Building*> getBuildings() { return buildings; }
         std::vector<Gold*> getGoldMines() { return goldMines; }
+        std::list<Character*> getCharacters() { return characters; }
 
         void AddResources();
 
@@ -33,6 +34,8 @@ class Environment
 
         float resources;
         Character* selectedCharacter;
+        Building* selectedBuilding;
+        Gold* selectedGold;
 
     private:
 

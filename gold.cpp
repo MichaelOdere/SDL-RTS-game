@@ -7,11 +7,22 @@ Gold::Gold(SDL_Setup* sdl_setup, int x, int y)
 
     resources = 1000; //amount of resources to be mined, mining method to be implemented
 
+    selected = false;
+
 }
 
 Gold::~Gold()
 {
     delete Mine;
+}
+
+void Gold::Update()
+{
+    if (selected)
+    {
+        Mine->DisplayRectangle();
+        std::cout << "Gold left: " << resources << std::endl; //for testing, will eventually be implemented as part of submenu
+    }
 }
 
 void Gold::DrawGold()
@@ -27,4 +38,20 @@ bool Gold::Mining()
         return true;
     }
     return false;
+}
+
+int Gold::getGoldX(){
+    return Mine->GetX();
+}
+
+int Gold::getGoldY(){
+    return Mine->GetY();
+}
+
+int Gold::getGoldW(){
+    return Mine->GetWidth();
+}
+
+int Gold::getGoldH(){
+    return Mine->GetHeight();
 }

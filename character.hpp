@@ -4,6 +4,7 @@
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
 #include "environment.hpp"
+#include "building.hpp"
 #include <math.h>
 
 class Environment; //avoids error because Environment includes Character and vice versa

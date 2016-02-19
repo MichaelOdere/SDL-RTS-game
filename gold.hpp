@@ -18,6 +18,18 @@ class Gold
 
         Sprite* GetGold() { return Mine; }
 
+        int getGoldX();
+        int getGoldY();
+        int getGoldW();
+        int getGoldH();
+
+        void Update();
+
+        void setSelected() { selected = true; }
+        void unSelect() { selected = false; }
+
+        bool selected;
+
     private:
         Sprite* Mine;
         float resources;

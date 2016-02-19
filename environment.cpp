@@ -21,11 +21,17 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
 
     selectedCharacter = new Character(sdl_setup, "images/villager.png", 300, 150, MouseX, MouseY, this); //game begins with villager selected to avoid error of deselecting an unselected character below
     selectedCharacter->unSelect();
-
     characters.push_back(selectedCharacter);
     characters.push_back(new Character(sdl_setup, "images/villager.png", 350, 150, MouseX, MouseY, this)); // "this" is instance of current class
-    buildings.push_back(new Building(sdl_setup, "images/house.png", 200, 200));
-    goldMines.push_back(new Gold(sdl_setup, 50, 50));
+
+    selectedBuilding = new Building(sdl_setup, "images/house.png", 200, 200);
+    selectedBuilding->unSelect();
+    buildings.push_back(selectedBuilding);
+    buildings.push_back(new Building(sdl_setup, "images/house.png", 300, 200));
+
+    selectedGold = new Gold(sdl_setup, 50, 50);
+    selectedGold->unSelect();
+    goldMines.push_back(selectedGold);
     goldMines.push_back(new Gold(sdl_setup, 600, 200));
     goldMines.push_back(new Gold(sdl_setup, 550, 500));
     goldMines.push_back(new Gold(sdl_setup, 720, 100));
@@ -51,8 +57,14 @@ Environment::~Environment()
     {
         delete (*i);
     }
+    for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
+    {
+        delete (*i);
+    }
+
     goldMines.clear();
     buildings.clear();
+    characters.clear();
 }
 
 void Environment::DrawBack()
@@ -104,23 +116,50 @@ void Environment::Update()
         (*i)->Update();
     }
 
+    for (std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i)
+    {
+        (*i)->Update();
+    }
+
+    for (std::vector<Gold*>::iterator i = goldMines.begin(); i != goldMines.end(); ++i)
+    {
+        (*i)->Update();
+    }
+
     if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN)
     {
         if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT)
         {
 
-            for(int i = 0; i < buildings.size(); i++){
-                if(*MouseX>buildings[i]->getStructureX() && *MouseX<(buildings[i]->getStructureX()+buildings[i]->getStructureW()) && *MouseY>buildings[i]->getStructureY() && *MouseY<(buildings[i]->getStructureY()+buildings[i]->getStructureH()))
+            for(std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i){
+                if(*MouseX >= ((*i)->getStructureX()) && *MouseX <= ((*i)->getStructureX()+(*i)->getStructureW()) && *MouseY >= ((*i)->getStructureY()) && *MouseY <= ((*i)->getStructureY()+(*i)->getStructureH()))
                 {
-
+                    selectedBuilding->unSelect(); //unselect previously selected
+                    (*i)->setSelected();
+                    selectedBuilding = (*i); //reassign selected building for future deselection
+                    break;
                 }
+                selectedBuilding->unSelect();
             }
 
-            for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
+            for(std::vector<Gold*>::iterator i = goldMines.begin(); i != goldMines.end(); ++i){
+                if(*MouseX >= ((*i)->getGoldX()) && *MouseX <= ((*i)->getGoldX()+(*i)->getGoldW()) && *MouseY >= ((*i)->getGoldY()) && *MouseY <= ((*i)->getGoldY()+(*i)->getGoldH()))
+                {
+                    selectedGold->unSelect(); //unselect previously selected
+                    (*i)->setSelected();
+                    selectedGold = (*i); //reassign selected gold mine for future deselection
+                    break;
+                }
+                selectedGold->unSelect();
+            }
+
+            for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i) //character selection takes priority over buildings and gold mines
             {
                 if(*MouseX >= ((*i)->getCharacterX()-15) && *MouseX <= ((*i)->getCharacterX()+(*i)->getCharacterW()-15) && *MouseY >= ((*i)->getCharacterY()-20) && *MouseY <= ((*i)->getCharacterY()+(*i)->getCharacterH()-20))
                 {
                     selectedCharacter->unSelect(); //unselect previously selected
+                    selectedBuilding->unSelect();
+                    selectedGold->unSelect();
                     (*i)->setSelected();
                     selectedCharacter = (*i); //reassign selected character for future deselection
                     break; //prevent selection of multiple characters in same area

@@ -11,13 +11,20 @@ class Building
         ~Building();
 
         void DrawBuilding();
-    
+
         int getStructureX();
         int getStructureY();
         int getStructureW();
         int getStructureH();
 
         Sprite* GetBuilding() { return Structure; }
+
+        void setSelected() { selected = true; }
+        void unSelect() { selected = false; }
+
+        void Update();
+
+        bool selected;
 
     private:
         Sprite* Structure;
