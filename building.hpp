@@ -16,8 +16,12 @@ class Building
         int getStructureY();
         int getStructureW();
         int getStructureH();
+    
+        void Select();
 
         Sprite* GetBuilding() { return Structure; }
+    
+        bool selected;
 
     private:
         Sprite* Structure;

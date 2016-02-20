@@ -20,7 +20,7 @@ class Environment
 
         void DrawBack();
 
-        void Update();
+        void Update(int whatToMake);
         int getMenuType();
         bool shouldMenu();
 

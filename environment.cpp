@@ -96,7 +96,7 @@ bool Environment::shouldMenu()
     return showMenu;
 }
 
-void Environment::Update()
+void Environment::Update(int whatToMake)
 {
 
     for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
@@ -108,11 +108,15 @@ void Environment::Update()
     {
         if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT)
         {
-
-            for(int i = 0; i < buildings.size(); i++){
-                if(*MouseX>buildings[i]->getStructureX() && *MouseX<(buildings[i]->getStructureX()+buildings[i]->getStructureW()) && *MouseY>buildings[i]->getStructureY() && *MouseY<(buildings[i]->getStructureY()+buildings[i]->getStructureH()))
-                {
-
+            
+            for (std::vector<Building*>::iterator iter = buildings.begin(); iter != buildings.end(); ++iter){
+                if(*MouseX >= ((*iter)->getStructureX()) && *MouseX <= ((*iter)->getStructureX()+(*iter)->getStructureW()) && *MouseY >= ((*iter)->getStructureY()) && *MouseY <= ((*iter)->getStructureY()+(*iter)->getStructureH())){
+                        (*iter)->Select();
+                    if(menuType == 2){
+                        menuType = 1;
+                    }else{
+                        menuType = 2;
+                    }
                 }
             }
 
@@ -127,8 +131,14 @@ void Environment::Update()
                 }
                 selectedCharacter->unSelect(); //unselect previously selected
             }
-            //buildings.push_back(new Building(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50)); //testing
-            //characters.push_back(new Character(sdl_setup, "images/villager.png", MouseX, MouseY, this)); //testing
+            
+            if(whatToMake== 1){
+                buildings.push_back(new Building(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50));
+            }else if(whatToMake == 2){
+                characters.push_back(new Character(sdl_setup, "images/villager.png",*MouseX-50, *MouseY-50, MouseX, MouseY, this));
+            }
+             //testing
+            // //testing
         }
     }
 

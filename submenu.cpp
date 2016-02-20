@@ -11,11 +11,23 @@ SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_Mo
     sdl_setup = passed_SDL_Setup;
     MouseX = passed_MouseX;
     MouseY = passed_MouseY;
-
+    
+    selectedI = 0;
+    opSelected = false;
+    
+    newHouse = MenuOption(1,0, "images/house.png");
+    newCharacter = MenuOption(2,0, "images/villager.png");
+    
+    mainOptions.push_back(newHouse);
+    mainOptions.push_back(newHouse);
+    mainOptions.push_back(newHouse);
+    
+    houseOptions.push_back(newCharacter);
+    houseOptions.push_back(newHouse);
+    houseOptions.push_back(newCharacter);
     
     bar = new Sprite(sdl_setup->GetRenderer(), "images/optionsmenu.png", 0, 400, 1024, 300, CollisionRectangle(0,0,1024,300));
     
-    timeCheck = SDL_GetTicks();
     type = kind;
 }
 
@@ -32,38 +44,62 @@ void SubMenu::Draw()
 }
 
 void SubMenu::DrawOptions(){
-    for(int j = 0; j < sprites.size(); j++){
+    for(int j = 0; j < options.size(); j++){
         sprites[j]->Draw();
+        if(options[j].selected){
+            sprites[j]->DisplayRectangle();
+        }
     }
+    
 }
 
 void SubMenu::UpdateType(int kind){
     if(type!=kind){
         type = kind;
         
-        if(type==1){//barracks
-            options.push_back('c');//will push Option type soon
-            options.push_back('a');
-            options.push_back('c');
+        options.clear();
+        sprites.clear();
+        
+        if(type==1){//main menu?
+            options = mainOptions;
+        }else if(type ==2){// house selected
+            options = houseOptions;
         }
         
         for( int i = 0; i < options.size(); i++){
-            if(options[i] == 'c'){
-                sprites.push_back(new Sprite(sdl_setup->GetRenderer(), "images/house.png", (i*300), 400, 300, 300, CollisionRectangle(0,0,300,300)));
-            }else if(options[i] == 'a'){
-                sprites.push_back(new Sprite(sdl_setup->GetRenderer(), "images/villager.png", (i*300), 400, 300, 300, CollisionRectangle(0,0,300,300)));
-            }
+            sprites.push_back(new Sprite(sdl_setup->GetRenderer(), options[i].getPic(), (i*300), 400, 300, 300, CollisionRectangle(0,0,300,300)));
         }
     }
 }
 
-void SubMenu::Update(int kind)
+void SubMenu::Update()
 {
     if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN) //mouse button clicked
     {
         if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT) //specifically, the left mouse button
         {
-            
+            for(int i = 0; i < options.size(); i++){
+                if(*MouseX>sprites[i]->GetX() && *MouseX<(sprites[i]->GetX()+sprites[i]->GetWidth()) && *MouseY>sprites[i]->GetY() && *MouseY<(sprites[i]->GetY()+sprites[i]->GetHeight()))
+                {
+                    if(options[i].selected){
+                        options[i].selected = false;
+                        opSelected = false;
+                    }else{
+                        options[i].selected = true;
+                        opSelected = true;
+                        options[selectedI].selected = false;
+                        selectedI = i;
+                    }
+                }
+            }
         }
+    }
+}
+
+int SubMenu::getWhatToMake(){
+    if(opSelected){
+        return options[selectedI].getType();
+    }else{
+        return 0;
     }
 }

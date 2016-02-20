@@ -35,7 +35,7 @@ void Main::GameLoop()
 
         gameMap->DrawBack();
 
-        gameMap->Update();
+        gameMap->Update(optionsMenu->getWhatToMake());
         menuType = gameMap->getMenuType();
         showMenu = gameMap->shouldMenu();
 
@@ -43,6 +43,7 @@ void Main::GameLoop()
             optionsMenu->Draw();
         }
         optionsMenu->UpdateType(menuType);
+        optionsMenu->Update();
 
         sdl_setup->End();
     }
