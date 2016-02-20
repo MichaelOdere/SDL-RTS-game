@@ -11,7 +11,7 @@ class Building
         ~Building();
 
         void DrawBuilding();
-    
+
         int getStructureX();
         int getStructureY();
         int getStructureW();
@@ -21,6 +21,13 @@ class Building
 
         Sprite* GetBuilding() { return Structure; }
     
+        bool selected;
+
+        void setSelected() { selected = true; }
+        void unSelect() { selected = false; }
+
+        void Update();
+
         bool selected;
 
     private:

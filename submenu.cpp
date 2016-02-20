@@ -7,7 +7,7 @@
 
 SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_MouseY, int kind) //Constructor
 {
-    
+
     sdl_setup = passed_SDL_Setup;
     MouseX = passed_MouseX;
     MouseY = passed_MouseY;
@@ -25,15 +25,14 @@ SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_Mo
     houseOptions.push_back(newCharacter);
     houseOptions.push_back(newHouse);
     houseOptions.push_back(newCharacter);
-    
+
     bar = new Sprite(sdl_setup->GetRenderer(), "images/optionsmenu.png", 0, 400, 1024, 300, CollisionRectangle(0,0,1024,300));
-    
+
     type = kind;
 }
 
 SubMenu::~SubMenu() //Destructor
 {
-    delete sdl_setup;
     delete bar;
 }
 
@@ -64,10 +63,10 @@ void SubMenu::UpdateType(int kind){
             options = mainOptions;
         }else if(type ==2){// house selected
             options = houseOptions;
-        }
-        
-        for( int i = 0; i < options.size(); i++){
-            sprites.push_back(new Sprite(sdl_setup->GetRenderer(), options[i].getPic(), (i*300), 400, 300, 300, CollisionRectangle(0,0,300,300)));
+
+            for( int i = 0; i < options.size(); i++){
+                sprites.push_back(new Sprite(sdl_setup->GetRenderer(), options[i].getPic(), (i*300), 400, 300, 300, CollisionRectangle(0,0,300,300)));
+            }
         }
     }
 }
@@ -103,3 +102,4 @@ int SubMenu::getWhatToMake(){
         return 0;
     }
 }
+

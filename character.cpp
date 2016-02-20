@@ -25,7 +25,6 @@ Character::Character(SDL_Setup* passed_SDL_Setup, std::string FilePath, int star
 
 Character::~Character() //Destructor
 {
-    delete sdl_setup;
     delete unit;
 }
 
@@ -180,6 +179,7 @@ void Character::Update()
             timeCheck = SDL_GetTicks();
         }
 
+        //Mining for VILLAGER class
         for (int i = 0; i < environment->getGoldMines().size(); i++) //check for collision with gold mines (mining)
         {
             if (unit->isColliding(environment->getGoldMines()[i]->GetGold()->GetCollisionRect()))
