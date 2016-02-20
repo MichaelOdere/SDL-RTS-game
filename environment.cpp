@@ -8,6 +8,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
 
     showMenu = false;
     menuType = 1;
+    whatToMake = 0;
 
     resources = 100;
 
@@ -108,7 +109,11 @@ bool Environment::shouldMenu()
     return showMenu;
 }
 
-void Environment::Update(int whatToMake)
+void Environment::updateWhatToMake(int what){
+    whatToMake = what;
+}
+
+void Environment::Update()
 {
 
     for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
@@ -130,13 +135,6 @@ void Environment::Update(int whatToMake)
     {
         if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT)
         {
-//            
-//            for (std::vector<Building*>::iterator iter = buildings.begin(); iter != buildings.end(); ++iter){
-//                if(*MouseX >= ((*iter)->getStructureX()) && *MouseX <= ((*iter)->getStructureX()+(*iter)->getStructureW()) && *MouseY >= ((*iter)->getStructureY()) && *MouseY <= ((*iter)->getStructureY()+(*iter)->getStructureH())){
-//                        (*iter)->Select();
-//                    
-
-
             for(std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i){
                 if(*MouseX >= ((*i)->getStructureX()) && *MouseX <= ((*i)->getStructureX()+(*i)->getStructureW()) && *MouseY >= ((*i)->getStructureY()) && *MouseY <= ((*i)->getStructureY()+(*i)->getStructureH()))
                 {
@@ -185,8 +183,6 @@ void Environment::Update(int whatToMake)
             }else if(whatToMake == 2){
                 characters.push_back(new Character(sdl_setup, "images/villager.png",*MouseX-50, *MouseY-50, MouseX, MouseY, this));
             }
-             //testing
-            // //testing
         }
     }
 

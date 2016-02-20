@@ -28,8 +28,6 @@ class Building
 
         void Update();
 
-        bool selected;
-
     private:
         Sprite* Structure;
 };

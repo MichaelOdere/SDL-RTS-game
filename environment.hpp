@@ -20,8 +20,9 @@ class Environment
 
         void DrawBack();
 
-        void Update(int whatToMake);
+        void Update();
         int getMenuType();
+        void updateWhatToMake(int what);
         bool shouldMenu();
 
         std::vector<Building*> getBuildings() { return buildings; }
@@ -43,6 +44,7 @@ class Environment
         int *MouseY;
 
         int menuType;
+        int whatToMake;
         bool showMenu;
 
         SDL_Setup* sdl_setup;

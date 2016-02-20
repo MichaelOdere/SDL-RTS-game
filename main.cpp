@@ -35,15 +35,19 @@ void Main::GameLoop()
 
         gameMap->DrawBack();
 
-        gameMap->Update(optionsMenu->getWhatToMake());
-        menuType = gameMap->getMenuType();
+        gameMap->Update();
+        
         showMenu = gameMap->shouldMenu();
-
+        
         if(showMenu){
+            menuType = gameMap->getMenuType();
+            optionsMenu->UpdateType(menuType);
             optionsMenu->Draw();
+            optionsMenu->Update();
+            gameMap->updateWhatToMake(optionsMenu->getWhatToMake());
         }
-        optionsMenu->UpdateType(menuType);
-        optionsMenu->Update();
+        
+        
 
         sdl_setup->End();
     }

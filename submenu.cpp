@@ -34,6 +34,11 @@ SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_Mo
 SubMenu::~SubMenu() //Destructor
 {
     delete bar;
+    
+    
+    for(int i = 0; i < sprites.size(); i++){
+        delete sprites[i];
+    }
 }
 
 void SubMenu::Draw()
@@ -63,11 +68,12 @@ void SubMenu::UpdateType(int kind){
             options = mainOptions;
         }else if(type ==2){// house selected
             options = houseOptions;
-
-            for( int i = 0; i < options.size(); i++){
-                sprites.push_back(new Sprite(sdl_setup->GetRenderer(), options[i].getPic(), (i*300), 400, 300, 300, CollisionRectangle(0,0,300,300)));
-            }
         }
+
+        for( int i = 0; i < options.size(); i++){
+            sprites.push_back(new Sprite(sdl_setup->GetRenderer(), options[i].getPic(), (i*300), 400, 300, 300, CollisionRectangle(0,0,300,300)));
+        }
+        
     }
 }
 
