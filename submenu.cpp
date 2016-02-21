@@ -15,8 +15,8 @@ SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_Mo
     selectedI = 0;
     opSelected = false;
     
-    newHouse = MenuOption(1,0, "images/house.png");
-    newCharacter = MenuOption(2,0, "images/villager.png");
+    newHouse = MenuOption(1,500, "images/house.png");
+    newCharacter = MenuOption(2,20, "images/villager.png");
     
     mainOptions.push_back(newHouse);
     mainOptions.push_back(newHouse);
@@ -34,7 +34,9 @@ SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_Mo
 SubMenu::~SubMenu() //Destructor
 {
     delete bar;
-    
+    delete sdl_setup;
+    delete MouseX;
+    delete MouseY;
     
     for(int i = 0; i < sprites.size(); i++){
         delete sprites[i];
@@ -63,6 +65,9 @@ void SubMenu::UpdateType(int kind){
         
         options.clear();
         sprites.clear();
+        for(int i = 0; i < sprites.size(); i++){
+            delete sprites[i];
+        }
         
         if(type==1){//main menu?
             options = mainOptions;
@@ -75,6 +80,10 @@ void SubMenu::UpdateType(int kind){
         }
         
     }
+}
+
+int SubMenu::getType(){
+    return type;
 }
 
 void SubMenu::Update()
@@ -104,6 +113,14 @@ void SubMenu::Update()
 int SubMenu::getWhatToMake(){
     if(opSelected){
         return options[selectedI].getType();
+    }else{
+        return 0;
+    }
+}
+
+int SubMenu::getOpCost(){
+    if(opSelected){
+        return options[selectedI].getCost();
     }else{
         return 0;
     }

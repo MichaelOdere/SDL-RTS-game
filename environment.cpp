@@ -1,14 +1,14 @@
 #include "environment.hpp"
 
-Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *passed_MouseY)
+Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *passed_MouseY, SubMenu* passed_menu)
 {
     sdl_setup = passed_sdl_setup;
     MouseX = passed_MouseX;
     MouseY = passed_MouseY;
-
-    showMenu = false;
-    menuType = 1;
-    whatToMake = 0;
+    optionsMenu = passed_menu;
+    
+    showMenu = false;//start with menu not displayed
+    optionsMenu->UpdateType(1);// 1 is main menu
 
     resources = 100;
 
@@ -43,6 +43,8 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
 
 Environment::~Environment()
 {
+    delete optionsMenu;
+    
     for (int i = 0; i < 21; i++)
     {
         for (int j = 0; j < 16; j++)
@@ -99,22 +101,12 @@ void Environment::AddResources()
     resources = resources + 0.005;
 }
 
-int Environment::getMenuType()
-{
-    return menuType;
-}
-
-bool Environment::shouldMenu()
-{
-    return showMenu;
-}
-
-void Environment::updateWhatToMake(int what){
-    whatToMake = what;
-}
-
 void Environment::Update()
 {
+    if(showMenu){
+        optionsMenu->Draw();
+        optionsMenu->Update();
+    }
 
     for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
     {
@@ -142,10 +134,10 @@ void Environment::Update()
                     (*i)->setSelected();
                     selectedBuilding = (*i); //reassign selected building for future deselection
                     
-                    if(menuType == 2){
-                        menuType = 1;
+                    if(optionsMenu->getType() == 2){
+                        optionsMenu->UpdateType(1);
                     }else{
-                        menuType = 2;
+                        optionsMenu->UpdateType(2);
                     }
                     
                     break;
@@ -178,11 +170,24 @@ void Environment::Update()
                 selectedCharacter->unSelect(); //unselect previously selected
             }
             
-            if(whatToMake== 1){
-                buildings.push_back(new Building(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50));
-            }else if(whatToMake == 2){
-                characters.push_back(new Character(sdl_setup, "images/villager.png",*MouseX-50, *MouseY-50, MouseX, MouseY, this));
+            //if((showMenu && (*MouseY > optionsMenu->getY())) || (showMenu == false)){
+            
+            if(optionsMenu->getWhatToMake()== 1){
+                if(resources>=optionsMenu->getOpCost()){
+                    buildings.push_back(new Building(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50));
+                    resources = resources - cost;
+                }else{
+                    //alert insufficient funds
+                }
+            }else if(optionsMenu->getWhatToMake() == 2){
+                if(resources>=optionsMenu->getOpCost()){
+                    characters.push_back(new Character(sdl_setup, "images/villager.png",*MouseX-50, *MouseY-50, MouseX, MouseY, this));
+                }else{
+                    //alert insufficient funds
+                }
+                
             }
+            //}
         }
     }
 

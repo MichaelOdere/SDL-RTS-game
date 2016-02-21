@@ -1,11 +1,8 @@
-
 #ifndef SUBMENU_HPP_INCLUDED
 #define SUBMENU_HPP_INCLUDED
 #include "imports.hpp"
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
-#include <math.h>
-#include "building.hpp"
 #include "menuoption.hpp"
 #include <vector>
 
@@ -20,7 +17,9 @@ public:
     void DrawOptions();
     void UpdateType(int type);
     
+    int getType();
     int getWhatToMake();
+    int getOpCost();
     
     bool opSelected;
 
@@ -31,20 +30,20 @@ private:
 
     int type;
     
-    std::vector<MenuOption> mainOptions;
-    std::vector<MenuOption> houseOptions;
+    std::vector<MenuOption> mainOptions;//options presented with nothing selected
+    std::vector<MenuOption> houseOptions;//options presented with a house selected
     
-    MenuOption newHouse;
-    MenuOption newCharacter;
+    MenuOption newHouse; //option to build a new house
+    MenuOption newCharacter; // option to build a new character
 
-    std::vector<MenuOption> options;
-    std::vector<Sprite*> sprites;
+    std::vector<MenuOption> options; //the options
+    std::vector<Sprite*> sprites; //corresponding sprites for options
 
     SDL_Setup* sdl_setup;
 
     Sprite* bar;
 
-    int selectedI;
+    int selectedI;//index of selected option
     
 
 

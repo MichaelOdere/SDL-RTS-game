@@ -24,8 +24,8 @@ private:
     Environment* gameMap;
     SubMenu *optionsMenu;
     bool quit;
+    
     bool showMenu;
-
     int menuType;
 
     Sprite* grass[21][16];

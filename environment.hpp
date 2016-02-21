@@ -9,20 +9,23 @@
 #include "gold.hpp"
 #include "building.hpp"
 #include "character.hpp"
+#include "submenu.hpp"
 
 class Character; //avoids error because Environment includes Character and vice versa
 
 class Environment
 {
     public:
-        Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *passed_MouseY);
+        Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *passed_MouseY, SubMenu* passed_menu);
         ~Environment();
 
         void DrawBack();
 
         void Update();
+    
         int getMenuType();
         void updateWhatToMake(int what);
+        void updateCost(int n);
         bool shouldMenu();
 
         std::vector<Building*> getBuildings() { return buildings; }
@@ -39,12 +42,15 @@ class Environment
         Gold* selectedGold;
 
     private:
+    
+        SubMenu* optionsMenu;
 
         int *MouseX;
         int *MouseY;
 
         int menuType;
         int whatToMake;
+        int cost;
         bool showMenu;
 
         SDL_Setup* sdl_setup;

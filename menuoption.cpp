@@ -24,3 +24,7 @@ std::string MenuOption::getPic(){
 int MenuOption::getType(){
     return type;
 }
+
+int MenuOption::getCost(){
+    return cost;
+}

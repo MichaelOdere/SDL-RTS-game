@@ -10,11 +10,8 @@ Main::Main() //Constructor
     MouseX = 0;
     MouseY = 0;
 
-    gameMap = new Environment(sdl_setup, &MouseX, &MouseY);
-
     optionsMenu = new SubMenu(sdl_setup, &MouseX, &MouseY,0);
-
-    showMenu = false;
+    gameMap = new Environment(sdl_setup, &MouseX, &MouseY, optionsMenu);
 
 }
 
@@ -36,18 +33,6 @@ void Main::GameLoop()
         gameMap->DrawBack();
 
         gameMap->Update();
-        
-        showMenu = gameMap->shouldMenu();
-        
-        if(showMenu){
-            menuType = gameMap->getMenuType();
-            optionsMenu->UpdateType(menuType);
-            optionsMenu->Draw();
-            optionsMenu->Update();
-            gameMap->updateWhatToMake(optionsMenu->getWhatToMake());
-        }
-        
-        
 
         sdl_setup->End();
     }

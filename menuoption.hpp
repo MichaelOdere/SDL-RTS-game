@@ -15,6 +15,7 @@ public:
 
     std::string getPic();
     int getType();
+    int getCost();
     
     bool selected;
 
