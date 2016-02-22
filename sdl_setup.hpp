@@ -1,5 +1,5 @@
-#ifndef SDL_SETUP_HPP_INCLUDED
-#define SDL_SETUP_HPP_INCLUDED
+#ifndef SDL_SETUP_HPP
+#define SDL_SETUP_HPP
 
 #include "imports.hpp"
 
@@ -22,4 +22,4 @@ private:
 };
 
 
-#endif // SDL_SETUP_HPP_INCLUDED
+#endif // SDL_SETUP_HPP

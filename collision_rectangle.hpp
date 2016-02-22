@@ -1,5 +1,5 @@
-#ifndef COLLISION_RECTANGLE_HPP_INCLUDED
-#define COLLISION_RECTANGLE_HPP_INCLUDED
+#ifndef COLLISION_RECTANGLE_HPP
+#define COLLISION_RECTANGLE_HPP
 
 #include "imports.hpp"
 
@@ -23,4 +23,4 @@ class CollisionRectangle
         SDL_Rect CollisionRect;
 };
 
-#endif // COLLISION_RECTANGLE_HPP_INCLUDED
+#endif // COLLISION_RECTANGLE_HPP
