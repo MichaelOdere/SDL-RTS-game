@@ -3,22 +3,9 @@ Real time strategy game using the SDL framework for c++
 
 Contributors:
         
-        Sam Cordes
-        
-        Colin Meisner
-        
-        Michael Odere
-        
-        Zoe Olson
-        
-        Charlie Quinn
-        
-  
-
-Responsibilites:
-        
         Sam Cordes: 
         - Gameplay
+        - Game Server
           
         Colin Meisner:
         - Gameplay
@@ -26,6 +13,7 @@ Responsibilites:
           
         Michael Odere:
         - Gameplay
+        - Game Server
         - Characters
           
         Zoe Olson:
@@ -33,4 +21,5 @@ Responsibilites:
         - Map Design
           
         Charlie Quinn:
-        - In-game Menu and GUI
+        - Menu and HUD
+        - Economy
