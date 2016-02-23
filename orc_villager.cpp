@@ -1,9 +1,9 @@
-#include "villager.hpp"
+#include "orc_villager.hpp"
 
-Villager::Villager(SDL_Setup* passed_SDL_Setup, std::string FilePath, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment) :
+OrcVillager::OrcVillager(SDL_Setup* passed_SDL_Setup, std::string FilePath, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment) :
     Character( passed_SDL_Setup, FilePath, starting_x, starting_y, passed_MouseX, passed_MouseY, passed_environment)
 {
-    team = 1;
+    team = 2;
     health = 50;
     max_health = 50;
     attack = 0.01;
@@ -11,11 +11,11 @@ Villager::Villager(SDL_Setup* passed_SDL_Setup, std::string FilePath, int starti
 
 }
 
-Villager::~Villager()
+OrcVillager::~OrcVillager()
 {
 }
 
-void Villager::Update(){
+void OrcVillager::Update(){
 
     Character::Update();
     //Mining for VILLAGER class

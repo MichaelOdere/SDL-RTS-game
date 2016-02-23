@@ -19,7 +19,7 @@ void Building::Update()
 {
     if (selected)
     {
-        Structure->DisplayRectangle();
+        Structure->DisplayRectangle(1.0);
     }
 }
 
@@ -27,7 +27,7 @@ void Building::DrawBuilding()
 {
     Structure->Draw();
     if(selected){
-        Structure->DisplayRectangle();
+        Structure->DisplayRectangle(1.0);
     }
 }
 

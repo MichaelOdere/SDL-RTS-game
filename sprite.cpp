@@ -14,7 +14,11 @@ Sprite::Sprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int y
     }
 
     collisionImage = NULL;
-    collisionImage = IMG_LoadTexture(renderer, "images/collision_rectangle.png");
+    collisionImage = IMG_LoadTexture(renderer, "images/collision_rectangleGREEN.png"); //default selection box is green
+    collisionImageYellow = NULL;
+    collisionImageYellow = IMG_LoadTexture(renderer, "images/collision_rectangleYELLOW.png");
+    collisionImageRed = NULL;
+    collisionImageRed = IMG_LoadTexture(renderer, "images/collision_rectangleRED.png");
 
     //location and size
     rect.x = x;
@@ -130,8 +134,16 @@ int Sprite::GetHeight()
     return rect.h;
 }
 
-void Sprite::DisplayRectangle()
+void Sprite::DisplayRectangle(float health_percent)
 {
+    if (health_percent < 0.67)
+    {
+        collisionImage = collisionImageYellow;
+    }
+    if (health_percent < 0.33 )
+    {
+        collisionImage = collisionImageRed;
+    }
     SDL_RenderCopy(renderer, collisionImage, NULL, &collisionSDLRect); //displays collision rectangle for debugging
 }
 

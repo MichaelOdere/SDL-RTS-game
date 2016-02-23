@@ -11,10 +11,10 @@ SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_Mo
 
     selectedI = 0;
     opSelected = false;
-    
+
     newHouse = MenuOption(1,100, "images/house.png");
     newCharacter = MenuOption(2,20, "images/villager.png");
-    
+
     mainOptions.push_back(newHouse);//this is how i plan to build different menus, create options above and then populate separate lists for any item that can be selected
     mainOptions.push_back(newHouse);
     mainOptions.push_back(newHouse);
@@ -37,6 +37,8 @@ SubMenu::~SubMenu() //Destructor
     for(int i = 0; i < sprites.size(); i++){
         delete sprites[i];
     }
+
+    sprites.clear();
 }
 
 void SubMenu::Draw()
@@ -49,7 +51,7 @@ void SubMenu::DrawOptions(){
     for(int j = 0; j < options.size(); j++){
         sprites[j]->Draw();
         if(options[j].selected){
-            sprites[j]->DisplayRectangle();
+            sprites[j]->DisplayRectangle(1.0);
         }
     }
 

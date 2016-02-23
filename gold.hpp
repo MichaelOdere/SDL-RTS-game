@@ -30,9 +30,12 @@ class Gold
 
         bool selected;
 
+        float resources;
+        float max_resources;
+
     private:
         Sprite* Mine;
-        float resources;
+
 };
 
 #endif // GOLD_HPP

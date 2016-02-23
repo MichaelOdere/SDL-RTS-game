@@ -8,6 +8,7 @@ Character::Character(SDL_Setup* passed_SDL_Setup, std::string FilePath, int star
     environment = passed_environment;
 
     selected = false;
+    alive = true;
 
     sdl_setup = passed_SDL_Setup;
     MouseX = passed_MouseX;
@@ -47,15 +48,27 @@ void Character::Update()
         Select();  // Selects the character
         Move();    // Moves the character
 
+        //COMBAT
+        target = environment->Combat(unit, team); //search for enemy in collision box, returns first enemy found
+        if( target != NULL) //if no enemies, Combat returns NULL
+        {
+            target->attacked(attack); //attack enemy by passing character's attack to enemy
+        }
+
+        //Check if Character is DEAD
+        if (health <= 0)
+        {
+            alive = false;
+            selected = false;
+        }
 }
 
-
 void Character::Animate(){
-    
+
     //get angle from unit to destination
     angle = atan2(follow_point_y - unit->GetY(), follow_point_x - unit->GetX());
     angle = angle * (180/3.14159) + 180; //convert angle to degrees
-    
+
     if (!stopAnimation) //if unit has not reached target yet
     {
         if (135 >= angle && angle > 45) //Walking up
@@ -99,10 +112,12 @@ void Character::Animate(){
 }
 
 void Character::Select(){
-    
+
     if (selected)
     {
-        unit->DisplayRectangle(); //selection box around unit
+        std::cout << health << std::endl; //testing
+        unit->DisplayRectangle(health/max_health); //selection box around unit
+
         if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN) //mouse button clicked
         {
             if (sdl_setup->GetEv()->button.button == SDL_BUTTON_RIGHT) //specifically, the right mouse button
@@ -117,24 +132,24 @@ void Character::Select(){
 }
 
 void Character::Move(){
-    
-    
+
+
     if (timeCheck+10 < SDL_GetTicks() && follow)
     {
         distance = GetDistance(unit->GetX(), unit->GetY(), follow_point_x, follow_point_y);
-        
+
         stopAnimation = (distance < 5); //boolean to stop animation within 5 of target
-        
+
         if (distance != 0)
         {
-            
+
             bool colliding = false;
-            
+
             for (int i = 0; i < environment->getBuildings().size(); i++) //check for collision
             {
                 if (unit->isColliding(environment->getBuildings()[i]->GetBuilding()->GetCollisionRect()))
                 {
-                    
+
                     //following if statements move character away from collision to avoid getting stuck on it
                     if (unit->GetX() > follow_point_x)
                     {
@@ -156,7 +171,7 @@ void Character::Move(){
                         unit->SetY(unit->GetY()-1);
                         unit->SetX(unit->GetX()-1);
                     }
-                    
+
                     colliding = true;
                     distance = 0;   //stop unit on collision
                     follow = false;
@@ -164,10 +179,7 @@ void Character::Move(){
                     follow_point_y = unit->GetY();
                 }
             }
-            
-            
-            
-            
+
             if (!colliding)
             {
                 if (unit->GetX() < follow_point_x) //left
@@ -190,7 +202,7 @@ void Character::Move(){
         } else {
             follow = false;
         }
-    
+
     timeCheck = SDL_GetTicks();
 
     }
@@ -211,4 +223,9 @@ int Character::getCharacterW(){
 
 int Character::getCharacterH(){
     return unit->GetHeight();
+}
+
+void Character::attacked(float attacker_attack)
+{
+    health = health + defense - attacker_attack;
 }

@@ -6,6 +6,7 @@ Gold::Gold(SDL_Setup* sdl_setup, int x, int y)
     Mine = new Sprite(sdl_setup->GetRenderer(), "images/gold.bmp", x, y, 50, 50, CollisionRectangle(0,0,50,50));
 
     resources = 1000; //amount of resources to be mined, mining method to be implemented
+    max_resources = 1000;
 
     selected = false;
 
@@ -20,7 +21,7 @@ void Gold::Update()
 {
     if (selected)
     {
-        Mine->DisplayRectangle();
+        Mine->DisplayRectangle((resources/max_resources));
         std::cout << "Gold left: " << resources << std::endl; //for testing, will eventually be implemented as part of submenu
     }
 }

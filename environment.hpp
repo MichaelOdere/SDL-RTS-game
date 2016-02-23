@@ -34,6 +34,11 @@ class Environment
 
         void PrintResources() { std::cout << resources << std::endl; } //prints to command line, for testing only
 
+        Character* Combat(Sprite* attacker, int attacker_team);
+        void KillCharacter(Sprite* passed_dead);
+
+
+
         float resources;
         Character* selectedCharacter;
         Building* selectedBuilding;
@@ -49,6 +54,8 @@ class Environment
         int menuType;
         int whatToMake;
         bool showMenu;
+
+        Character* dead;
 
         SDL_Setup* sdl_setup;
         Sprite* grass[21][16];

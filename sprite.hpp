@@ -32,7 +32,7 @@ public:
 
     CollisionRectangle GetCollisionRect() { return collision_rect; }
 
-    void DisplayRectangle();
+    void DisplayRectangle(float health_percent);
 
 private:
     float X_pos;
@@ -43,6 +43,8 @@ private:
 
     SDL_Texture* image;
     SDL_Texture* collisionImage;
+    SDL_Texture* collisionImageYellow;
+    SDL_Texture* collisionImageRed;
     SDL_Rect rect;
     SDL_Rect crop;
 

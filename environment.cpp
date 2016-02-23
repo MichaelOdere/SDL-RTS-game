@@ -2,6 +2,9 @@
 #include "villager.hpp"
 #include "militia.hpp"
 #include "champion.hpp"
+#include "orc_villager.hpp"
+#include "orc_militia.hpp"
+#include "orc_champion.hpp"
 #include "TownCenter.h"
 #include "barracks.h"
 
@@ -21,22 +24,31 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     {
         for (int j = 0; j < 16; j++)
         {
-            grass[i][j] = new Sprite(sdl_setup->GetRenderer(), "images/grass.bmp", i*50, j*50, 50, 50, CollisionRectangle(0,0,0,0)); //map, currently tiled, will eventually be one big grass tile
+            //grass[i][j] = new Sprite(sdl_setup->GetRenderer(), "images/grass.bmp", i*50, j*50, 50, 50, CollisionRectangle(0,0,0,0)); //map, currently tiled, will eventually be one big grass tile
         }
     }
 
-
+    //Humans
     selectedCharacter = new Militia(sdl_setup, "images/militia.png", 300, 150, MouseX, MouseY, this); //game begins with villager selected to avoid error of deselecting an unselected character below
     selectedCharacter->unSelect();
     characters.push_back(selectedCharacter);
-    characters.push_back(new Champion(sdl_setup, "images/champion.png", 350, 150, MouseX, MouseY, this)); // "this" is instance of current class
-    characters.push_back(new Villager(sdl_setup, "images/villager.png", 400, 150, MouseX, MouseY, this)); // "this" is instance of current class
-    characters.push_back(new Villager(sdl_setup, "images/villager.png", 450, 150, MouseX, MouseY, this)); // "this" is instance of current class
+    characters.push_back(new Villager(sdl_setup, "images/villager.png", 200, 150, MouseX, MouseY, this));
+    characters.push_back(new Villager(sdl_setup, "images/villager.png", 250, 150, MouseX, MouseY, this));
+    characters.push_back(new Militia(sdl_setup, "images/militia.png", 350, 150, MouseX, MouseY, this));
+    characters.push_back(new Champion(sdl_setup, "images/Champion.png", 400, 150, MouseX, MouseY, this));
+
+    //Orcs
+    characters.push_back(new OrcChampion(sdl_setup, "images/orcChampion.png", 600, 150, MouseX, MouseY, this)); // "this" is instance of current class
+    characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png", 500, 150, MouseX, MouseY, this));
+    characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png", 550, 150, MouseX, MouseY, this));
+    characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png", 650, 150, MouseX, MouseY, this));
+    characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png", 700, 150, MouseX, MouseY, this));
+
 
     selectedBuilding = new Building(sdl_setup, "images/house.png", 200, 200);
     selectedBuilding->unSelect();
     buildings.push_back(selectedBuilding);
-    buildings.push_back(new Building(sdl_setup, "images/house.png", 300, 200));
+    buildings.push_back(new Building(sdl_setup, "images/house.png", 750, 200));
     buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 400, 400));
     buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 300, 300));
 
@@ -44,6 +56,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     selectedGold = new Gold(sdl_setup, 50, 50);
     selectedGold->unSelect();
     goldMines.push_back(selectedGold);
+    goldMines.push_back(new Gold(sdl_setup, 150, 50));
     goldMines.push_back(new Gold(sdl_setup, 600, 200));
     goldMines.push_back(new Gold(sdl_setup, 550, 500));
     goldMines.push_back(new Gold(sdl_setup, 720, 100));
@@ -57,7 +70,7 @@ Environment::~Environment()
     {
         for (int j = 0; j < 16; j++)
         {
-            delete grass[i][j];
+            //delete grass[i][j];
             //delete grass;
         }
     }
@@ -85,7 +98,7 @@ void Environment::DrawBack()
     {
         for (int j = 0; j < 16; j++)
         {
-            grass[i][j]->Draw();
+            //grass[i][j]->Draw();
         }
     }
 
@@ -99,9 +112,12 @@ void Environment::DrawBack()
         (*i)->DrawBuilding();
     }
 
-        for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
+    for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
     {
-        (*i)->Draw();
+        if ((*i)->Alive())
+        {
+            (*i)->Draw();
+        }
     }
 }
 
@@ -119,7 +135,10 @@ void Environment::Update()
 
     for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
     {
-        (*i)->Update();
+        if ((*i)->Alive())
+        {
+            (*i)->Update();
+        }
     }
 
     for (std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i)
@@ -209,14 +228,26 @@ void Environment::Update()
     }
 
     if(sdl_setup->GetEv()->type == SDL_KEYDOWN){
-       // if(sdl_setup->GetEv()->button.button == SDLK_SPACE){
+       if(sdl_setup->GetEv()->key.keysym.sym == SDLK_SPACE){
             if(showMenu){
                 showMenu = false;
             }else{
                 showMenu = true;
             }
-        //}
+       }
     }
+}
+
+Character* Environment::Combat(Sprite* attacker, int attacker_team) //returns Character attacked by input, if no collision, return NULL
+{
+    for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
+    {
+        if (attacker->isColliding((*i)->GetCharacter()->GetCollisionRect()) && (*i)->GetCharacter() != attacker && (*i)->Alive() && (*i)->getTeam() != attacker_team) //check for collision with character, excluding self and allies
+        {
+            return (*i);
+        }
+    }
+    return NULL;
 }
 
 
