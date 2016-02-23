@@ -2,9 +2,6 @@
 #ifndef MENUOPTION_HPP_INCLUDED
 #define MENUOPTION_HPP_INCLUDED
 #include "imports.hpp"
-#include "sprite.hpp"
-#include "building.hpp"
-#include <vector>
 
 class MenuOption
 {
@@ -30,4 +27,4 @@ private:
 };
 
 
-#endif // CHARACTER_HPP_INCLUDED
+#endif 

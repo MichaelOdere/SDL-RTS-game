@@ -5,7 +5,8 @@ MenuOption::MenuOption(int kind, int price, std::string picString) //Constructor
 {
     pic = picString;
     type = kind;
-    cost = price;
+    cost = price;//later should keep a cost of gold, cost of wood, such and such
+    selected = false;
 }
 
 MenuOption::MenuOption(){

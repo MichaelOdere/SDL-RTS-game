@@ -20,6 +20,7 @@ public:
     int getType();
     int getWhatToMake();
     int getOpCost();
+    int getY();
     
     bool opSelected;
 
