@@ -1,5 +1,5 @@
-#ifndef SUBMENU_HPP_INCLUDED
-#define SUBMENU_HPP_INCLUDED
+#ifndef SUBMENU_HPP
+#define SUBMENU_HPP
 #include "imports.hpp"
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
@@ -16,10 +16,11 @@ public:
     void Draw();
     void DrawOptions();
     void UpdateType(int type);
-    
+
     int getType();
     int getWhatToMake();
     int getOpCost();
+    int getY();
     
     bool opSelected;
 
@@ -29,10 +30,10 @@ private:
     int *MouseY;
 
     int type;
-    
+
     std::vector<MenuOption> mainOptions;//options presented with nothing selected
     std::vector<MenuOption> houseOptions;//options presented with a house selected
-    
+
     MenuOption newHouse; //option to build a new house
     MenuOption newCharacter; // option to build a new character
 
@@ -44,10 +45,10 @@ private:
     Sprite* bar;
 
     int selectedI;//index of selected option
-    
+
 
 
 };
 
 
-#endif // CHARACTER_HPP_INCLUDED
+#endif // SUBMENU_HPP

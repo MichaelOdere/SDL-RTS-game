@@ -1,5 +1,5 @@
-#ifndef BUILDING_HPP_INCLUDED
-#define BUILDING_HPP_INCLUDED
+#ifndef BUILDING_HPP
+#define BUILDING_HPP
 #include "imports.hpp"
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
@@ -16,11 +16,11 @@ class Building
         int getStructureY();
         int getStructureW();
         int getStructureH();
-    
+
         void Select();
 
         Sprite* GetBuilding() { return Structure; }
-    
+
         bool selected;
 
         void setSelected() { selected = true; }
@@ -32,4 +32,4 @@ class Building
         Sprite* Structure;
 };
 
-#endif // BUILDING_HPP_INCLUDED
+#endif // BUILDING_HPP

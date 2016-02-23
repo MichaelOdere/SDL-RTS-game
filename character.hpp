@@ -1,9 +1,8 @@
-#ifndef CHARACTER_HPP_INCLUDED
-#define CHARACTER_HPP_INCLUDED
+#ifndef CHARACTER_HPP
+#define CHARACTER_HPP
 #include "imports.hpp"
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
-#include "environment.hpp"
 #include "building.hpp"
 #include <math.h>
 
@@ -13,6 +12,7 @@ class Character
 {
     public:
         Character(SDL_Setup* passed_SDL_Setup, std::string FilePath, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment);
+        Character() {}
         ~Character();
 
         double GetDistance(int x1, int y1, int x2, int y2);

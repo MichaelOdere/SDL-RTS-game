@@ -1,5 +1,5 @@
-#ifndef SPRITE_HPP_INCLUDED
-#define SPRITE_HPP_INCLUDED
+#ifndef SPRITE_HPP
+#define SPRITE_HPP
 
 #include "imports.hpp"
 #include "collision_rectangle.hpp"
@@ -61,4 +61,4 @@ private:
     SDL_Renderer* renderer;
 };
 
-#endif // SPRITE_HPP_INCLUDED
+#endif // SPRITE_HPP
