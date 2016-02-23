@@ -1,5 +1,7 @@
 #include "environment.hpp"
 #include "villager.hpp"
+#include "militia.hpp"
+#include "champion.hpp"
 #include "TownCenter.h"
 #include "barracks.h"
 
@@ -24,11 +26,12 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     }
 
 
-    selectedCharacter = new Character(sdl_setup, "images/villager.png", 300, 150, MouseX, MouseY, this); //game begins with villager selected to avoid error of deselecting an unselected character below
+    selectedCharacter = new Militia(sdl_setup, "images/militia.png", 300, 150, MouseX, MouseY, this); //game begins with villager selected to avoid error of deselecting an unselected character below
     selectedCharacter->unSelect();
     characters.push_back(selectedCharacter);
-    characters.push_back(new Character(sdl_setup, "images/villager.png", 350, 150, MouseX, MouseY, this)); // "this" is instance of current class
+    characters.push_back(new Champion(sdl_setup, "images/champion.png", 350, 150, MouseX, MouseY, this)); // "this" is instance of current class
     characters.push_back(new Villager(sdl_setup, "images/villager.png", 400, 150, MouseX, MouseY, this)); // "this" is instance of current class
+    characters.push_back(new Villager(sdl_setup, "images/villager.png", 450, 150, MouseX, MouseY, this)); // "this" is instance of current class
 
     selectedBuilding = new Building(sdl_setup, "images/house.png", 200, 200);
     selectedBuilding->unSelect();

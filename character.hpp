@@ -17,11 +17,14 @@ class Character
 
         double GetDistance(int x1, int y1, int x2, int y2);
 
-        void Update();
+        virtual void Update();
         void Draw();
 
         Sprite* GetCharacter() { return unit; }
-
+        void Animate();
+        void Select();
+        void Move();
+    
         int getCharacterX();
         int getCharacterY();
         int getCharacterW();
@@ -32,7 +35,7 @@ class Character
 
         bool selected;
 
-    private:
+    protected:
 
         Environment* environment;
 
