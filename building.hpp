@@ -8,6 +8,7 @@ class Building
 {
     public:
         Building(SDL_Setup* sdl_setup, std::string FilePath, int x, int y);
+        Building() {}
         ~Building();
 
         void DrawBuilding();
@@ -20,6 +21,7 @@ class Building
         void Select();
 
         Sprite* GetBuilding() { return Structure; }
+        void SetBuilding();
 
         bool selected;
 

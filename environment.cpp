@@ -1,5 +1,7 @@
 #include "environment.hpp"
 #include "villager.hpp"
+#include "TownCenter.h"
+#include "barracks.h"
 
 Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *passed_MouseY, SubMenu* passed_menu)
 {
@@ -20,7 +22,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
             grass[i][j] = new Sprite(sdl_setup->GetRenderer(), "images/grass.bmp", i*50, j*50, 50, 50, CollisionRectangle(0,0,0,0)); //map, currently tiled, will eventually be one big grass tile
         }
     }
-    
+
     //grass = new Sprite(sdl_setup->GetRenderer(), "images/grass.bmp", 50, 50, 50, 50, CollisionRectangle(0,0,0,0));
 
     selectedCharacter = new Character(sdl_setup, "images/villager.png", 300, 150, MouseX, MouseY, this); //game begins with villager selected to avoid error of deselecting an unselected character below
@@ -33,6 +35,11 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     selectedBuilding->unSelect();
     buildings.push_back(selectedBuilding);
     buildings.push_back(new Building(sdl_setup, "images/house.png", 300, 200));
+
+    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 400, 400));
+
+    buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 300, 300));
+
 
     selectedGold = new Gold(sdl_setup, 50, 50);
     selectedGold->unSelect();
@@ -78,10 +85,10 @@ void Environment::DrawBack()
     {
         for (int j = 0; j < 16; j++)
         {
-            //grass[i][j]->Draw();
+            grass[i][j]->Draw();
         }
     }
-    
+
     //grass->Draw();
 
     for (std::vector<Gold*>::iterator i = goldMines.begin(); i != goldMines.end(); ++i)
@@ -131,7 +138,7 @@ void Environment::Update()
     {
         if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT)
         {
-            
+
             if(showMenu == false || *MouseY <= optionsMenu->getY()){
             for(std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i){
                 if(*MouseX >= ((*i)->getStructureX()) && *MouseX <= ((*i)->getStructureX()+(*i)->getStructureW()) && *MouseY >= ((*i)->getStructureY()) && *MouseY <= ((*i)->getStructureY()+(*i)->getStructureH()))
