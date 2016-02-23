@@ -55,9 +55,10 @@ void SubMenu::DrawOptions(){
 
 }
 
-void SubMenu::UpdateType(int kind){
+void SubMenu::UpdateType(int kind){// if different item is selected, a different menu is displayed
     if(type!=kind){
         type = kind;
+        opSelected = false;
 
         options.clear();
         sprites.clear();
@@ -65,7 +66,7 @@ void SubMenu::UpdateType(int kind){
             delete sprites[i];
         }
 
-        if(type==1){//main menu?
+        if(type==1){//main menu
             options = mainOptions;
         }else if(type ==2){// house selected
             options = houseOptions;

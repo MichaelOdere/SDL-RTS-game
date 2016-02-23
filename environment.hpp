@@ -48,7 +48,6 @@ class Environment
 
         int menuType;
         int whatToMake;
-        int cost;
         bool showMenu;
 
         SDL_Setup* sdl_setup;

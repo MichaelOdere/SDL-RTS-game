@@ -20,6 +20,8 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
             grass[i][j] = new Sprite(sdl_setup->GetRenderer(), "images/grass.bmp", i*50, j*50, 50, 50, CollisionRectangle(0,0,0,0)); //map, currently tiled, will eventually be one big grass tile
         }
     }
+    
+    //grass = new Sprite(sdl_setup->GetRenderer(), "images/grass.bmp", 50, 50, 50, 50, CollisionRectangle(0,0,0,0));
 
     selectedCharacter = new Character(sdl_setup, "images/villager.png", 300, 150, MouseX, MouseY, this); //game begins with villager selected to avoid error of deselecting an unselected character below
     selectedCharacter->unSelect();
@@ -49,6 +51,7 @@ Environment::~Environment()
         for (int j = 0; j < 16; j++)
         {
             delete grass[i][j];
+            //delete grass;
         }
     }
     for (std::vector<Gold*>::iterator i = goldMines.begin(); i != goldMines.end(); ++i)
@@ -75,9 +78,11 @@ void Environment::DrawBack()
     {
         for (int j = 0; j < 16; j++)
         {
-            grass[i][j]->Draw();
+            //grass[i][j]->Draw();
         }
     }
+    
+    //grass->Draw();
 
     for (std::vector<Gold*>::iterator i = goldMines.begin(); i != goldMines.end(); ++i)
     {
@@ -126,6 +131,8 @@ void Environment::Update()
     {
         if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT)
         {
+            
+            if(showMenu == false || *MouseY <= optionsMenu->getY()){
             for(std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i){
                 if(*MouseX >= ((*i)->getStructureX()) && *MouseX <= ((*i)->getStructureX()+(*i)->getStructureW()) && *MouseY >= ((*i)->getStructureY()) && *MouseY <= ((*i)->getStructureY()+(*i)->getStructureH()))
                 {
@@ -173,20 +180,26 @@ void Environment::Update()
 
             if(optionsMenu->getWhatToMake()== 1){
                 if(resources>=optionsMenu->getOpCost()){
+                    PrintResources();
                     buildings.push_back(new Building(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50));
-                    resources = resources - cost;
+                    resources = resources - optionsMenu->getOpCost();
+                    PrintResources();
                 }else{
                     //alert insufficient funds
+                    PrintResources();
                 }
             }else if(optionsMenu->getWhatToMake() == 2){
                 if(resources>=optionsMenu->getOpCost()){
+                    PrintResources();
                     characters.push_back(new Character(sdl_setup, "images/villager.png",*MouseX-50, *MouseY-50, MouseX, MouseY, this));
+                    resources = resources - optionsMenu->getOpCost();
+                    PrintResources();
                 }else{
                     //alert insufficient funds
                 }
 
             }
-            //}
+            }
         }
     }
 

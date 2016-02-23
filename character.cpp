@@ -94,7 +94,8 @@ void Character::Update()
              unit->DisplayRectangle(); //selection box around unit
             if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN) //mouse button clicked
                 {
-                    if (sdl_setup->GetEv()->button.button == SDL_BUTTON_RIGHT) //specifically, the right mouse button
+                    //if (sdl_setup->GetEv()->button.button == SDL_BUTTON_RIGHT) //specifically, the right mouse button
+                    if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT) //specifically, for mac lol ;) 
                     {
                         follow_point_x = *MouseX; //set target
                         follow_point_y = *MouseY; //set target
@@ -187,7 +188,7 @@ void Character::Update()
                 if (environment->getGoldMines()[i]->Mining()) //if resources successfully mined (ie gold mine isn't empty)
                     {
                         environment->AddResources();
-                        environment->PrintResources(); //for testing only
+                        //environment->PrintResources(); //for testing only
                     }
             }
         }
