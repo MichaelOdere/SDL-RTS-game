@@ -23,7 +23,6 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
         }
     }
 
-    //grass = new Sprite(sdl_setup->GetRenderer(), "images/grass.bmp", 50, 50, 50, 50, CollisionRectangle(0,0,0,0));
 
     selectedCharacter = new Character(sdl_setup, "images/villager.png", 300, 150, MouseX, MouseY, this); //game begins with villager selected to avoid error of deselecting an unselected character below
     selectedCharacter->unSelect();
@@ -35,9 +34,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     selectedBuilding->unSelect();
     buildings.push_back(selectedBuilding);
     buildings.push_back(new Building(sdl_setup, "images/house.png", 300, 200));
-
     buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 400, 400));
-
     buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 300, 300));
 
 
@@ -88,8 +85,6 @@ void Environment::DrawBack()
             grass[i][j]->Draw();
         }
     }
-
-    //grass->Draw();
 
     for (std::vector<Gold*>::iterator i = goldMines.begin(); i != goldMines.end(); ++i)
     {

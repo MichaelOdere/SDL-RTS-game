@@ -2,9 +2,6 @@
 #define BARRACKS_H
 #include "building.hpp"
 
-
-
-
 class Barracks: public Building
 {
     public:
