@@ -1,5 +1,5 @@
-#ifndef MAIN_HPP_INCLUDED
-#define MAIN_HPP_INCLUDED
+#ifndef MAIN_HPP
+#define MAIN_HPP
 #include "imports.hpp"
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
@@ -24,7 +24,7 @@ private:
     Environment* gameMap;
     SubMenu *optionsMenu;
     bool quit;
-    
+
     bool showMenu;
     int menuType;
 
@@ -37,4 +37,4 @@ private:
 };
 
 
-#endif // MAIN_HPP_INCLUDED
+#endif // MAIN_HPP

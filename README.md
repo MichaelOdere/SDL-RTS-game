@@ -18,16 +18,19 @@ Contributors:
 Responsibilites:
         
         Sam Cordes: 
-        -
+        - Gameplay
           
         Colin Meisner:
-        -
+        - Gameplay
+        - Buildings
           
         Michael Odere:
-        -
+        - Gameplay
+        - Characters
           
         Zoe Olson:
-        -
+        - Graphics
+        - Map Design
           
         Charlie Quinn:
-        -
+        - In-game Menu and GUI

@@ -1,6 +1,5 @@
-
-#ifndef MENUOPTION_HPP_INCLUDED
-#define MENUOPTION_HPP_INCLUDED
+#ifndef MENUOPTION_HPP
+#define MENUOPTION_HPP
 #include "imports.hpp"
 
 class MenuOption
@@ -13,7 +12,7 @@ public:
     std::string getPic();
     int getType();
     int getCost();
-    
+
     bool selected;
 
 private:
@@ -27,4 +26,4 @@ private:
 };
 
 
-#endif 
+#endif // MENUOPTION_HPP

@@ -1,14 +1,12 @@
-#ifndef ENVIRONMENT_H
-#define ENVIRONMENT_H
+#ifndef ENVIRONMENT_HPP
+#define ENVIRONMENT_HPP
 #include "imports.hpp"
 #include <vector>
 #include <list>
-
 #include "sprite.hpp"
 #include "sdl_setup.hpp"
 #include "gold.hpp"
 #include "building.hpp"
-#include "character.hpp"
 #include "submenu.hpp"
 
 class Character; //avoids error because Environment includes Character and vice versa
@@ -22,7 +20,7 @@ class Environment
         void DrawBack();
 
         void Update();
-    
+
         int getMenuType();
         void updateWhatToMake(int what);
         void updateCost(int n);
@@ -42,7 +40,7 @@ class Environment
         Gold* selectedGold;
 
     private:
-    
+
         SubMenu* optionsMenu;
 
         int *MouseX;
@@ -61,4 +59,4 @@ class Environment
 
 };
 
-#endif // ENVIRONMENT_H
+#endif // ENVIRONMENT_HPP

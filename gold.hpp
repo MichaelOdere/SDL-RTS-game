@@ -1,5 +1,5 @@
-#ifndef GOLD_HPP_INCLUDED
-#define GOLD_HPP_INCLUDED
+#ifndef GOLD_HPP
+#define GOLD_HPP
 #include "imports.hpp"
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
@@ -35,4 +35,4 @@ class Gold
         float resources;
 };
 
-#endif // GOLD_HPP_INCLUDED
+#endif // GOLD_HPP

@@ -2,15 +2,13 @@
 #include "main.hpp"
 #include "sprite.hpp"
 
-
-
 SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_MouseY, int kind) //Constructor
 {
 
     sdl_setup = passed_SDL_Setup;
     MouseX = passed_MouseX;
     MouseY = passed_MouseY;
-    
+
     selectedI = 0;
     opSelected = false;
     
@@ -20,7 +18,7 @@ SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_Mo
     mainOptions.push_back(newHouse);//this is how i plan to build different menus, create options above and then populate separate lists for any item that can be selected
     mainOptions.push_back(newHouse);
     mainOptions.push_back(newHouse);
-    
+
     houseOptions.push_back(newCharacter);
     houseOptions.push_back(newHouse);
     houseOptions.push_back(newCharacter);
@@ -33,10 +31,9 @@ SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_Mo
 SubMenu::~SubMenu() //Destructor
 {
     delete bar;
-    delete sdl_setup;
     delete MouseX;
     delete MouseY;
-    
+
     for(int i = 0; i < sprites.size(); i++){
         delete sprites[i];
     }
@@ -55,19 +52,19 @@ void SubMenu::DrawOptions(){
             sprites[j]->DisplayRectangle();
         }
     }
-    
+
 }
 
 void SubMenu::UpdateType(int kind){
     if(type!=kind){
         type = kind;
-        
+
         options.clear();
         sprites.clear();
         for(int i = 0; i < sprites.size(); i++){
             delete sprites[i];
         }
-        
+
         if(type==1){//main menu?
             options = mainOptions;
         }else if(type ==2){// house selected
@@ -77,7 +74,7 @@ void SubMenu::UpdateType(int kind){
         for( int i = 0; i < options.size(); i++){
             sprites.push_back(new Sprite(sdl_setup->GetRenderer(), options[i].getPic(), (i*300), 400, 300, 300, CollisionRectangle(0,0,300,300)));
         }
-        
+
     }
 }
 

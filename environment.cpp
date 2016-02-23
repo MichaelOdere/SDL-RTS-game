@@ -1,4 +1,5 @@
 #include "environment.hpp"
+#include "villager.hpp"
 
 Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *passed_MouseY, SubMenu* passed_menu)
 {
@@ -6,7 +7,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     MouseX = passed_MouseX;
     MouseY = passed_MouseY;
     optionsMenu = passed_menu;
-    
+
     showMenu = false;//start with menu not displayed
     optionsMenu->UpdateType(1);// 1 is main menu
 
@@ -24,6 +25,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     selectedCharacter->unSelect();
     characters.push_back(selectedCharacter);
     characters.push_back(new Character(sdl_setup, "images/villager.png", 350, 150, MouseX, MouseY, this)); // "this" is instance of current class
+    characters.push_back(new Villager(sdl_setup, "images/villager.png", 400, 150, MouseX, MouseY, this)); // "this" is instance of current class
 
     selectedBuilding = new Building(sdl_setup, "images/house.png", 200, 200);
     selectedBuilding->unSelect();
@@ -36,15 +38,12 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     goldMines.push_back(new Gold(sdl_setup, 600, 200));
     goldMines.push_back(new Gold(sdl_setup, 550, 500));
     goldMines.push_back(new Gold(sdl_setup, 720, 100));
-
-
-
 }
 
 Environment::~Environment()
 {
     delete optionsMenu;
-    
+
     for (int i = 0; i < 21; i++)
     {
         for (int j = 0; j < 16; j++)
@@ -133,13 +132,13 @@ void Environment::Update()
                     selectedBuilding->unSelect(); //unselect previously selected
                     (*i)->setSelected();
                     selectedBuilding = (*i); //reassign selected building for future deselection
-                    
+
                     if(optionsMenu->getType() == 2){
                         optionsMenu->UpdateType(1);
                     }else{
                         optionsMenu->UpdateType(2);
                     }
-                    
+
                     break;
                 }
                 selectedBuilding->unSelect();
@@ -169,9 +168,9 @@ void Environment::Update()
                 }
                 selectedCharacter->unSelect(); //unselect previously selected
             }
-            
+
             //if((showMenu && (*MouseY > optionsMenu->getY())) || (showMenu == false)){
-            
+
             if(optionsMenu->getWhatToMake()== 1){
                 if(resources>=optionsMenu->getOpCost()){
                     buildings.push_back(new Building(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50));
@@ -185,7 +184,7 @@ void Environment::Update()
                 }else{
                     //alert insufficient funds
                 }
-                
+
             }
             //}
         }
