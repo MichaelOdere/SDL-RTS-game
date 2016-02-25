@@ -6,8 +6,6 @@ Building::Building(SDL_Setup* sdl_setup, std::string FilePath, int x, int y)
 
     selected = false;
 
-    selected = false;
-
 }
 
 Building::~Building()

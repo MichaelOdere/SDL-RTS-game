@@ -27,6 +27,7 @@ class Character
         void Move();
 
         Character* target;
+        Character* follow_target;
 
         int getCharacterX();
         int getCharacterY();
@@ -43,6 +44,8 @@ class Character
 
         void setSelected() { selected = true; }
         void unSelect() { selected = false; }
+
+        bool isAlive() { return alive; }
 
         bool Alive() { return alive; }
 
@@ -66,6 +69,8 @@ class Character
         bool follow;
         int follow_point_x;
         int follow_point_y;
+
+        bool character_target;
 
         float angle;
 

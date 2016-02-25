@@ -134,23 +134,23 @@ int Sprite::GetHeight()
     return rect.h;
 }
 
-void Sprite::DisplayRectangle(float health_percent)
+void Sprite::DisplayRectangle(float health_percent) //called when Character, Building or Gold is selected
 {
-    if (health_percent < 0.67)
+    if (health_percent < 0.67) //under 2/3 health
     {
         collisionImage = collisionImageYellow;
     }
-    if (health_percent < 0.33 )
+    if (health_percent < 0.33 ) //under 1/3 health
     {
         collisionImage = collisionImageRed;
     }
-    SDL_RenderCopy(renderer, collisionImage, NULL, &collisionSDLRect); //displays collision rectangle for debugging
+    SDL_RenderCopy(renderer, collisionImage, NULL, &collisionSDLRect); //displays rectangle
 }
 
 bool Sprite::isColliding(CollisionRectangle collider)
 {
-    return !(collision_rect.GetRectangle().x + collision_rect.GetRectangle().w < collider.GetRectangle().x ||
-             collision_rect.GetRectangle().y + collision_rect.GetRectangle().h < collider.GetRectangle().y ||
-             collision_rect.GetRectangle().x > collider.GetRectangle().w + collider.GetRectangle().x ||
-             collision_rect.GetRectangle().y > collider.GetRectangle().y + collider.GetRectangle().h);
+    return (collision_rect.GetRectangle().x + collision_rect.GetRectangle().w > collider.GetRectangle().x+5 && //+5 to allow for a small collision so that units may attack buildings
+             collision_rect.GetRectangle().y + collision_rect.GetRectangle().h > collider.GetRectangle().y+5 &&
+             collision_rect.GetRectangle().x+5 < collider.GetRectangle().w + collider.GetRectangle().x &&
+             collision_rect.GetRectangle().y+5 < collider.GetRectangle().y + collider.GetRectangle().h);
 }

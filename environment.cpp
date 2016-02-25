@@ -170,9 +170,9 @@ void Environment::Update()
                         optionsMenu->UpdateType(2);
                     }
 
-                    break;
+                    break; //end loop once building found
                 }
-                selectedBuilding->unSelect();
+                selectedBuilding->unSelect(); //no building found, unselect previous building
             }
 
             for(std::vector<Gold*>::iterator i = goldMines.begin(); i != goldMines.end(); ++i){
@@ -181,9 +181,9 @@ void Environment::Update()
                     selectedGold->unSelect(); //unselect previously selected
                     (*i)->setSelected();
                     selectedGold = (*i); //reassign selected gold mine for future deselection
-                    break;
+                    break; //end loop once gold found
                 }
-                selectedGold->unSelect();
+                selectedGold->unSelect(); //no gold found, unselect previous gold
             }
 
             for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i) //character selection takes priority over buildings and gold mines
@@ -221,7 +221,6 @@ void Environment::Update()
                 }else{
                     //alert insufficient funds
                 }
-
             }
             }
         }
@@ -242,11 +241,23 @@ Character* Environment::Combat(Sprite* attacker, int attacker_team) //returns Ch
 {
     for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
     {
-        if (attacker->isColliding((*i)->GetCharacter()->GetCollisionRect()) && (*i)->GetCharacter() != attacker && (*i)->Alive() && (*i)->getTeam() != attacker_team) //check for collision with character, excluding self and allies
+        if (attacker->isColliding((*i)->GetCharacter()->GetCollisionRect()) && (*i)->Alive() && (*i)->getTeam() != attacker_team) //check for collision with character, excluding allies and dead characters
         {
             return (*i);
         }
     }
+    return NULL;
+}
+
+Character* Environment::FindTarget(int x, int y) //used for following, currently not called because of bug which entails from it
+{
+    for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i) //character selection takes priority over buildings and gold mines
+        {
+            if(x >= ((*i)->getCharacterX()-15) && x <= ((*i)->getCharacterX()+(*i)->getCharacterW()-15) && y >= ((*i)->getCharacterY()-20) && y <= ((*i)->getCharacterY()+(*i)->getCharacterH()-20))
+            {
+                return (*i);
+            }
+        }
     return NULL;
 }
 

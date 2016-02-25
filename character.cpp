@@ -10,6 +10,8 @@ Character::Character(SDL_Setup* passed_SDL_Setup, std::string FilePath, int star
     selected = false;
     alive = true;
 
+    character_target = false;
+
     sdl_setup = passed_SDL_Setup;
     MouseX = passed_MouseX;
     MouseY = passed_MouseY;
@@ -121,10 +123,23 @@ void Character::Select(){
         if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN) //mouse button clicked
         {
             if (sdl_setup->GetEv()->button.button == SDL_BUTTON_RIGHT) //specifically, the right mouse button
-                //if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT) //specifically, for charlie lol ;)
+            //if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT) //specifically, for charlie lol ;)
             {
-                follow_point_x = *MouseX; //set target
-                follow_point_y = *MouseY; //set target
+
+                //follow_target = NULL; // following currently has bug that if follower dies while attacking followee, then followee is unselectable if followee is an orc. I have no idea why so follow_target is always NULL until bug fixed
+                follow_target = environment->FindTarget(*MouseX, *MouseY); //check if mouse click is in collision box of another Character (friendly or enemy)
+
+                if (follow_target == NULL) //target is location
+                {
+                    follow_point_x = *MouseX; //set target where clicked
+                    follow_point_y = *MouseY; //set target where clicked
+                    character_target = false;
+                } else //target is Character
+                {
+                    follow_point_x = follow_target->getCharacterX(); //set target to Character
+                    follow_point_y = follow_target->getCharacterY(); //set target to Character
+                    character_target = true;
+                }
                 follow = true;
             }
         }
@@ -133,6 +148,11 @@ void Character::Select(){
 
 void Character::Move(){
 
+    if (character_target) //if following another Character
+    {
+        follow_point_x = follow_target->getCharacterX(); //update target
+        follow_point_y = follow_target->getCharacterY(); //update target
+    }
 
     if (timeCheck+10 < SDL_GetTicks() && follow)
     {
@@ -150,7 +170,7 @@ void Character::Move(){
                 if (unit->isColliding(environment->getBuildings()[i]->GetBuilding()->GetCollisionRect()))
                 {
 
-                    //following if statements move character away from collision to avoid getting stuck on it
+                    //below if statements move character away from collision to avoid getting stuck on it
                     if (unit->GetX() > follow_point_x)
                     {
                         unit->SetX(unit->GetX()+1);
@@ -225,7 +245,7 @@ int Character::getCharacterH(){
     return unit->GetHeight();
 }
 
-void Character::attacked(float attacker_attack)
+void Character::attacked(float attacker_attack) //called if attacked by another Character
 {
     health = health + defense - attacker_attack;
 }

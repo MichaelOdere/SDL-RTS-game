@@ -37,7 +37,7 @@ class Environment
         Character* Combat(Sprite* attacker, int attacker_team);
         void KillCharacter(Sprite* passed_dead);
 
-
+        Character* FindTarget(int x, int y);
 
         float resources;
         Character* selectedCharacter;
