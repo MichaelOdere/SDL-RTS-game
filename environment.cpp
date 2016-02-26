@@ -7,6 +7,7 @@
 #include "orc_champion.hpp"
 #include "TownCenter.h"
 #include "barracks.h"
+#include "house.hpp"
 
 Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *passed_MouseY, SubMenu* passed_menu)
 {
@@ -45,10 +46,10 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png", 700, 150, MouseX, MouseY, this));
 
 
-    selectedBuilding = new Building(sdl_setup, "images/house.png", 200, 200);
+    selectedBuilding = new House(sdl_setup, "images/house.png", 200, 200);
     selectedBuilding->unSelect();
     buildings.push_back(selectedBuilding);
-    buildings.push_back(new Building(sdl_setup, "images/house.png", 750, 200));
+    buildings.push_back(new House(sdl_setup, "images/house.png", 750, 200));
     buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 400, 400));
     buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 300, 300));
 
@@ -109,7 +110,10 @@ void Environment::DrawBack()
 
     for (std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i)
     {
-        (*i)->DrawBuilding();
+        if ((*i)->Alive())
+        {
+            (*i)->DrawBuilding();
+        }
     }
 
     for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
@@ -143,7 +147,10 @@ void Environment::Update()
 
     for (std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i)
     {
-        (*i)->Update();
+        if ((*i)->Alive())
+        {
+            (*i)->Update();
+        }
     }
 
     for (std::vector<Gold*>::iterator i = goldMines.begin(); i != goldMines.end(); ++i)
@@ -242,6 +249,18 @@ Character* Environment::Combat(Sprite* attacker, int attacker_team) //returns Ch
     for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
     {
         if (attacker->isColliding((*i)->GetCharacter()->GetCollisionRect()) && (*i)->Alive() && (*i)->getTeam() != attacker_team) //check for collision with character, excluding allies and dead characters
+        {
+            return (*i);
+        }
+    }
+    return NULL;
+}
+
+Building* Environment::CombatBuilding(Sprite* attacker, int attacker_team) //returns Character attacked by input, if no collision, return NULL
+{
+    for (std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i)
+    {
+        if (attacker->isColliding((*i)->GetBuilding()->GetCollisionRect()) && (*i)->Alive() && (*i)->getTeam() != attacker_team) //check for collision with character, excluding allies and dead characters
         {
             return (*i);
         }

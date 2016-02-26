@@ -28,6 +28,7 @@ class Character
 
         Character* target;
         Character* follow_target;
+        Building* buildingTarget;
 
         int getCharacterX();
         int getCharacterY();

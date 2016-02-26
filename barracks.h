@@ -8,6 +8,7 @@ class Barracks: public Building
         Barracks(SDL_Setup* sdl_setup, std::string FilePath, int x, int y);
         Barracks() {}
         ~Barracks();
+        void Update();
 
 };
 

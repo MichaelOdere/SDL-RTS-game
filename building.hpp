@@ -3,6 +3,7 @@
 #include "imports.hpp"
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
+//#include <math.h>
 
 class Building
 {
@@ -11,24 +12,39 @@ class Building
         Building() {}
         ~Building();
 
+        Sprite* GetBuilding() { return Structure; }
+        void SetBuilding();
+
+        virtual void Update();
         void DrawBuilding();
+
+        int getTeam() { return team; }
+        void Select();
+
+        Building* target;
 
         int getStructureX();
         int getStructureY();
         int getStructureW();
         int getStructureH();
 
-        void Select();
+        int team;
+        float health;
+        float max_health;
+        float attack;
 
-        Sprite* GetBuilding() { return Structure; }
-        void SetBuilding();
-
-        bool selected;
+        void attacked(float attacker_attack);
 
         void setSelected() { selected = true; }
         void unSelect() { selected = false; }
 
-        void Update();
+        bool isAlive() { return alive; }
+
+        bool Alive() { return alive; }
+
+        bool selected;
+
+        bool alive;
 
     private:
         Sprite* Structure;

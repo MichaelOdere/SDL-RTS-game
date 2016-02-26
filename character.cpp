@@ -52,10 +52,14 @@ void Character::Update()
 
         //COMBAT
         target = environment->Combat(unit, team); //search for enemy in collision box, returns first enemy found
+        buildingTarget = environment->CombatBuilding(unit, team);
         if( target != NULL) //if no enemies, Combat returns NULL
         {
             target->attacked(attack); //attack enemy by passing character's attack to enemy
+        }else if(buildingTarget != NULL){
+            buildingTarget->attacked(attack);
         }
+
 
         //Check if Character is DEAD
         if (health <= 0)

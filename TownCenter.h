@@ -9,6 +9,7 @@ class TownCenter: public Building
         TownCenter(SDL_Setup* sdl_setup, std::string FilePath, int x, int y);
         TownCenter() {}
         ~TownCenter();
+        void Update();
 
 };
 

@@ -35,6 +35,7 @@ class Environment
         void PrintResources() { std::cout << resources << std::endl; } //prints to command line, for testing only
 
         Character* Combat(Sprite* attacker, int attacker_team);
+        Building* CombatBuilding(Sprite* attacker, int attacker_team);
         void KillCharacter(Sprite* passed_dead);
 
         Character* FindTarget(int x, int y);
