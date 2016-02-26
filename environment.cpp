@@ -260,7 +260,7 @@ Building* Environment::CombatBuilding(Sprite* attacker, int attacker_team) //ret
 {
     for (std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i)
     {
-        if (attacker->isCollidingBuilding((*i)->GetBuilding()->GetCollisionRect()) && (*i)->Alive() && (*i)->getTeam() != attacker_team) //check for collision with character, excluding allies and dead characters
+        if (attacker->isColliding((*i)->GetBuilding()->GetCollisionRect()) && (*i)->Alive() && (*i)->getTeam() != attacker_team) //check for collision with character, excluding allies and dead characters
         {
             return (*i);
         }

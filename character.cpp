@@ -173,7 +173,7 @@ void Character::Move(){
             {
                 if (environment->getBuildings()[i]->Alive())
                 {
-                    if (unit->isColliding(environment->getBuildings()[i]->GetBuilding()->GetCollisionRect()))
+                    if (unit->isCollidingBuilding(environment->getBuildings()[i]->GetBuilding()->GetCollisionRect()))
                     {
 
                         //below if statements move character away from collision to avoid getting stuck on it

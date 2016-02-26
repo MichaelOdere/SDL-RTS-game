@@ -157,7 +157,7 @@ bool Sprite::isColliding(CollisionRectangle collider)
 
 bool Sprite::isCollidingBuilding(CollisionRectangle collider)
 {
-    return (collision_rect.GetRectangle().x + collision_rect.GetRectangle().w > collider.GetRectangle().x+20 && //+5 to allow for a small collision so that units may attack buildings
+    return (collision_rect.GetRectangle().x + collision_rect.GetRectangle().w > collider.GetRectangle().x+20 && //+20 to allow for a small collision so that units may attack buildings
              collision_rect.GetRectangle().y + collision_rect.GetRectangle().h > collider.GetRectangle().y+20 &&
              collision_rect.GetRectangle().x+20 < collider.GetRectangle().w + collider.GetRectangle().x &&
              collision_rect.GetRectangle().y+20 < collider.GetRectangle().y + collider.GetRectangle().h);
