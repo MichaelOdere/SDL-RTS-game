@@ -29,6 +29,7 @@ public:
     void Animation(int beginFrame, int endFrame, int row, float speed);
 
     bool isColliding(CollisionRectangle collider);
+    bool isCollidingBuilding(CollisionRectangle collider);
 
     CollisionRectangle GetCollisionRect() { return collision_rect; }
 

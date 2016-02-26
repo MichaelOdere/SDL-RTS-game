@@ -38,8 +38,6 @@ class Building
         void setSelected() { selected = true; }
         void unSelect() { selected = false; }
 
-        bool isAlive() { return alive; }
-
         bool Alive() { return alive; }
 
         bool selected;

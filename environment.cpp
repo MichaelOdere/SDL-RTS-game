@@ -212,7 +212,7 @@ void Environment::Update()
             if(optionsMenu->getWhatToMake()== 1){
                 if(resources>=optionsMenu->getOpCost()){
                     PrintResources();
-                    buildings.push_back(new Building(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50));
+                    buildings.push_back(new House(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50));
                     resources = resources - optionsMenu->getOpCost();
                     PrintResources();
                 }else{
@@ -222,7 +222,7 @@ void Environment::Update()
             }else if(optionsMenu->getWhatToMake() == 2){
                 if(resources>=optionsMenu->getOpCost()){
                     PrintResources();
-                    characters.push_back(new Character(sdl_setup, "images/villager.png",*MouseX-50, *MouseY-50, MouseX, MouseY, this));
+                    characters.push_back(new Villager(sdl_setup, "images/villager.png",*MouseX-50, *MouseY-50, MouseX, MouseY, this));
                     resources = resources - optionsMenu->getOpCost();
                     PrintResources();
                 }else{
@@ -260,7 +260,7 @@ Building* Environment::CombatBuilding(Sprite* attacker, int attacker_team) //ret
 {
     for (std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i)
     {
-        if (attacker->isColliding((*i)->GetBuilding()->GetCollisionRect()) && (*i)->Alive() && (*i)->getTeam() != attacker_team) //check for collision with character, excluding allies and dead characters
+        if (attacker->isCollidingBuilding((*i)->GetBuilding()->GetCollisionRect()) && (*i)->Alive() && (*i)->getTeam() != attacker_team) //check for collision with character, excluding allies and dead characters
         {
             return (*i);
         }

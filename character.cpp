@@ -130,8 +130,8 @@ void Character::Select(){
             //if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT) //specifically, for charlie lol ;)
             {
 
-                //follow_target = NULL; // following currently has bug that if follower dies while attacking followee, then followee is unselectable if followee is an orc. I have no idea why so follow_target is always NULL until bug fixed
-                follow_target = environment->FindTarget(*MouseX, *MouseY); //check if mouse click is in collision box of another Character (friendly or enemy)
+                follow_target = NULL; // following currently has bug that if follower dies while attacking followee, then followee is unselectable. I have no idea why so follow_target is always NULL until bug fixed
+                //follow_target = environment->FindTarget(*MouseX, *MouseY); //check if mouse click is in collision box of another Character (friendly or enemy)
 
                 if (follow_target == NULL) //target is location
                 {
@@ -171,36 +171,39 @@ void Character::Move(){
 
             for (int i = 0; i < environment->getBuildings().size(); i++) //check for collision
             {
-                if (unit->isColliding(environment->getBuildings()[i]->GetBuilding()->GetCollisionRect()))
+                if (environment->getBuildings()[i]->Alive())
                 {
+                    if (unit->isColliding(environment->getBuildings()[i]->GetBuilding()->GetCollisionRect()))
+                    {
 
-                    //below if statements move character away from collision to avoid getting stuck on it
-                    if (unit->GetX() > follow_point_x)
-                    {
-                        unit->SetX(unit->GetX()+1);
-                        unit->SetY(unit->GetY()+1);
-                    }
-                    if (unit->GetX() < follow_point_x)
-                    {
-                        unit->SetX(unit->GetX()-1);
-                        unit->SetY(unit->GetY()-1);
-                    }
-                    if (unit->GetY() > follow_point_y)
-                    {
-                        unit->SetY(unit->GetY()+1);
-                        unit->SetX(unit->GetX()+1);
-                    }
-                    if (unit->GetY() > follow_point_y)
-                    {
-                        unit->SetY(unit->GetY()-1);
-                        unit->SetX(unit->GetX()-1);
-                    }
+                        //below if statements move character away from collision to avoid getting stuck on it
+                        if (unit->GetX() > follow_point_x)
+                        {
+                            unit->SetX(unit->GetX()+1);
+                            unit->SetY(unit->GetY()+1);
+                        }
+                        if (unit->GetX() < follow_point_x)
+                        {
+                            unit->SetX(unit->GetX()-1);
+                            unit->SetY(unit->GetY()-1);
+                        }
+                        if (unit->GetY() > follow_point_y)
+                        {
+                            unit->SetY(unit->GetY()+1);
+                            unit->SetX(unit->GetX()+1);
+                        }
+                        if (unit->GetY() > follow_point_y)
+                        {
+                            unit->SetY(unit->GetY()-1);
+                            unit->SetX(unit->GetX()-1);
+                        }
 
-                    colliding = true;
-                    distance = 0;   //stop unit on collision
-                    follow = false;
-                    follow_point_x = unit->GetX();
-                    follow_point_y = unit->GetY();
+                        colliding = true;
+                        distance = 0;   //stop unit on collision
+                        follow = false;
+                        follow_point_x = unit->GetX();
+                        follow_point_y = unit->GetY();
+                    }
                 }
             }
 
