@@ -25,7 +25,7 @@ void Villager::Update(){
         {
             if (environment->getGoldMines()[i]->Mining()) //if resources successfully mined (ie gold mine isn't empty)
             {
-                environment->AddResources();
+                environment->AddResources(1);
                 //environment->PrintResources(); //for testing only
             }
         }

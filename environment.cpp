@@ -20,6 +20,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     optionsMenu->UpdateType(1);// 1 is main menu
 
     resources = 100;
+    orcResources = 100;
 
     for (int i = 0; i < 21; i++)
     {
@@ -125,9 +126,15 @@ void Environment::DrawBack()
     }
 }
 
-void Environment::AddResources()
+void Environment::AddResources(int i)
 {
+    if (i == 1)
+    {
     resources = resources + 0.005;
+    } else
+    {
+    orcResources = orcResources + 0.005;
+    }
 }
 
 void Environment::Update()
@@ -195,7 +202,7 @@ void Environment::Update()
 
             for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i) //character selection takes priority over buildings and gold mines
             {
-                if(*MouseX >= ((*i)->getCharacterX()-15) && *MouseX <= ((*i)->getCharacterX()+(*i)->getCharacterW()-15) && *MouseY >= ((*i)->getCharacterY()-20) && *MouseY <= ((*i)->getCharacterY()+(*i)->getCharacterH()-20))
+                if(*MouseX >= ((*i)->getCharacterX()-15) && *MouseX <= ((*i)->getCharacterX()+(*i)->getCharacterW()-15) && *MouseY >= ((*i)->getCharacterY()-20) && *MouseY <= ((*i)->getCharacterY()+(*i)->getCharacterH()-20) && (*i)->Alive())
                 {
                     selectedCharacter->unSelect(); //unselect previously selected
                     selectedBuilding->unSelect();

@@ -1,6 +1,4 @@
 #include "building.hpp"
-//#include "main.hpp"
-//#include <math.h>
 
 Building::Building(SDL_Setup* sdl_setup, std::string FilePath, int x, int y)
 {
@@ -34,7 +32,6 @@ void Building::Update()
     {
         alive = false;
         selected = false;
-        //delete Structure;
     }
     }
 }

@@ -30,7 +30,7 @@ class Environment
         std::vector<Gold*> getGoldMines() { return goldMines; }
         std::list<Character*> getCharacters() { return characters; }
 
-        void AddResources();
+        void AddResources(int i);
 
         void PrintResources() { std::cout << resources << std::endl; } //prints to command line, for testing only
 
@@ -41,6 +41,7 @@ class Environment
         Character* FindTarget(int x, int y);
 
         float resources;
+        float orcResources;
         Character* selectedCharacter;
         Building* selectedBuilding;
         Gold* selectedGold;

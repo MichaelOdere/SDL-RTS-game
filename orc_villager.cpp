@@ -25,7 +25,7 @@ void OrcVillager::Update(){
         {
             if (environment->getGoldMines()[i]->Mining()) //if resources successfully mined (ie gold mine isn't empty)
             {
-                environment->AddResources();
+                environment->AddResources(2);
                 //environment->PrintResources(); //for testing only
             }
         }

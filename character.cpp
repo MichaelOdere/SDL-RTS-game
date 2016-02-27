@@ -24,6 +24,8 @@ Character::Character(SDL_Setup* passed_SDL_Setup, std::string FilePath, int star
     follow = false;
     distance = 0;
     stopAnimation = false;
+
+    follow_target = NULL;
 }
 
 Character::~Character() //Destructor
@@ -129,9 +131,7 @@ void Character::Select(){
             if (sdl_setup->GetEv()->button.button == SDL_BUTTON_RIGHT) //specifically, the right mouse button
             //if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT) //specifically, for charlie lol ;)
             {
-
-                follow_target = NULL; // following currently has bug that if follower dies while attacking followee, then followee is unselectable. I have no idea why so follow_target is always NULL until bug fixed
-                //follow_target = environment->FindTarget(*MouseX, *MouseY); //check if mouse click is in collision box of another Character (friendly or enemy)
+                follow_target = environment->FindTarget(*MouseX, *MouseY); //check if mouse click is in collision box of another Character (friendly or enemy)
 
                 if (follow_target == NULL) //target is location
                 {
@@ -166,7 +166,6 @@ void Character::Move(){
 
         if (distance != 0)
         {
-
             bool colliding = false;
 
             for (int i = 0; i < environment->getBuildings().size(); i++) //check for collision
