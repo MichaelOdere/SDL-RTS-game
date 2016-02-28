@@ -53,6 +53,9 @@ class Character
         bool selected;
 
         bool alive;
+    
+        int menuType;
+        int getMenuType() { return menuType; }
 
     protected:
 

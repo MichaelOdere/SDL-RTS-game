@@ -11,17 +11,25 @@ SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_Mo
 
     selectedI = 0;
     opSelected = false;
+    buttonPressed = false;
 
-    newHouse = MenuOption(1,100, "images/house.png");
-    newCharacter = MenuOption(2,20, "images/villager.png");
+    newHouse = MenuOption(1,100, "images/house.png", false);
+    newCharacter = MenuOption(2,20, "images/villager.png", false);
+    newVillager = MenuOption(3, 20, "images/villager.png", true);
+    newOrcVillager = MenuOption(4, 20, "images/orcVillager.png", true);
 
-    mainOptions.push_back(newHouse);//this is how i plan to build different menus, create options above and then populate separate lists for any item that can be selected
-    mainOptions.push_back(newHouse);
-    mainOptions.push_back(newHouse);
+    //mainOptions.push_back(newHouse);//this is how i plan to build different menus, create options above and then populate separate lists for any item that can be selected
+    //mainOptions.push_back(newHouse);
+    //mainOptions.push_back(newHouse);
 
-    houseOptions.push_back(newCharacter);
-    houseOptions.push_back(newHouse);
-    houseOptions.push_back(newCharacter);
+    //houseOptions.push_back(newCharacter);
+    //houseOptions.push_back(newHouse);
+    //houseOptions.push_back(newCharacter);
+    
+    characterOptions.push_back(newHouse);
+    
+    TownCenterOptions.push_back(newVillager);
+    TownCenterOptions.push_back(newOrcVillager);
 
     bar = new Sprite(sdl_setup->GetRenderer(), "images/optionsmenu.png", 0, 400, 1024, 300, CollisionRectangle(0,0,1024,300));
 
@@ -72,6 +80,10 @@ void SubMenu::UpdateType(int kind){// if different item is selected, a different
             options = mainOptions;
         }else if(type ==2){// house selected
             options = houseOptions;
+        }else if(type ==3){
+            options = characterOptions;
+        }else if(type == 4){
+            options = TownCenterOptions;
         }
 
         for( int i = 0; i < options.size(); i++){
@@ -106,6 +118,9 @@ void SubMenu::Update()
                         opSelected = true;
                         options[selectedI].selected = false;
                         selectedI = i;
+                        if(options[i].isButton){
+                            buttonPressed = true;
+                        }
                     }
                 }
             }
@@ -120,6 +135,7 @@ int SubMenu::getWhatToMake(){
         return 0;
     }
 }
+
 
 int SubMenu::getOpCost(){
     if(opSelected){

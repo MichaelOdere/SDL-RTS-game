@@ -1,12 +1,13 @@
 #include "menuoption.hpp"
 #include "main.hpp"
 
-MenuOption::MenuOption(int kind, int price, std::string picString) //Constructor
+MenuOption::MenuOption(int kind, int price, std::string picString, bool button) //Constructor
 {
     pic = picString;
     type = kind;
     cost = price;//later should keep a cost of gold, cost of wood, such and such
     selected = false;
+    isButton = button;
 }
 
 MenuOption::MenuOption(){

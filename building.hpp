@@ -18,6 +18,7 @@ class Building
         virtual void Update();
         void DrawBuilding();
 
+        int getMenuType() {return menuType;}
         int getTeam() { return team; }
         void Select();
 
@@ -43,9 +44,12 @@ class Building
         bool selected;
 
         bool alive;
+    
+        int menuType;
 
     private:
         Sprite* Structure;
+        
 };
 
 #endif // BUILDING_HPP

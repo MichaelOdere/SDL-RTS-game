@@ -7,6 +7,8 @@ TownCenter::TownCenter(SDL_Setup* sdl_setup, std::string FilePath, int x, int y)
     health = 1000;
     max_health = 1000;
     attack = 0.00;
+    
+    menuType = 4;
 }
 TownCenter::~TownCenter()
 {

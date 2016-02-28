@@ -140,8 +140,43 @@ void Environment::AddResources(int i)
 void Environment::Update()
 {
     if(showMenu){
+        if(selectedBuilding->selected){
+            optionsMenu->UpdateType(selectedBuilding->getMenuType());
+        }else if(selectedCharacter->selected){
+            optionsMenu->UpdateType(3);
+        }else{
+            optionsMenu->UpdateType(1);
+        }
         optionsMenu->Draw();
         optionsMenu->Update();
+    }
+    
+    if(selectedBuilding->menuType == 4){
+        if(optionsMenu->buttonPressed){
+        if(optionsMenu->getWhatToMake() == 3){
+            //make villager next to towncenter
+            if(resources>=optionsMenu->getOpCost()){
+                PrintResources();
+                characters.push_back(new Villager(sdl_setup, "images/villager.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW() + 50, selectedBuilding->getStructureY() + selectedBuilding->getStructureH() - 50, MouseX, MouseY, this));
+                resources = resources - optionsMenu->getOpCost();
+                PrintResources();
+            }else{
+                //alert insufficient funds
+            }
+            optionsMenu->buttonPressed = false;
+        }else if(optionsMenu->getWhatToMake() == 4){
+            //make orc villager next to towncenter
+            if(resources>=optionsMenu->getOpCost()){
+                PrintResources();
+                characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW() + 50, selectedBuilding->getStructureY() + selectedBuilding->getStructureH() - 50, MouseX, MouseY, this));
+                resources = resources - optionsMenu->getOpCost();
+                PrintResources();
+            }else{
+                //alert insufficient funds
+            }
+            optionsMenu->buttonPressed = false;
+        }
+        }
     }
 
     for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
@@ -178,12 +213,6 @@ void Environment::Update()
                     (*i)->setSelected();
                     selectedBuilding = (*i); //reassign selected building for future deselection
 
-                    if(optionsMenu->getType() == 2){
-                        optionsMenu->UpdateType(1);
-                    }else{
-                        optionsMenu->UpdateType(2);
-                    }
-
                     break; //end loop once building found
                 }
                 selectedBuilding->unSelect(); //no building found, unselect previous building
@@ -209,6 +238,7 @@ void Environment::Update()
                     selectedGold->unSelect();
                     (*i)->setSelected();
                     selectedCharacter = (*i); //reassign selected character for future deselection
+                    
                     break; //prevent selection of multiple characters in same area
                 }
                 selectedCharacter->unSelect(); //unselect previously selected

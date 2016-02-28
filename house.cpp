@@ -6,6 +6,8 @@ House::House(SDL_Setup* sdl_setup, std::string FilePath, int x, int y) : Buildin
     health = 200;
     max_health = 200;
     attack = 0.00;
+    
+    menuType = 2;
 }
 
 House::~House()

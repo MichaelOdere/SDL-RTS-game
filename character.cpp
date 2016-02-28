@@ -128,8 +128,8 @@ void Character::Select(){
 
         if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN) //mouse button clicked
         {
-            if (sdl_setup->GetEv()->button.button == SDL_BUTTON_RIGHT) //specifically, the right mouse button
-            //if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT) //specifically, for charlie lol ;)
+            //if (sdl_setup->GetEv()->button.button == SDL_BUTTON_RIGHT) //specifically, the right mouse button
+            if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT) //specifically, for charlie lol ;)
             {
                 follow_target = environment->FindTarget(*MouseX, *MouseY); //check if mouse click is in collision box of another Character (friendly or enemy)
 

@@ -8,6 +8,8 @@ Villager::Villager(SDL_Setup* passed_SDL_Setup, std::string FilePath, int starti
     max_health = 50;
     attack = 0.01;
     defense = 0;
+    
+    menuType = 3;
 
 }
 

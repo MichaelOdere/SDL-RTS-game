@@ -5,7 +5,7 @@
 class MenuOption
 {
 public:
-    MenuOption(int kind, int price, std::string picString);
+    MenuOption(int kind, int price, std::string picString, bool button);
     MenuOption();
     ~MenuOption();
 
@@ -14,6 +14,7 @@ public:
     int getCost();
 
     bool selected;
+    bool isButton;
 
 private:
 
