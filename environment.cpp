@@ -22,6 +22,11 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     resources = 100;
     orcResources = 100;
 
+    humanPop = 5;
+    orcPop = 5;
+    humanMaxPop = 15;
+    orcMaxPop = 15;
+
     for (int i = 0; i < 21; i++)
     {
         for (int j = 0; j < 16; j++)
@@ -47,10 +52,10 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png", 700, 150, MouseX, MouseY, this));
 
 
-    selectedBuilding = new House(sdl_setup, "images/house.png", 200, 200, 75, 75, 1);
+    selectedBuilding = new House(sdl_setup, "images/house.png", 200, 200, 50, 50, 1);
     selectedBuilding->unSelect();
     buildings.push_back(selectedBuilding);
-    buildings.push_back(new House(sdl_setup, "images/house.png", 750, 200, 75, 75, 2));
+    buildings.push_back(new House(sdl_setup, "images/house.png", 750, 200, 50, 50, 2));
     buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 400, 400, 60, 60, 1));
     buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 300, 300, 50, 50, 1));
 
@@ -146,7 +151,7 @@ void Environment::Update()
         if(selectedBuilding->selected){
             optionsMenu->UpdateType(selectedBuilding->getMenuType());
         }else if(selectedCharacter->selected){
-            optionsMenu->UpdateType(3);
+            optionsMenu->UpdateType(selectedCharacter->getMenuType());
         }else{
             optionsMenu->UpdateType(1);
         }
@@ -154,31 +159,89 @@ void Environment::Update()
         optionsMenu->Update();
     }
 
-    if(selectedBuilding->menuType == 4){
+    if(selectedBuilding->menuType == 4){ //town center selected
         if(optionsMenu->buttonPressed){
-        if(optionsMenu->getWhatToMake() == 3){
-            //make villager next to towncenter
-            if(resources>=optionsMenu->getOpCost()){
-                PrintResources();
-                characters.push_back(new Villager(sdl_setup, "images/villager.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW() + 50, selectedBuilding->getStructureY() + selectedBuilding->getStructureH() - 50, MouseX, MouseY, this));
-                resources = resources - optionsMenu->getOpCost();
-                PrintResources();
-            }else{
-                //alert insufficient funds
+            if (selectedBuilding->getTeam() == 1) { //check if human towncenter
+                if(optionsMenu->getWhatToMake() == 3){
+                    //make villager next to towncenter
+                    if(resources>=optionsMenu->getOpCost()){
+                        PrintResources();
+                        characters.push_back(new Villager(sdl_setup, "images/villager.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW() + 50, selectedBuilding->getStructureY() + selectedBuilding->getStructureH() - 50, MouseX, MouseY, this));
+                        resources = resources - optionsMenu->getOpCost();
+                        PrintResources();
+                    }else{
+                        //alert insufficient funds
+                    }
+                    optionsMenu->buttonPressed = false;
+                }
+            } else { //orc towncenter
+                if(optionsMenu->getWhatToMake() == 4){
+                    //make orc villager next to towncenter
+                    if(resources>=optionsMenu->getOpCost()){
+                        PrintResources();
+                        characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW() + 50, selectedBuilding->getStructureY() + selectedBuilding->getStructureH() - 50, MouseX, MouseY, this));
+                        resources = resources - optionsMenu->getOpCost();
+                        PrintResources();
+                    }else{
+                        //alert insufficient funds
+                    }
+                    optionsMenu->buttonPressed = false;
+                }
             }
-            optionsMenu->buttonPressed = false;
-        }else if(optionsMenu->getWhatToMake() == 4){
-            //make orc villager next to towncenter
-            if(resources>=optionsMenu->getOpCost()){
-                PrintResources();
-                characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW() + 50, selectedBuilding->getStructureY() + selectedBuilding->getStructureH() - 50, MouseX, MouseY, this));
-                resources = resources - optionsMenu->getOpCost();
-                PrintResources();
-            }else{
-                //alert insufficient funds
-            }
-            optionsMenu->buttonPressed = false;
         }
+    }
+
+    if(selectedBuilding->menuType == 5){ //barracks selected
+        if(optionsMenu->buttonPressed){
+            if (selectedBuilding->getTeam() == 1) { //check if human barracks
+                if(optionsMenu->getWhatToMake() == 5){
+                    //make militia next to barracks
+                    if(resources>=optionsMenu->getOpCost()){
+                        PrintResources();
+                        characters.push_back(new Militia(sdl_setup, "images/militia.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW() + 50, selectedBuilding->getStructureY() + selectedBuilding->getStructureH() - 50, MouseX, MouseY, this));
+                        resources = resources - optionsMenu->getOpCost();
+                        PrintResources();
+                    }else{
+                        //alert insufficient funds
+                    }
+                    optionsMenu->buttonPressed = false;
+                }else if(optionsMenu->getWhatToMake() == 7){
+                    //make champion next to barracks
+                    if(resources>=optionsMenu->getOpCost()){
+                        PrintResources();
+                        characters.push_back(new Champion(sdl_setup, "images/champion.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW() + 50, selectedBuilding->getStructureY() + selectedBuilding->getStructureH() - 50, MouseX, MouseY, this));
+                        resources = resources - optionsMenu->getOpCost();
+                        PrintResources();
+                    }else{
+                        //alert insufficient funds
+                    }
+                    optionsMenu->buttonPressed = false;
+                }
+            } else { //orc barracks
+                if(optionsMenu->getWhatToMake() == 6){
+                    //make orc militia next to barracks
+                    if(resources>=optionsMenu->getOpCost()){
+                        PrintResources();
+                        characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW() + 50, selectedBuilding->getStructureY() + selectedBuilding->getStructureH() - 50, MouseX, MouseY, this));
+                        resources = resources - optionsMenu->getOpCost();
+                        PrintResources();
+                    }else{
+                        //alert insufficient funds
+                    }
+                    optionsMenu->buttonPressed = false;
+                }else if(optionsMenu->getWhatToMake() == 8){
+                    //make champion next to barracks
+                    if(resources>=optionsMenu->getOpCost()){
+                        PrintResources();
+                        characters.push_back(new OrcChampion(sdl_setup, "images/orcChampion.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW() + 50, selectedBuilding->getStructureY() + selectedBuilding->getStructureH() - 50, MouseX, MouseY, this));
+                        resources = resources - optionsMenu->getOpCost();
+                        PrintResources();
+                    }else{
+                        //alert insufficient funds
+                    }
+                    optionsMenu->buttonPressed = false;
+                }
+            }
         }
     }
 
@@ -250,12 +313,15 @@ void Environment::Update()
                 selectedCharacter->unSelect(); //unselect previously selected
             }
 
-            //if((showMenu && (*MouseY > optionsMenu->getY())) || (showMenu == false)){
-
-            if(optionsMenu->getWhatToMake()== 1){
+            if(optionsMenu->getWhatToMake() == 1){
                 if(resources >= optionsMenu->getOpCost()){
                     PrintResources();
-                    buildings.push_back(new House(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50, 75, 75, 1));
+                    if (selectedCharacter->getTeam() == 1) //check villager team
+                    {
+                        buildings.push_back(new House(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50, 50, 50, 1));
+                    } else {
+                        buildings.push_back(new House(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50, 50, 50, 2));
+                    }
                     resources = resources - optionsMenu->getOpCost();
                     PrintResources();
                 }else{
@@ -263,9 +329,15 @@ void Environment::Update()
                     PrintResources();
                 }
             }else if(optionsMenu->getWhatToMake() == 2){
+                std::cout << "barracks selected" << std::endl;
                 if(resources >= optionsMenu->getOpCost()){
                     PrintResources();
-                    characters.push_back(new Villager(sdl_setup, "images/villager.png",*MouseX-50, *MouseY-50, MouseX, MouseY, this));
+                    if (selectedCharacter->getTeam() == 1) //check villager team
+                    {
+                        buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", *MouseX-50, *MouseY-50, 50, 50, 1));
+                    } else {
+                        buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", *MouseX-50, *MouseY-50, 50, 50, 2));
+                    }
                     resources = resources - optionsMenu->getOpCost();
                     PrintResources();
                 }else{

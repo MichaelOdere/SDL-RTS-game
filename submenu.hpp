@@ -21,7 +21,7 @@ public:
     int getWhatToMake();
     int getOpCost();
     int getY();
-    
+
     bool opSelected;
     bool buttonPressed;
 
@@ -31,21 +31,23 @@ private:
     int *MouseY;
 
     int type;
-    
+
 
     std::vector<MenuOption> mainOptions;//options presented with nothing selected
     std::vector<MenuOption> houseOptions;//options presented with a house selected
-    std::vector<MenuOption> characterOptions;//options presented with a character selected
-    std::vector<MenuOption> TownCenterOptions;//options presented with a character selected
+    std::vector<MenuOption> villagerOptions;//options presented with a character selected
+    std::vector<MenuOption> TownCenterOptions;//options presented with a town center selected
+    std::vector<MenuOption> barracksOptions;//options presented with a barracks selected
 
-    
+
     MenuOption newHouse; //option to build a new house
-    MenuOption newCharacter; // option to build a new character
     MenuOption newVillager;
     MenuOption newOrcVillager;
-//    MenuOption newChampion;
-//    MenuOption newVillager;
-//    MenuOption newVillager;
+    MenuOption newChampion;
+    MenuOption newOrcChampion;
+    MenuOption newMilitia;
+    MenuOption newOrcMilitia;
+    MenuOption newBarracks;
 
     std::vector<MenuOption> options; //the options
     std::vector<Sprite*> sprites; //corresponding sprites for options

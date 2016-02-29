@@ -8,8 +8,6 @@ Character( passed_SDL_Setup, FilePath, starting_x, starting_y, passed_MouseX, pa
     max_health = 100;
     attack = 0.02;
     defense = 0.005;
-    
-    menuType = 3;
 }
 
 Champion::~Champion()

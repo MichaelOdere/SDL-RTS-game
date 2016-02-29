@@ -26,6 +26,8 @@ class Character
         void Select();
         void Move();
 
+        int getMenuType() {return menuType;}
+
         Character* target;
         Character* follow_target;
         Building* buildingTarget;
@@ -53,9 +55,8 @@ class Character
         bool selected;
 
         bool alive;
-    
+
         int menuType;
-        int getMenuType() { return menuType; }
 
     protected:
 

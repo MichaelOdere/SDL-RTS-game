@@ -46,6 +46,11 @@ class Environment
         Building* selectedBuilding;
         Gold* selectedGold;
 
+        int humanPop;
+        int orcPop;
+        int humanMaxPop;
+        int orcMaxPop;
+
     private:
 
         SubMenu* optionsMenu;

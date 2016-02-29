@@ -26,7 +26,7 @@ void Building::Update()
 {
     if (selected)
     {
-        std::cout << health << std::endl;
+        //std::cout << health << std::endl;
         Structure->DisplayRectangle(health/max_health);
     }
 
