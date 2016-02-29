@@ -1,10 +1,11 @@
 #include "building.hpp"
 
-Building::Building(SDL_Setup* sdl_setup, std::string FilePath, int x, int y)
+Building::Building(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_x, int size_y, int passed_team)
 {
-    Structure = new Sprite(sdl_setup->GetRenderer(), FilePath.c_str(), x, y, 75, 75, CollisionRectangle(0, 0, 75, 75));
+    Structure = new Sprite(sdl_setup->GetRenderer(), FilePath.c_str(), x, y, size_x, size_y, CollisionRectangle(0, 0, size_x, size_y));
     selected = false;
     alive = true;
+    team = passed_team;
 }
 
 Building::~Building()
@@ -27,12 +28,12 @@ void Building::Update()
     {
         std::cout << health << std::endl;
         Structure->DisplayRectangle(health/max_health);
+    }
 
     if (health <= 0)
     {
         alive = false;
         selected = false;
-    }
     }
 }
 

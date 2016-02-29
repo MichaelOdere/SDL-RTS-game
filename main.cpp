@@ -12,8 +12,6 @@ Main::Main() //Constructor
 
     optionsMenu = new SubMenu(sdl_setup, &MouseX, &MouseY,0);
     gameMap = new Environment(sdl_setup, &MouseX, &MouseY, optionsMenu);
-
-    //server socket initialization goes here
 }
 
 Main::~Main() //Destructor
@@ -22,13 +20,12 @@ Main::~Main() //Destructor
     delete sdl_setup;
     delete gameMap;
     delete optionsMenu;
+
     SDL_Quit();
 }
 
 void Main::GameLoop()
 {
-    //will have while loop here for server
-
     while (!quit && (sdl_setup->GetEv()->type != SDL_QUIT)) //the game loop
     {
         sdl_setup->Begin();

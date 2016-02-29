@@ -25,9 +25,8 @@ SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_Mo
     //houseOptions.push_back(newCharacter);
     //houseOptions.push_back(newHouse);
     //houseOptions.push_back(newCharacter);
-    
+
     characterOptions.push_back(newHouse);
-    
     TownCenterOptions.push_back(newVillager);
     TownCenterOptions.push_back(newOrcVillager);
 
@@ -89,7 +88,6 @@ void SubMenu::UpdateType(int kind){// if different item is selected, a different
         for( int i = 0; i < options.size(); i++){
             sprites.push_back(new Sprite(sdl_setup->GetRenderer(), options[i].getPic(), (i*300), 400, 300, 300, CollisionRectangle(0,0,300,300)));
         }
-
     }
 }
 

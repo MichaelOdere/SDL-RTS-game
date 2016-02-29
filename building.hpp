@@ -8,7 +8,7 @@
 class Building
 {
     public:
-        Building(SDL_Setup* sdl_setup, std::string FilePath, int x, int y);
+        Building(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_x, int size_y, int passed_team);
         Building() {}
         ~Building();
 
@@ -17,6 +17,8 @@ class Building
 
         virtual void Update();
         void DrawBuilding();
+
+        int team;
 
         int getMenuType() {return menuType;}
         int getTeam() { return team; }
@@ -29,7 +31,6 @@ class Building
         int getStructureW();
         int getStructureH();
 
-        int team;
         float health;
         float max_health;
         float attack;
@@ -44,12 +45,12 @@ class Building
         bool selected;
 
         bool alive;
-    
+
         int menuType;
 
     private:
         Sprite* Structure;
-        
+
 };
 
 #endif // BUILDING_HPP

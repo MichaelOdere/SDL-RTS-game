@@ -9,7 +9,7 @@ Gold::Gold(SDL_Setup* sdl_setup, int x, int y)
     max_resources = 1000;
 
     selected = false;
-
+    alive = true;
 }
 
 Gold::~Gold()
@@ -21,8 +21,14 @@ void Gold::Update()
 {
     if (selected)
     {
-        Mine->DisplayRectangle((resources/max_resources));
+        Mine->DisplayRectangle(resources/max_resources);
         std::cout << "Gold left: " << resources << std::endl; //for testing, will eventually be implemented as part of submenu
+    }
+
+    if (resources <= 0)
+    {
+        alive = false;
+        selected = false;
     }
 }
 

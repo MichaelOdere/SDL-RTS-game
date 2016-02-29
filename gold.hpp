@@ -23,6 +23,10 @@ class Gold
         int getGoldW();
         int getGoldH();
 
+        bool alive;
+
+        bool Alive() { return alive; }
+
         void Update();
 
         void setSelected() { selected = true; }

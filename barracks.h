@@ -5,7 +5,7 @@
 class Barracks: public Building
 {
     public:
-        Barracks(SDL_Setup* sdl_setup, std::string FilePath, int x, int y);
+        Barracks(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_x, int size_y, int passed_team);
         Barracks() {}
         ~Barracks();
         void Update();

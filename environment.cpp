@@ -47,12 +47,12 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png", 700, 150, MouseX, MouseY, this));
 
 
-    selectedBuilding = new House(sdl_setup, "images/house.png", 200, 200);
+    selectedBuilding = new House(sdl_setup, "images/house.png", 200, 200, 75, 75, 1);
     selectedBuilding->unSelect();
     buildings.push_back(selectedBuilding);
-    buildings.push_back(new House(sdl_setup, "images/house.png", 750, 200));
-    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 400, 400));
-    buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 300, 300));
+    buildings.push_back(new House(sdl_setup, "images/house.png", 750, 200, 75, 75, 2));
+    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 400, 400, 60, 60, 1));
+    buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 300, 300, 50, 50, 1));
 
 
     selectedGold = new Gold(sdl_setup, 50, 50);
@@ -106,7 +106,10 @@ void Environment::DrawBack()
 
     for (std::vector<Gold*>::iterator i = goldMines.begin(); i != goldMines.end(); ++i)
     {
-        (*i)->DrawGold();
+        if ((*i)->Alive())
+        {
+            (*i)->DrawGold();
+        }
     }
 
     for (std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i)
@@ -150,7 +153,7 @@ void Environment::Update()
         optionsMenu->Draw();
         optionsMenu->Update();
     }
-    
+
     if(selectedBuilding->menuType == 4){
         if(optionsMenu->buttonPressed){
         if(optionsMenu->getWhatToMake() == 3){
@@ -197,7 +200,10 @@ void Environment::Update()
 
     for (std::vector<Gold*>::iterator i = goldMines.begin(); i != goldMines.end(); ++i)
     {
-        (*i)->Update();
+        if ((*i)->Alive())
+        {
+            (*i)->Update();
+        }
     }
 
     if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN)
@@ -238,7 +244,7 @@ void Environment::Update()
                     selectedGold->unSelect();
                     (*i)->setSelected();
                     selectedCharacter = (*i); //reassign selected character for future deselection
-                    
+
                     break; //prevent selection of multiple characters in same area
                 }
                 selectedCharacter->unSelect(); //unselect previously selected
@@ -247,9 +253,9 @@ void Environment::Update()
             //if((showMenu && (*MouseY > optionsMenu->getY())) || (showMenu == false)){
 
             if(optionsMenu->getWhatToMake()== 1){
-                if(resources>=optionsMenu->getOpCost()){
+                if(resources >= optionsMenu->getOpCost()){
                     PrintResources();
-                    buildings.push_back(new House(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50));
+                    buildings.push_back(new House(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50, 75, 75, 1));
                     resources = resources - optionsMenu->getOpCost();
                     PrintResources();
                 }else{
@@ -257,7 +263,7 @@ void Environment::Update()
                     PrintResources();
                 }
             }else if(optionsMenu->getWhatToMake() == 2){
-                if(resources>=optionsMenu->getOpCost()){
+                if(resources >= optionsMenu->getOpCost()){
                     PrintResources();
                     characters.push_back(new Villager(sdl_setup, "images/villager.png",*MouseX-50, *MouseY-50, MouseX, MouseY, this));
                     resources = resources - optionsMenu->getOpCost();
