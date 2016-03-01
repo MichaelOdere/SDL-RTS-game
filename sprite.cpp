@@ -13,16 +13,27 @@ Sprite::Sprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int y
         std::cout << "Could not load image" << std::endl;
     }
 
-    collisionImage = NULL;
-    collisionImage = IMG_LoadTexture(renderer, "images/collision_rectangleGREEN.png"); //default selection box is green
-    collisionImageYellow = NULL;
-    collisionImageYellow = IMG_LoadTexture(renderer, "images/collision_rectangleYELLOW.png");
-    collisionImageRed = NULL;
-    collisionImageRed = IMG_LoadTexture(renderer, "images/collision_rectangleRED.png");
-    collisionImageYellowRed = NULL;
-    collisionImageYellowRed = IMG_LoadTexture(renderer, "images/collision_rectangleYELLOWRED.png");
-    collisionImageGreenYellow = NULL;
-    collisionImageGreenYellow = IMG_LoadTexture(renderer, "images/collision_rectangleGREENYELLOW.png");
+
+    collisionImage = IMG_LoadTexture(renderer, "images/collision_rectangleGREEN.png");
+    collisionImage19= IMG_LoadTexture(renderer, "images/collision_rectangle19.png");
+    collisionImage18 = IMG_LoadTexture(renderer, "images/collision_rectangle18.png");
+    collisionImage17 = IMG_LoadTexture(renderer, "images/collision_rectangle17.png");
+    collisionImage16 = IMG_LoadTexture(renderer, "images/collision_rectangle16.png");
+    collisionImage15 = IMG_LoadTexture(renderer, "images/collision_rectangle15.png");
+    collisionImage14= IMG_LoadTexture(renderer, "images/collision_rectangle14.png");
+    collisionImage13 = IMG_LoadTexture(renderer, "images/collision_rectangle13.png");
+    collisionImage12 = IMG_LoadTexture(renderer, "images/collision_rectangle12.png");
+    collisionImage11 = IMG_LoadTexture(renderer, "images/collision_rectangle11.png");
+    collisionImage10 = IMG_LoadTexture(renderer, "images/collision_rectangle10.png");
+    collisionImage9= IMG_LoadTexture(renderer, "images/collision_rectangle9.png");
+    collisionImage8 = IMG_LoadTexture(renderer, "images/collision_rectangle8.png");
+    collisionImage7 = IMG_LoadTexture(renderer, "images/collision_rectangle7.png");
+    collisionImage6 = IMG_LoadTexture(renderer, "images/collision_rectangle6.png");
+    collisionImage5 = IMG_LoadTexture(renderer, "images/collision_rectangle5.png");
+    collisionImage4 = IMG_LoadTexture(renderer, "images/collision_rectangle4.png");
+    collisionImage3 = IMG_LoadTexture(renderer, "images/collision_rectangle3.png");
+    collisionImage2 = IMG_LoadTexture(renderer, "images/collision_rectangle2.png");
+    collisionImage1 = IMG_LoadTexture(renderer, "images/collision_rectangle1.png");
 
     //location and size
     rect.x = x;
@@ -140,21 +151,81 @@ int Sprite::GetHeight()
 
 void Sprite::DisplayRectangle(float health_percent) //called when Character, Building or Gold is selected
 {
-    if (health_percent < 0.80) //under 4/5 health
+    if (health_percent < 0.95)
     {
-        collisionImage = collisionImageGreenYellow;
+        collisionImage = collisionImage19;
     }
-    if (health_percent < 0.60 ) //under 3/5 health
+    if (health_percent < 0.90 )
     {
-        collisionImage = collisionImageYellow;
+        collisionImage = collisionImage18;
     }
-    if (health_percent < 0.40 ) //under 2/5 health
+    if (health_percent < 0.85 )
     {
-        collisionImage = collisionImageYellowRed;
+        collisionImage = collisionImage17;
     }
-    if (health_percent < 0.20 ) //under 1/5 health
+    if (health_percent < 0.80 )
     {
-        collisionImage = collisionImageRed;
+        collisionImage = collisionImage16;
+    }
+    if (health_percent < 0.75)
+    {
+        collisionImage = collisionImage15;
+    }
+    if (health_percent < 0.70 )
+    {
+        collisionImage = collisionImage14;
+    }
+    if (health_percent < 0.65 )
+    {
+        collisionImage = collisionImage13;
+    }
+    if (health_percent < 0.60 )
+    {
+        collisionImage = collisionImage12;
+    }
+    if (health_percent < 0.55)
+    {
+        collisionImage = collisionImage11;
+    }
+    if (health_percent < 0.50 )
+    {
+        collisionImage = collisionImage10;
+    }
+    if (health_percent < 0.45 )
+    {
+        collisionImage = collisionImage9;
+    }
+    if (health_percent < 0.40 )
+    {
+        collisionImage = collisionImage8;
+    }
+    if (health_percent < 0.35)
+    {
+        collisionImage = collisionImage7;
+    }
+    if (health_percent < 0.30 )
+    {
+        collisionImage = collisionImage6;
+    }
+    if (health_percent < 0.25 )
+    {
+        collisionImage = collisionImage5;
+    }
+    if (health_percent < 0.20 )
+    {
+        collisionImage = collisionImage4;
+    }
+    if (health_percent < 0.15)
+    {
+        collisionImage = collisionImage3;
+    }
+    if (health_percent < 0.10 )
+    {
+        collisionImage = collisionImage2;
+    }
+    if (health_percent < 0.05 )
+    {
+        collisionImage = collisionImage1;
     }
     SDL_RenderCopy(renderer, collisionImage, NULL, &collisionSDLRect); //displays rectangle
 }

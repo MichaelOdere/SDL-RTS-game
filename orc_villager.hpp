@@ -13,6 +13,12 @@ class OrcVillager : public Character
         OrcVillager() {}
         ~OrcVillager();
         void Update();
+
+        bool building;
+        bool mining;
+
+        bool Mining() { return mining; }
+        bool Building() { return building; }
 };
 
 #endif // ORC_VILLAGER_HPP

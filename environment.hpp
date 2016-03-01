@@ -9,13 +9,14 @@
 #include "building.hpp"
 #include "submenu.hpp"
 #include "collision_rectangle.hpp"
+#include "ai.hpp"
 
 class Character; //avoids error because Environment includes Character and vice versa
 
 class Environment
 {
     public:
-        Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *passed_MouseY, SubMenu* passed_menu);
+        Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *passed_MouseY, SubMenu* passed_menu, AI* passed_ai);
         ~Environment();
 
         void DrawBack();
@@ -26,6 +27,8 @@ class Environment
         void updateWhatToMake(int what);
         void updateCost(int n);
         bool shouldMenu();
+
+        int team;
 
         std::vector<Building*> getBuildings() { return buildings; }
         std::vector<Gold*> getGoldMines() { return goldMines; }
@@ -41,6 +44,8 @@ class Environment
 
         Character* FindTarget(int x, int y);
 
+        AI* ai;
+
         float resources;
         float orcResources;
         Character* selectedCharacter;
@@ -55,6 +60,9 @@ class Environment
         int orcPop;
         int humanMaxPop;
         int orcMaxPop;
+
+        int getOrcPop() { return orcPop; }
+        int getOrcMaxPop() { return orcMaxPop; }
 
     private:
 

@@ -6,6 +6,7 @@
 #include "character.hpp"
 #include "environment.hpp"
 #include "submenu.hpp"
+#include "ai.hpp"
 
 class Main
 {
@@ -24,6 +25,8 @@ private:
     Environment* gameMap;
     SubMenu *optionsMenu;
     bool quit;
+
+    AI* ai;
 
     Sprite* grass;
 

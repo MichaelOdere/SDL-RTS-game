@@ -123,10 +123,9 @@ void Character::Select(){
 
     if (selected)
     {
-        std::cout << health << std::endl; //testing
         unit->DisplayRectangle(health/max_health); //selection box around unit
 
-        if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN) //mouse button clicked
+        if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN && team == 1) //mouse button clicked
         {
             if (sdl_setup->GetEv()->button.button == SDL_BUTTON_RIGHT) //specifically, the right mouse button
             //if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT) //specifically, for charlie lol ;)

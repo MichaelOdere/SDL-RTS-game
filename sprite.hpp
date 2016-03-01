@@ -44,10 +44,25 @@ private:
 
     SDL_Texture* image;
     SDL_Texture* collisionImage;
-    SDL_Texture* collisionImageYellow;
-    SDL_Texture* collisionImageRed;
-    SDL_Texture* collisionImageYellowRed;
-    SDL_Texture* collisionImageGreenYellow;
+    SDL_Texture* collisionImage19;
+    SDL_Texture* collisionImage18;
+    SDL_Texture* collisionImage17;
+    SDL_Texture* collisionImage16;
+    SDL_Texture* collisionImage15;
+    SDL_Texture* collisionImage14;
+    SDL_Texture* collisionImage13;
+    SDL_Texture* collisionImage12;
+    SDL_Texture* collisionImage11;
+    SDL_Texture* collisionImage10;
+    SDL_Texture* collisionImage9;
+    SDL_Texture* collisionImage8;
+    SDL_Texture* collisionImage7;
+    SDL_Texture* collisionImage6;
+    SDL_Texture* collisionImage5;
+    SDL_Texture* collisionImage4;
+    SDL_Texture* collisionImage3;
+    SDL_Texture* collisionImage2;
+    SDL_Texture* collisionImage1;
     SDL_Rect rect;
     SDL_Rect crop;
 

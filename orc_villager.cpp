@@ -8,8 +8,10 @@ OrcVillager::OrcVillager(SDL_Setup* passed_SDL_Setup, std::string FilePath, int 
     max_health = 50;
     attack = 0.01;
     defense = 0;
-    
+
     menuType = 3;
+    mining = false;
+    building = false;
 
 }
 
@@ -27,8 +29,10 @@ void OrcVillager::Update(){
         {
             if (environment->getGoldMines()[i]->Mining()) //if resources successfully mined (ie gold mine isn't empty)
             {
-                environment->AddResources(2);
-                //environment->PrintResources(); //for testing only
+                environment->AddResources(2); //add resources to orc stockpile (team 2)
+                mining = true;
+            } else {
+                mining = false;
             }
         }
     }

@@ -11,9 +11,11 @@ Main::Main() //Constructor
     MouseY = 0;
 
     optionsMenu = new SubMenu(sdl_setup, &MouseX, &MouseY,0);
-    gameMap = new Environment(sdl_setup, &MouseX, &MouseY, optionsMenu);
+    ai = new AI();
+    gameMap = new Environment(sdl_setup, &MouseX, &MouseY, optionsMenu, ai);
 
     grass = new Sprite(sdl_setup->GetRenderer(), "images/grass.png", 0, 0, 1024, 1024, CollisionRectangle(0,0,0,0)); //map, one big grass tile
+
 
 }
 
