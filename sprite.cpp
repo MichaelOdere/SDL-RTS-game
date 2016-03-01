@@ -19,6 +19,10 @@ Sprite::Sprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int y
     collisionImageYellow = IMG_LoadTexture(renderer, "images/collision_rectangleYELLOW.png");
     collisionImageRed = NULL;
     collisionImageRed = IMG_LoadTexture(renderer, "images/collision_rectangleRED.png");
+    collisionImageYellowRed = NULL;
+    collisionImageYellowRed = IMG_LoadTexture(renderer, "images/collision_rectangleYELLOWRED.png");
+    collisionImageGreenYellow = NULL;
+    collisionImageGreenYellow = IMG_LoadTexture(renderer, "images/collision_rectangleGREENYELLOW.png");
 
     //location and size
     rect.x = x;
@@ -136,11 +140,19 @@ int Sprite::GetHeight()
 
 void Sprite::DisplayRectangle(float health_percent) //called when Character, Building or Gold is selected
 {
-    if (health_percent < 0.67) //under 2/3 health
+    if (health_percent < 0.80) //under 4/5 health
+    {
+        collisionImage = collisionImageGreenYellow;
+    }
+    if (health_percent < 0.60 ) //under 3/5 health
     {
         collisionImage = collisionImageYellow;
     }
-    if (health_percent < 0.33 ) //under 1/3 health
+    if (health_percent < 0.40 ) //under 2/5 health
+    {
+        collisionImage = collisionImageYellowRed;
+    }
+    if (health_percent < 0.20 ) //under 1/5 health
     {
         collisionImage = collisionImageRed;
     }

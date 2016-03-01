@@ -31,7 +31,7 @@ SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_Mo
     barracksOptions.push_back(newChampion);
     barracksOptions.push_back(newOrcChampion);
 
-    bar = new Sprite(sdl_setup->GetRenderer(), "images/optionsmenu.png", 0, 650, 1024, 100, CollisionRectangle(0,0,1024,100));
+    bar = new Sprite(sdl_setup->GetRenderer(), "images/optionsmenu.png", 0, 675, 1024, 100, CollisionRectangle(0,0,1024,100));
 
     type = kind;
 }
@@ -89,7 +89,7 @@ void SubMenu::UpdateType(int kind){// if different item is selected, a different
         }
 
         for( int i = 0; i < options.size(); i++){
-            sprites.push_back(new Sprite(sdl_setup->GetRenderer(), options[i].getPic(), (i*100), 650, 100, 100, CollisionRectangle(0,0,100,100)));
+            sprites.push_back(new Sprite(sdl_setup->GetRenderer(), options[i].getPic(), (i*100), 675, 100, 100, CollisionRectangle(0,0,100,100)));
         }
     }
 }

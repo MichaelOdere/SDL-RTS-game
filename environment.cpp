@@ -48,8 +48,8 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     selectedBuilding->unSelect();
     buildings.push_back(selectedBuilding);
     buildings.push_back(new House(sdl_setup, "images/house.png", 750, 200, 50, 50, 2));
-    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 400, 400, 120, 120, 1));
-    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 700, 400, 120, 120, 2));
+    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 400, 400, 140, 120, 1));
+    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 700, 400, 140, 120, 2));
     buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 300, 300, 75, 75, 1));
     buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 700, 300, 75, 75, 2));
 
