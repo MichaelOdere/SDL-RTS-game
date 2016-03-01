@@ -25,10 +25,10 @@ private:
     SubMenu *optionsMenu;
     bool quit;
 
+    Sprite* grass;
+
     bool showMenu;
     int menuType;
-
-    Sprite* grass[21][16];
 
     SDL_Setup* sdl_setup;
 

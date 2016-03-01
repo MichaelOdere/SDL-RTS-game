@@ -15,12 +15,12 @@ SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_Mo
 
     newHouse = MenuOption(1,150, "images/house.png", false);
     newBarracks = MenuOption(2,250, "images/barracks.png", false);
-    newVillager = MenuOption(3, 50, "images/villager.png", true);
-    newOrcVillager = MenuOption(4, 50, "images/orcVillager.png", true);
-    newMilitia = MenuOption(5, 75, "images/militia.png", true);
-    newOrcMilitia = MenuOption(6, 75, "images/orcMilitia.png", true);
-    newChampion = MenuOption(7, 100, "images/champion.png", true);
-    newOrcChampion = MenuOption(8, 100, "images/orcChampion.png", true);
+    newVillager = MenuOption(3, 50, "images/villagerButton.png", true);
+    newOrcVillager = MenuOption(4, 50, "images/orcVillagerButton.png", true);
+    newMilitia = MenuOption(5, 75, "images/militiaButton.png", true);
+    newOrcMilitia = MenuOption(6, 75, "images/orcMilitiaButton.png", true);
+    newChampion = MenuOption(7, 100, "images/championButton.png", true);
+    newOrcChampion = MenuOption(8, 100, "images/orcChampionButton.png", true);
 
     villagerOptions.push_back(newHouse);
     villagerOptions.push_back(newBarracks);

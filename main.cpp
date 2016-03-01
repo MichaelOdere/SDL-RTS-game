@@ -12,6 +12,9 @@ Main::Main() //Constructor
 
     optionsMenu = new SubMenu(sdl_setup, &MouseX, &MouseY,0);
     gameMap = new Environment(sdl_setup, &MouseX, &MouseY, optionsMenu);
+
+    grass = new Sprite(sdl_setup->GetRenderer(), "images/grass.png", 0, 0, 1024, 1024, CollisionRectangle(0,0,0,0)); //map, one big grass tile
+
 }
 
 Main::~Main() //Destructor
@@ -30,6 +33,7 @@ void Main::GameLoop()
     {
         sdl_setup->Begin();
         SDL_GetMouseState(&MouseX, &MouseY); //sets x and y of mouse location for each loop
+        grass->Draw();
 
         gameMap->DrawBack();
 

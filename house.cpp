@@ -7,13 +7,6 @@ House::House(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_
     attack = 0.00;
 
     menuType = 2;
-    /*
-    if (team == 1) {
-        humanMaxPop += 5;
-    } else {
-        orcMaxPop += 5;
-    }
-    */
 }
 
 House::~House()
@@ -23,13 +16,4 @@ House::~House()
 void House::Update()
 {
     Building::Update();
-    /*
-    if (health <= 0) {
-        if (team == 1) {
-            humanMaxPop -= 5;
-        } else {
-            orcMaxPop -= 5;
-        }
-    }
-    */
 }

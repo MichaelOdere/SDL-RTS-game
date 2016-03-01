@@ -3,7 +3,6 @@
 #include "imports.hpp"
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
-//#include <math.h>
 
 class Building
 {

@@ -27,14 +27,6 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     humanMaxPop = 15;
     orcMaxPop = 15;
 
-    for (int i = 0; i < 21; i++)
-    {
-        for (int j = 0; j < 16; j++)
-        {
-            //grass[i][j] = new Sprite(sdl_setup->GetRenderer(), "images/grass.bmp", i*50, j*50, 50, 50, CollisionRectangle(0,0,0,0)); //map, currently tiled, will eventually be one big grass tile
-        }
-    }
-
     //Humans
     selectedCharacter = new Militia(sdl_setup, "images/militia.png", 300, 150, MouseX, MouseY, this); //game begins with villager selected to avoid error of deselecting an unselected character below
     selectedCharacter->unSelect();
@@ -56,8 +48,10 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     selectedBuilding->unSelect();
     buildings.push_back(selectedBuilding);
     buildings.push_back(new House(sdl_setup, "images/house.png", 750, 200, 50, 50, 2));
-    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 400, 400, 60, 60, 1));
-    buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 300, 300, 50, 50, 1));
+    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 400, 400, 120, 120, 1));
+    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 700, 400, 120, 120, 2));
+    buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 300, 300, 75, 75, 1));
+    buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 700, 300, 75, 75, 2));
 
 
     selectedGold = new Gold(sdl_setup, 50, 50);
@@ -73,14 +67,6 @@ Environment::~Environment()
 {
     delete optionsMenu;
 
-    for (int i = 0; i < 21; i++)
-    {
-        for (int j = 0; j < 16; j++)
-        {
-            //delete grass[i][j];
-            //delete grass;
-        }
-    }
     for (std::vector<Gold*>::iterator i = goldMines.begin(); i != goldMines.end(); ++i)
     {
         delete (*i);
@@ -101,14 +87,6 @@ Environment::~Environment()
 
 void Environment::DrawBack()
 {
-    for (int i = 0; i < 21; i++)
-    {
-        for (int j = 0; j < 16; j++)
-        {
-            //grass[i][j]->Draw();
-        }
-    }
-
     for (std::vector<Gold*>::iterator i = goldMines.begin(); i != goldMines.end(); ++i)
     {
         if ((*i)->Alive())
@@ -164,11 +142,12 @@ void Environment::Update()
             if (selectedBuilding->getTeam() == 1) { //check if human towncenter
                 if(optionsMenu->getWhatToMake() == 3){
                     //make villager next to towncenter
-                    if(resources>=optionsMenu->getOpCost()){
+                    if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop){
                         PrintResources();
                         characters.push_back(new Villager(sdl_setup, "images/villager.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW() + 50, selectedBuilding->getStructureY() + selectedBuilding->getStructureH() - 50, MouseX, MouseY, this));
                         resources = resources - optionsMenu->getOpCost();
                         PrintResources();
+                        humanPop++;
                     }else{
                         //alert insufficient funds
                     }
@@ -177,11 +156,12 @@ void Environment::Update()
             } else { //orc towncenter
                 if(optionsMenu->getWhatToMake() == 4){
                     //make orc villager next to towncenter
-                    if(resources>=optionsMenu->getOpCost()){
+                    if(resources>=optionsMenu->getOpCost()  && orcPop < orcMaxPop){
                         PrintResources();
                         characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW() + 50, selectedBuilding->getStructureY() + selectedBuilding->getStructureH() - 50, MouseX, MouseY, this));
                         resources = resources - optionsMenu->getOpCost();
                         PrintResources();
+                        orcPop++;
                     }else{
                         //alert insufficient funds
                     }
@@ -196,22 +176,24 @@ void Environment::Update()
             if (selectedBuilding->getTeam() == 1) { //check if human barracks
                 if(optionsMenu->getWhatToMake() == 5){
                     //make militia next to barracks
-                    if(resources>=optionsMenu->getOpCost()){
+                    if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop){
                         PrintResources();
                         characters.push_back(new Militia(sdl_setup, "images/militia.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW() + 50, selectedBuilding->getStructureY() + selectedBuilding->getStructureH() - 50, MouseX, MouseY, this));
                         resources = resources - optionsMenu->getOpCost();
                         PrintResources();
+                        humanPop++;
                     }else{
                         //alert insufficient funds
                     }
                     optionsMenu->buttonPressed = false;
                 }else if(optionsMenu->getWhatToMake() == 7){
                     //make champion next to barracks
-                    if(resources>=optionsMenu->getOpCost()){
+                    if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop){
                         PrintResources();
                         characters.push_back(new Champion(sdl_setup, "images/champion.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW() + 50, selectedBuilding->getStructureY() + selectedBuilding->getStructureH() - 50, MouseX, MouseY, this));
                         resources = resources - optionsMenu->getOpCost();
                         PrintResources();
+                        humanPop++;
                     }else{
                         //alert insufficient funds
                     }
@@ -220,22 +202,24 @@ void Environment::Update()
             } else { //orc barracks
                 if(optionsMenu->getWhatToMake() == 6){
                     //make orc militia next to barracks
-                    if(resources>=optionsMenu->getOpCost()){
+                    if(orcResources>=optionsMenu->getOpCost() && orcPop < orcMaxPop){
                         PrintResources();
                         characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW() + 50, selectedBuilding->getStructureY() + selectedBuilding->getStructureH() - 50, MouseX, MouseY, this));
-                        resources = resources - optionsMenu->getOpCost();
+                        orcResources = orcResources - optionsMenu->getOpCost();
                         PrintResources();
+                        orcPop++;
                     }else{
                         //alert insufficient funds
                     }
                     optionsMenu->buttonPressed = false;
                 }else if(optionsMenu->getWhatToMake() == 8){
                     //make champion next to barracks
-                    if(resources>=optionsMenu->getOpCost()){
+                    if(orcResources>=optionsMenu->getOpCost()  && orcPop < orcMaxPop){
                         PrintResources();
                         characters.push_back(new OrcChampion(sdl_setup, "images/orcChampion.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW() + 50, selectedBuilding->getStructureY() + selectedBuilding->getStructureH() - 50, MouseX, MouseY, this));
-                        resources = resources - optionsMenu->getOpCost();
+                        orcResources = orcResources - optionsMenu->getOpCost();
                         PrintResources();
+                        orcPop++;
                     }else{
                         //alert insufficient funds
                     }
@@ -313,41 +297,40 @@ void Environment::Update()
                 selectedCharacter->unSelect(); //unselect previously selected
             }
 
-            if(optionsMenu->getWhatToMake() == 1){
-                if(resources >= optionsMenu->getOpCost()){
-                    PrintResources();
-                    if (selectedCharacter->getTeam() == 1) //check villager team
-                    {
+            if(optionsMenu->getWhatToMake() == 1 && !buildingConstructionCollision(*MouseX-50, *MouseY-50)){
+                if (selectedCharacter->getTeam() == 1) {//check villager team
+                    if(resources >= optionsMenu->getOpCost()){
                         buildings.push_back(new House(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50, 50, 50, 1));
-                    } else {
+                        resources = resources - optionsMenu->getOpCost();
+                        PrintResources();
+                        humanMaxPop += 5;
+                    }
+                } else {
+                    if(orcResources >= optionsMenu->getOpCost()){
                         buildings.push_back(new House(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50, 50, 50, 2));
+                        orcResources = orcResources - optionsMenu->getOpCost();
+                        PrintResources();
+                        orcMaxPop += 5;
                     }
-                    resources = resources - optionsMenu->getOpCost();
-                    PrintResources();
-                }else{
-                    //alert insufficient funds
-                    PrintResources();
                 }
-            }else if(optionsMenu->getWhatToMake() == 2){
-                std::cout << "barracks selected" << std::endl;
-                if(resources >= optionsMenu->getOpCost()){
-                    PrintResources();
-                    if (selectedCharacter->getTeam() == 1) //check villager team
-                    {
-                        buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", *MouseX-50, *MouseY-50, 50, 50, 1));
-                    } else {
-                        buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", *MouseX-50, *MouseY-50, 50, 50, 2));
+            }else if(optionsMenu->getWhatToMake() == 2 && !buildingConstructionCollision(*MouseX-50, *MouseY-50)){
+                if (selectedCharacter->getTeam() == 1) {//check villager team
+                    if(resources >= optionsMenu->getOpCost()){
+                        buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", *MouseX-50, *MouseY-50, 75, 75, 1));
+                        resources = resources - optionsMenu->getOpCost();
+                        PrintResources();
                     }
-                    resources = resources - optionsMenu->getOpCost();
-                    PrintResources();
-                }else{
-                    //alert insufficient funds
+                } else {
+                    if(orcResources >= optionsMenu->getOpCost()){
+                        buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", *MouseX-50, *MouseY-50, 75, 75, 2));
+                        orcResources = orcResources - optionsMenu->getOpCost();
+                        PrintResources();
+                    }
                 }
-            }
             }
         }
     }
-
+}
     if(sdl_setup->GetEv()->type == SDL_KEYDOWN){
        if(sdl_setup->GetEv()->key.keysym.sym == SDLK_SPACE){
             if(showMenu){
@@ -393,6 +376,35 @@ Character* Environment::FindTarget(int x, int y) //used for following, currently
             }
         }
     return NULL;
+}
+
+void Environment::decreasePop(int team)
+{
+    if (team == 1) {
+        humanMaxPop -= 5;
+    } else {
+        orcMaxPop -= 5;
+    }
+}
+
+bool Environment::buildingConstructionCollision(int x, int y)
+{
+    for (int j = 0; j < buildings.size(); j++) //check for collision
+    {
+        if (buildings[j]->Alive())
+        {
+            collision_rect = buildings[j]->GetBuilding()->GetCollisionRect();
+
+            if (collision_rect.GetRectangle().x + collision_rect.GetRectangle().w > x &&
+            collision_rect.GetRectangle().y + collision_rect.GetRectangle().h > y &&
+            collision_rect.GetRectangle().x < x+50 &&
+            collision_rect.GetRectangle().y < y+50)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 

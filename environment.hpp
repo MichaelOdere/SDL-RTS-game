@@ -8,6 +8,7 @@
 #include "gold.hpp"
 #include "building.hpp"
 #include "submenu.hpp"
+#include "collision_rectangle.hpp"
 
 class Character; //avoids error because Environment includes Character and vice versa
 
@@ -46,6 +47,10 @@ class Environment
         Building* selectedBuilding;
         Gold* selectedGold;
 
+        bool buildingConstructionCollision(int x, int y);
+
+        void decreasePop(int team);
+
         int humanPop;
         int orcPop;
         int humanMaxPop;
@@ -54,6 +59,8 @@ class Environment
     private:
 
         SubMenu* optionsMenu;
+
+        CollisionRectangle collision_rect;
 
         int *MouseX;
         int *MouseY;
@@ -65,7 +72,6 @@ class Environment
         Character* dead;
 
         SDL_Setup* sdl_setup;
-        Sprite* grass[21][16];
         std::vector<Gold*> goldMines;
         std::vector<Building*> buildings;
         std::list<Character*> characters;
