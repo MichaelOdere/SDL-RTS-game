@@ -3,6 +3,9 @@
 #include "imports.hpp"
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
+#include "environment.hpp"
+
+class Environment;
 
 class Building
 {
@@ -46,6 +49,13 @@ class Building
         bool alive;
 
         int menuType;
+
+        bool creating;
+        virtual void startCreating(Environment* passed_environment, int unit_to_create) {}
+        bool Creating() { return creating; }
+        Environment* environment;
+
+        int unit;
 
     private:
         Sprite* Structure;

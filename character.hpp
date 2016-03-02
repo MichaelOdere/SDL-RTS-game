@@ -7,6 +7,7 @@
 #include <math.h>
 
 class Environment; //avoids error because Environment includes Character and vice versa
+class Building;
 
 class Character
 {

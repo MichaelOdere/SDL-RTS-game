@@ -10,8 +10,11 @@
 #include "submenu.hpp"
 #include "collision_rectangle.hpp"
 #include "ai.hpp"
+#include <math.h>
 
 class Character; //avoids error because Environment includes Character and vice versa
+class Building;
+class AI;
 
 class Environment
 {
@@ -63,6 +66,10 @@ class Environment
 
         int getOrcPop() { return orcPop; }
         int getOrcMaxPop() { return orcMaxPop; }
+
+        void createVillager(Building* passed_building, int unit);
+        void createMilitia(Building* passed_building, int unit);
+        void createChampion(Building* passed_building, int unit);
 
     private:
 

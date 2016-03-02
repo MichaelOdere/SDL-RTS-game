@@ -12,6 +12,8 @@
 #include <list>
 
 class Environment;
+class Character;
+class Building;
 
 class AI
 {

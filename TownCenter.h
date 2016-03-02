@@ -10,7 +10,9 @@ class TownCenter: public Building
         TownCenter() {}
         ~TownCenter();
         void Update();
-
+        void startCreating(Environment* passed_environment, int unit_to_create);
+    private:
+        int timecheck;
 };
 
 #endif // TOWNCENTER_H

@@ -6,6 +6,7 @@ Building::Building(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int
     selected = false;
     alive = true;
     team = passed_team;
+    creating = false;
 }
 
 Building::~Building()

@@ -143,28 +143,22 @@ void Environment::Update()
     if(selectedBuilding->menuType == 4 && selectedBuilding->Alive()){ //town center selected
         if(optionsMenu->buttonPressed){
             if (selectedBuilding->getTeam() == 1) { //check if human towncenter
-                if(optionsMenu->getWhatToMake() == 3){
+                if(optionsMenu->getWhatToMake() == 3){ //if villager selected
                     //make villager next to towncenter
-                    if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop){
-                        PrintResources();
-                        characters.push_back(new Villager(sdl_setup, "images/villager.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW(), selectedBuilding->getStructureY() + selectedBuilding->getStructureH()+20, MouseX, MouseY, this));
-                        resources = resources - optionsMenu->getOpCost();
-                        PrintResources();
-                        humanPop++;
+                    if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop){ //if enough resources and population room
+                        resources = resources - optionsMenu->getOpCost(); //remove resources
+                        selectedBuilding->startCreating(this, 1); //initiate creation of unit (10 sec, multiple units may be queued)
                     }else{
                         //alert insufficient funds
                     }
                     optionsMenu->buttonPressed = false;
                 }
             } else if (team != 1) { //orc towncenter
-                if(optionsMenu->getWhatToMake() == 4){
+                if(optionsMenu->getWhatToMake() == 4){ //if orc villager selected
                     //make orc villager next to towncenter
                     if(orcResources>=optionsMenu->getOpCost()  && orcPop < orcMaxPop){
-                        PrintResources();
-                        characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW(), selectedBuilding->getStructureY() + selectedBuilding->getStructureH()+20, MouseX, MouseY, this));
                         orcResources = orcResources - optionsMenu->getOpCost();
-                        PrintResources();
-                        orcPop++;
+                        selectedBuilding->startCreating(this, 2);
                     }else{
                         //alert insufficient funds
                     }
@@ -180,11 +174,8 @@ void Environment::Update()
                 if(optionsMenu->getWhatToMake() == 5){
                     //make militia next to barracks
                     if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop){
-                        PrintResources();
-                        characters.push_back(new Militia(sdl_setup, "images/militia.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW(), selectedBuilding->getStructureY() + selectedBuilding->getStructureH()+20, MouseX, MouseY, this));
                         resources = resources - optionsMenu->getOpCost();
-                        PrintResources();
-                        humanPop++;
+                        selectedBuilding->startCreating(this, 1);
                     }else{
                         //alert insufficient funds
                     }
@@ -192,11 +183,8 @@ void Environment::Update()
                 }else if(optionsMenu->getWhatToMake() == 7){
                     //make champion next to barracks
                     if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop){
-                        PrintResources();
-                        characters.push_back(new Champion(sdl_setup, "images/champion.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW(), selectedBuilding->getStructureY() + selectedBuilding->getStructureH()+20, MouseX, MouseY, this));
                         resources = resources - optionsMenu->getOpCost();
-                        PrintResources();
-                        humanPop++;
+                        selectedBuilding->startCreating(this, 3);
                     }else{
                         //alert insufficient funds
                     }
@@ -206,11 +194,8 @@ void Environment::Update()
                 if(optionsMenu->getWhatToMake() == 6){
                     //make orc militia next to barracks
                     if(orcResources>=optionsMenu->getOpCost() && orcPop < orcMaxPop){
-                        PrintResources();
-                        characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW(), selectedBuilding->getStructureY() + selectedBuilding->getStructureH()+20, MouseX, MouseY, this));
                         orcResources = orcResources - optionsMenu->getOpCost();
-                        PrintResources();
-                        orcPop++;
+                        selectedBuilding->startCreating(this, 2);
                     }else{
                         //alert insufficient funds
                     }
@@ -218,11 +203,8 @@ void Environment::Update()
                 }else if(optionsMenu->getWhatToMake() == 8){
                     //make champion next to barracks
                     if(orcResources>=optionsMenu->getOpCost()  && orcPop < orcMaxPop){
-                        PrintResources();
-                        characters.push_back(new OrcChampion(sdl_setup, "images/orcChampion.png",selectedBuilding->getStructureX() + selectedBuilding->getStructureW(), selectedBuilding->getStructureY() + selectedBuilding->getStructureH()+20, MouseX, MouseY, this));
                         orcResources = orcResources - optionsMenu->getOpCost();
-                        PrintResources();
-                        orcPop++;
+                        selectedBuilding->startCreating(this, 4);
                     }else{
                         //alert insufficient funds
                     }
@@ -416,4 +398,42 @@ bool Environment::buildingConstructionCollision(int x, int y)
     return false;
 }
 
+void Environment::createVillager(Building* passed_building, int unit) //creates new unit next to passed building
+{
+    if (unit == 1) // if human villager
+    {
+        characters.push_back(new Villager(sdl_setup, "images/Villager.png",passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
+        humanPop++;
+    } else
+    {
+        characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png",passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
+        orcPop++;
+    }
+}
+
+void Environment::createMilitia(Building* passed_building, int unit)
+{
+    if (unit == 1) //if human militia
+    {
+        characters.push_back(new Militia(sdl_setup, "images/Militia.png",passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
+        humanPop++;
+    } else
+    {
+        characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png",passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
+        orcPop++;
+    }
+}
+
+void Environment::createChampion(Building* passed_building, int unit)
+{
+    if (unit == 3) //if human champion
+    {
+        characters.push_back(new Champion(sdl_setup, "images/Champion.png",passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
+        humanPop++;
+    } else
+    {
+        characters.push_back(new OrcChampion(sdl_setup, "images/orcChampion.png",passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
+        orcPop++;
+    }
+}
 
