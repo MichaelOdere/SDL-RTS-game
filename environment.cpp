@@ -291,7 +291,7 @@ void Environment::Update()
             if(optionsMenu->getWhatToMake() == 1 && !buildingConstructionCollision(*MouseX-50, *MouseY-50)){
                 if (selectedCharacter->getTeam() == 1) {//check villager team
                     if(resources >= optionsMenu->getOpCost()){
-                        buildings.push_back(new House(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 50, 50, 1));
+                        buildings.push_back(new House(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 50, 50, 1)); //initially display construction zone
                         resources = resources - optionsMenu->getOpCost();
                         humanMaxPop += 5;
                     }
@@ -302,6 +302,8 @@ void Environment::Update()
                         orcMaxPop += 5;
                     }
                 }
+                selectedCharacter->setFollowPoint(*MouseX, *MouseY); //move villager to construction zone
+
             }else if(optionsMenu->getWhatToMake() == 2 && !buildingConstructionCollision(*MouseX-50, *MouseY-50)){
                 if (selectedCharacter->getTeam() == 1) {//check villager team
                     if(resources >= optionsMenu->getOpCost()){
@@ -314,6 +316,7 @@ void Environment::Update()
                         orcResources = orcResources - optionsMenu->getOpCost();
                     }
                 }
+                selectedCharacter->setFollowPoint(*MouseX, *MouseY); //move character to construction zone
             }
         }
     }

@@ -71,8 +71,8 @@ void Building::constructing()
     health += 0.01;
     if (health >= max_health)
     {
-        constructed = true;
-        health = max_health;
-        Structure->setCollisionImage();
+        constructed = true; //allows use of building and stops villager from constructing
+        health = max_health; //ensures health is not greater than max
+        Structure->setCollisionImage(); //set health bar to max health
     }
 }

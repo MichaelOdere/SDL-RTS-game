@@ -26,6 +26,6 @@ void House::constructing()
 
     if (health >= max_health)
     {
-        Structure->changeImage("images/house.png");
+        Structure->changeImage("images/house.png"); //change image to constructed state
     }
 }

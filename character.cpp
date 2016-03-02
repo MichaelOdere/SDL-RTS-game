@@ -255,3 +255,10 @@ void Character::attacked(float attacker_attack) //called if attacked by another 
 {
     health = health + defense - attacker_attack;
 }
+
+void Character::setFollowPoint(int x, int y)
+{
+    follow_point_x = x;
+    follow_point_y = y;
+    follow = true;
+}

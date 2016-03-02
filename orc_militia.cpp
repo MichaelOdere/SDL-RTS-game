@@ -8,6 +8,8 @@ Character( passed_SDL_Setup, FilePath, starting_x, starting_y, passed_MouseX, pa
     max_health = 75;
     attack = 0.015;
     defense = 0.0025;
+
+    type = 2;
 }
 
 OrcMilitia::~OrcMilitia()

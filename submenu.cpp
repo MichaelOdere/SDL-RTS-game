@@ -115,6 +115,7 @@ void SubMenu::Update()
                         options[i].selected = false;
                         opSelected = false;
                     }else{
+                        sprites[i]->DisplayRectangle(1.0);
                         options[i].selected = true;
                         opSelected = true;
                         options[selectedI].selected = false;

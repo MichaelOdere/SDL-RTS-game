@@ -8,7 +8,7 @@
 Barracks::Barracks(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_x, int size_y, int passed_team) : Building(sdl_setup, FilePath, x, y, size_x, size_y, passed_team)
 {
     health = 1;
-    max_health = 500;
+    max_health = 10;
     attack = 0.00;
 
     menuType = 5;
@@ -24,12 +24,12 @@ void Barracks::Update()
 {
     Building::Update();
 
-    if (timecheck + 15000 < SDL_GetTicks() && creating && (unit == 1 || unit == 2)) //if creating militia
+    if (timecheck + 15000 < SDL_GetTicks() && creating && (unit == 1 || unit == 2)) //if creating militia and been 15sec
     {
         environment->createMilitia(this, unit); //unit designates human or orc militia
         creating = false;
     }
-    if (timecheck + 20000 < SDL_GetTicks() && creating && (unit == 3 || unit == 4)) //if creating champion
+    if (timecheck + 20000 < SDL_GetTicks() && creating && (unit == 3 || unit == 4)) //if creating champion and been 20sec
     {
         environment->createChampion(this, unit); //unit designates human or orc champion
         creating = false;
@@ -41,7 +41,7 @@ void Barracks::startCreating(Environment* passed_environment, int unit_to_create
     environment = passed_environment;
     creating = true;
     unit = unit_to_create;
-    timecheck = SDL_GetTicks();
+    timecheck = SDL_GetTicks(); //get time at call to create
 }
 
 void Barracks::constructing()
@@ -50,6 +50,6 @@ void Barracks::constructing()
 
     if (health >= max_health)
     {
-        Structure->changeImage("images/barracks.png");
+        Structure->changeBarracksImage(); //reset image to created state, for some reason barracks.png doesn't work and is cropped weird
     }
 }

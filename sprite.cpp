@@ -13,7 +13,7 @@ Sprite::Sprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int y
         std::cout << "Could not load image" << std::endl;
     }
 
-    barracksImage = IMG_LoadTexture(renderer, "images/barracks.png");
+    barracksImage = IMG_LoadTexture(renderer, "images/barracks1.png");
 
     collisionImage20 = IMG_LoadTexture(renderer, "images/collision_rectangleGREEN.png");
     collisionImage19= IMG_LoadTexture(renderer, "images/collision_rectangle19.png");

@@ -16,6 +16,9 @@ class Character
         Character() {}
         ~Character();
 
+        int type;
+        int getType() { return type; }
+
         double GetDistance(int x1, int y1, int x2, int y2);
 
         virtual void Update();
@@ -26,6 +29,7 @@ class Character
         void Animate();
         void Select();
         void Move();
+        void setFollowPoint(int x, int y);
 
         int getMenuType() {return menuType;}
 
@@ -59,6 +63,14 @@ class Character
 
         int menuType;
 
+        bool building;
+        bool mining;
+        bool follow;
+
+        bool isMining() { return mining; }
+        bool isBuilding() { return building; }
+        bool isFollowing() { return follow; }
+
     protected:
 
         Environment* environment;
@@ -72,7 +84,6 @@ class Character
 
         int timeCheck;
 
-        bool follow;
         int follow_point_x;
         int follow_point_y;
 

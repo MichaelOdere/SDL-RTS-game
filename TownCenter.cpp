@@ -21,7 +21,7 @@ void TownCenter::Update()
 {
     Building::Update();
 
-    if (timecheck + 10000 < SDL_GetTicks() && creating)
+    if (timecheck + 10000 < SDL_GetTicks() && creating) //if creating unit and been 10sec
     {
         environment->createVillager(this, unit); //unit designates human or orc villager
         creating = false;
@@ -33,5 +33,5 @@ void TownCenter::startCreating(Environment* passed_environment, int unit_to_crea
     environment = passed_environment;
     creating = true;
     unit = unit_to_create;
-    timecheck = SDL_GetTicks();
+    timecheck = SDL_GetTicks(); //get time at call to create
 }

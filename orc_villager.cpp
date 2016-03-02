@@ -13,6 +13,8 @@ OrcVillager::OrcVillager(SDL_Setup* passed_SDL_Setup, std::string FilePath, int 
     mining = false;
     building = false;
 
+    type = 1;
+
 }
 
 OrcVillager::~OrcVillager()
@@ -34,6 +36,9 @@ void OrcVillager::Update(){
             } else {
                 mining = false;
             }
+        } else
+        {
+            mining = false;
         }
     }
     //constructing for VILLAGER class
@@ -45,6 +50,10 @@ void OrcVillager::Update(){
             !environment->getBuildings()[i]->isConstructed()) //not constructed
         {
             environment->getBuildings()[i]->constructing();
+            building = true;
+        } else
+        {
+            building = false;
         }
     }
 }
