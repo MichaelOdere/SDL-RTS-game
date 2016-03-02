@@ -20,8 +20,8 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     showMenu = false;//start with menu not displayed
     optionsMenu->UpdateType(1);// 1 is main menu
 
-    resources = 100;
-    orcResources = 100;
+    resources = 1000;
+    orcResources = 1000;
 
     team = 1;
 
@@ -47,14 +47,14 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png", 700, 150, MouseX, MouseY, this));
 
 
-    selectedBuilding = new House(sdl_setup, "images/house.png", 300, 200, 50, 50, 1);
+    selectedBuilding = new TownCenter(sdl_setup, "images/towncenter.png", 100, 200, 140, 120, 1);
     selectedBuilding->unSelect();
     buildings.push_back(selectedBuilding);
-    buildings.push_back(new House(sdl_setup, "images/house.png", 900, 200, 50, 50, 2));
-    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 100, 200, 140, 120, 1));
+    //buildings.push_back(new House(sdl_setup, "images/house.png", 900, 200, 50, 50, 2));
+    //buildings.push_back(new House(sdl_setup, "images/house.png", 300, 200, 50, 50, 1));
     buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 700, 200, 140, 120, 2));
-    buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 300, 300, 75, 75, 1));
-    buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 700, 350, 75, 75, 2));
+    //buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 300, 300, 75, 75, 1));
+    //buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 700, 350, 75, 75, 2));
 
 
     selectedGold = new Gold(sdl_setup, 50, 50);
@@ -153,7 +153,7 @@ void Environment::Update()
                     }
                     optionsMenu->buttonPressed = false;
                 }
-            } else if (team != 1) { //orc towncenter
+            } else { //orc towncenter
                 if(optionsMenu->getWhatToMake() == 4){ //if orc villager selected
                     //make orc villager next to towncenter
                     if(orcResources>=optionsMenu->getOpCost()  && orcPop < orcMaxPop){
@@ -168,7 +168,7 @@ void Environment::Update()
         }
     }
 
-    if(selectedBuilding->menuType == 5 && selectedBuilding->Alive()){ //barracks selected
+    if(selectedBuilding->menuType == 5 && selectedBuilding->Alive() && selectedBuilding->isConstructed()){ //barracks selected
         if(optionsMenu->buttonPressed){
             if (selectedBuilding->getTeam() == 1) { //check if human barracks
                 if(optionsMenu->getWhatToMake() == 5){
@@ -190,7 +190,7 @@ void Environment::Update()
                     }
                     optionsMenu->buttonPressed = false;
                 }
-            } else if (team != 1) { //orc barracks
+            } else { //orc barracks
                 if(optionsMenu->getWhatToMake() == 6){
                     //make orc militia next to barracks
                     if(orcResources>=optionsMenu->getOpCost() && orcPop < orcMaxPop){
@@ -291,31 +291,27 @@ void Environment::Update()
             if(optionsMenu->getWhatToMake() == 1 && !buildingConstructionCollision(*MouseX-50, *MouseY-50)){
                 if (selectedCharacter->getTeam() == 1) {//check villager team
                     if(resources >= optionsMenu->getOpCost()){
-                        buildings.push_back(new House(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50, 50, 50, 1));
+                        buildings.push_back(new House(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 50, 50, 1));
                         resources = resources - optionsMenu->getOpCost();
-                        PrintResources();
                         humanMaxPop += 5;
                     }
                 } else {
                     if(orcResources >= optionsMenu->getOpCost()){
-                        buildings.push_back(new House(sdl_setup, "images/house.png", *MouseX-50, *MouseY-50, 50, 50, 2));
+                        buildings.push_back(new House(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 50, 50, 2));
                         orcResources = orcResources - optionsMenu->getOpCost();
-                        PrintResources();
                         orcMaxPop += 5;
                     }
                 }
             }else if(optionsMenu->getWhatToMake() == 2 && !buildingConstructionCollision(*MouseX-50, *MouseY-50)){
                 if (selectedCharacter->getTeam() == 1) {//check villager team
                     if(resources >= optionsMenu->getOpCost()){
-                        buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", *MouseX-50, *MouseY-50, 75, 75, 1));
+                        buildings.push_back(new Barracks(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 75, 75, 1));
                         resources = resources - optionsMenu->getOpCost();
-                        PrintResources();
                     }
                 } else {
                     if(orcResources >= optionsMenu->getOpCost()){
-                        buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", *MouseX-50, *MouseY-50, 75, 75, 2));
+                        buildings.push_back(new Barracks(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 75, 75, 2));
                         orcResources = orcResources - optionsMenu->getOpCost();
-                        PrintResources();
                     }
                 }
             }

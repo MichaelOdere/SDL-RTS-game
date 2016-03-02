@@ -10,6 +10,7 @@ class House : public Building
         House() {}
         ~House();
         void Update();
+        void constructing();
 
 };
 

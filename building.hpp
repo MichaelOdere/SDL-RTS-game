@@ -57,7 +57,12 @@ class Building
 
         int unit;
 
-    private:
+        bool constructed;
+
+        bool isConstructed() { return constructed; }
+
+        virtual void constructing();
+
         Sprite* Structure;
 
 };

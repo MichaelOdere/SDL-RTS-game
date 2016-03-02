@@ -9,8 +9,8 @@ class Barracks: public Building
         Barracks() {}
         ~Barracks();
         void Update();
-        void createUnit();
         void startCreating(Environment* passed_environment, int unit_to_create);
+        void constructing();
     private:
         int timecheck;
 };

@@ -35,6 +35,10 @@ public:
 
     void DisplayRectangle(float health_percent);
 
+    void changeImage(std::string new_FilePath);
+    void setCollisionImage();
+    void changeBarracksImage();
+
 private:
     float X_pos;
     float Y_pos;
@@ -42,8 +46,10 @@ private:
     float origin_x;
     float origin_y;
 
+    SDL_Texture* barracksImage;
     SDL_Texture* image;
     SDL_Texture* collisionImage;
+    SDL_Texture* collisionImage20;
     SDL_Texture* collisionImage19;
     SDL_Texture* collisionImage18;
     SDL_Texture* collisionImage17;

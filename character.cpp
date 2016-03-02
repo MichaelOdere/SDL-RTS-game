@@ -125,7 +125,7 @@ void Character::Select(){
     {
         unit->DisplayRectangle(health/max_health); //selection box around unit
 
-        if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN && team == 1) //mouse button clicked
+        if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN) //mouse button clicked
         {
             if (sdl_setup->GetEv()->button.button == SDL_BUTTON_RIGHT) //specifically, the right mouse button
             //if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT) //specifically, for charlie lol ;)
@@ -171,7 +171,8 @@ void Character::Move(){
             {
                 if (environment->getBuildings()[i]->Alive())
                 {
-                    if (unit->isCollidingBuilding(environment->getBuildings()[i]->GetBuilding()->GetCollisionRect()))
+                    //check if colliding with building that is either constructed or on your team (prevents builder from getting stuck in completed building, cannot collide with unfinished enemy buildings)
+                    if (unit->isCollidingBuilding(environment->getBuildings()[i]->GetBuilding()->GetCollisionRect()) && (environment->getBuildings()[i]->isConstructed() || environment->getBuildings()[i]->getTeam() == team))
                     {
 
                         //below if statements move character away from collision to avoid getting stuck on it

@@ -13,8 +13,9 @@ Sprite::Sprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int y
         std::cout << "Could not load image" << std::endl;
     }
 
+    barracksImage = IMG_LoadTexture(renderer, "images/barracks.png");
 
-    collisionImage = IMG_LoadTexture(renderer, "images/collision_rectangleGREEN.png");
+    collisionImage20 = IMG_LoadTexture(renderer, "images/collision_rectangleGREEN.png");
     collisionImage19= IMG_LoadTexture(renderer, "images/collision_rectangle19.png");
     collisionImage18 = IMG_LoadTexture(renderer, "images/collision_rectangle18.png");
     collisionImage17 = IMG_LoadTexture(renderer, "images/collision_rectangle17.png");
@@ -34,6 +35,8 @@ Sprite::Sprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int y
     collisionImage3 = IMG_LoadTexture(renderer, "images/collision_rectangle3.png");
     collisionImage2 = IMG_LoadTexture(renderer, "images/collision_rectangle2.png");
     collisionImage1 = IMG_LoadTexture(renderer, "images/collision_rectangle1.png");
+
+    collisionImage = collisionImage20;
 
     //location and size
     rect.x = x;
@@ -244,4 +247,19 @@ bool Sprite::isCollidingBuilding(CollisionRectangle collider)
              collision_rect.GetRectangle().y + collision_rect.GetRectangle().h > collider.GetRectangle().y+10 &&
              collision_rect.GetRectangle().x+10 < collider.GetRectangle().w + collider.GetRectangle().x &&
              collision_rect.GetRectangle().y+10 < collider.GetRectangle().y + collider.GetRectangle().h);
+}
+
+void Sprite::changeImage(std::string new_FilePath)
+{
+    image = IMG_LoadTexture(renderer, new_FilePath.c_str());
+}
+
+void Sprite::changeBarracksImage()
+{
+    image = barracksImage;
+}
+
+void Sprite::setCollisionImage()
+{
+    collisionImage = collisionImage20;
 }

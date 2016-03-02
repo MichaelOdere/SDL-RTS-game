@@ -65,3 +65,14 @@ void Building::attacked(float attacker_attack) //called if attacked by another c
 {
     health = health - attacker_attack;
 }
+
+void Building::constructing()
+{
+    health += 0.01;
+    if (health >= max_health)
+    {
+        constructed = true;
+        health = max_health;
+        Structure->setCollisionImage();
+    }
+}

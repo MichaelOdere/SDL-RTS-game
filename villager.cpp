@@ -8,7 +8,7 @@ Villager::Villager(SDL_Setup* passed_SDL_Setup, std::string FilePath, int starti
     max_health = 50;
     attack = 0.01;
     defense = 0;
-    
+
     menuType = 3;
 
 }
@@ -30,6 +30,17 @@ void Villager::Update(){
                 environment->AddResources(1);
                 //environment->PrintResources(); //for testing only
             }
+        }
+    }
+    //constructing for VILLAGER class
+    for (int i = 0; i < environment->getBuildings().size(); i++)
+    {
+        if (unit->isColliding(environment->getBuildings()[i]->GetBuilding()->GetCollisionRect()) &&
+            environment->getBuildings()[i]->getTeam() == team &&
+            environment->getBuildings()[i]->Alive() &&
+            !environment->getBuildings()[i]->isConstructed()) //not constructed
+        {
+            environment->getBuildings()[i]->constructing();
         }
     }
 }

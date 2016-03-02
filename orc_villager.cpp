@@ -36,4 +36,15 @@ void OrcVillager::Update(){
             }
         }
     }
+    //constructing for VILLAGER class
+    for (int i = 0; i < environment->getBuildings().size(); i++)
+    {
+        if (unit->isColliding(environment->getBuildings()[i]->GetBuilding()->GetCollisionRect()) &&
+            environment->getBuildings()[i]->getTeam() == team &&
+            environment->getBuildings()[i]->Alive() &&
+            !environment->getBuildings()[i]->isConstructed()) //not constructed
+        {
+            environment->getBuildings()[i]->constructing();
+        }
+    }
 }

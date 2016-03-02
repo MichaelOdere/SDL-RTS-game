@@ -10,6 +10,8 @@ TownCenter::TownCenter(SDL_Setup* sdl_setup, std::string FilePath, int x, int y,
     attack = 0.00;
 
     menuType = 4;
+
+    constructed = true;
 }
 TownCenter::~TownCenter()
 {
