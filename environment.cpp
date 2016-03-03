@@ -8,6 +8,7 @@
 #include "TownCenter.h"
 #include "barracks.h"
 #include "house.hpp"
+#include "text.hpp"
 
 Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *passed_MouseY, SubMenu* passed_menu, AI* passed_ai)
 {
@@ -16,6 +17,8 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     MouseY = passed_MouseY;
     optionsMenu = passed_menu;
     ai = passed_ai;
+    
+    txt = new TextMessage(sdl_setup->GetRenderer(), "hi, I'm here", 500, 300);
 
     showMenu = false;//start with menu not displayed
     optionsMenu->UpdateType(1);// 1 is main menu
@@ -128,6 +131,8 @@ void Environment::AddResources(int i)
 
 void Environment::Update()
 {
+    txt->Draw();
+    
     if(showMenu){
         if(selectedBuilding->selected){
             optionsMenu->UpdateType(selectedBuilding->getMenuType());
@@ -435,4 +440,6 @@ void Environment::createChampion(Building* passed_building, int unit)
         orcPop++;
     }
 }
+
+
 

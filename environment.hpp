@@ -11,6 +11,7 @@
 #include "collision_rectangle.hpp"
 #include "ai.hpp"
 #include <math.h>
+#include "text.hpp"
 
 class Character; //avoids error because Environment includes Character and vice versa
 class Building;
@@ -70,6 +71,8 @@ class Environment
         void createVillager(Building* passed_building, int unit);
         void createMilitia(Building* passed_building, int unit);
         void createChampion(Building* passed_building, int unit);
+    
+        
 
     private:
 
@@ -83,6 +86,8 @@ class Environment
         int menuType;
         int whatToMake;
         bool showMenu;
+    
+        TextMessage* txt;
 
         Character* dead;
 
