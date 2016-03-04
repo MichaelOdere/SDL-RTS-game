@@ -24,18 +24,25 @@ class Character
         virtual void Update();
         void Draw();
 
+        bool hasTask;
+        void setNoTask() { hasTask = false; }
+        bool ifHasTask() { return hasTask; }
+
         Sprite* GetCharacter() { return unit; }
         int getTeam() { return team; }
         void Animate();
         void Select();
         void Move();
-        void setFollowPoint(int x, int y);
+        virtual void setFollowPoint(int x, int y);
 
         int getMenuType() {return menuType;}
 
         Character* target;
         Character* follow_target;
         Building* buildingTarget;
+
+        int prevX;
+        int prevY;
 
         int getCharacterX();
         int getCharacterY();

@@ -12,6 +12,8 @@ OrcVillager::OrcVillager(SDL_Setup* passed_SDL_Setup, std::string FilePath, int 
     menuType = 3;
     mining = false;
     building = false;
+    hasTask = false;
+    environment->addVillager();
 
     type = 1;
 
@@ -52,10 +54,25 @@ void OrcVillager::Update(){
         {
             environment->getBuildings()[i]->constructing();
             building = true;
+            distance = 0;   //stop unit when reached build site
+            follow = false;
+            follow_point_x = unit->GetX();
+            follow_point_y = unit->GetY();
             break;
         } else
         {
             building = false;
         }
     }
+
+    if (health <= 0)
+    {
+        environment->removeVillager();
+    }
+}
+
+void OrcVillager::setFollowPoint(int x, int y)
+{
+    Character::setFollowPoint(x, y);
+    hasTask = true;
 }

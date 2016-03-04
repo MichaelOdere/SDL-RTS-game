@@ -13,6 +13,7 @@ class OrcVillager : public Character
         OrcVillager() {}
         ~OrcVillager();
         void Update();
+        void setFollowPoint(int x, int y);
 };
 
 #endif // ORC_VILLAGER_HPP

@@ -19,7 +19,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     ai = passed_ai;
 
 
-    txt = new TextMessage(sdl_setup->GetRenderer(), "hi, I'm here", 500, 300);
+    txt = new TextMessage(sdl_setup->GetRenderer(), "test display text", 250, 150);
 
     showMenu = false;//start with menu not displayed
     optionsMenu->UpdateType(1);// 1 is main menu
@@ -44,11 +44,11 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     characters.push_back(new Champion(sdl_setup, "images/Champion.png", 400, 150, MouseX, MouseY, this));
 
     //Orcs
-    characters.push_back(new OrcChampion(sdl_setup, "images/orcChampion.png", 600, 150, MouseX, MouseY, this)); // "this" is instance of current class
-    characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png", 500, 150, MouseX, MouseY, this));
-    characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png", 550, 150, MouseX, MouseY, this));
-    characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png", 650, 150, MouseX, MouseY, this));
-    characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png", 700, 150, MouseX, MouseY, this));
+    characters.push_back(new OrcChampion(sdl_setup, "images/orcChampion.png", 600, 250, MouseX, MouseY, this)); // "this" is instance of current class
+    characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png", 500, 250, MouseX, MouseY, this));
+    characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png", 550, 250, MouseX, MouseY, this));
+    characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png", 650, 250, MouseX, MouseY, this));
+    characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png", 700, 250, MouseX, MouseY, this));
 
 
     selectedBuilding = new TownCenter(sdl_setup, "images/towncenter.png", 100, 200, 140, 120, 1, this);
@@ -56,7 +56,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     buildings.push_back(selectedBuilding);
     //buildings.push_back(new House(sdl_setup, "images/house.png", 900, 200, 50, 50, 2));
     //buildings.push_back(new House(sdl_setup, "images/house.png", 300, 200, 50, 50, 1));
-    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 700, 200, 140, 120, 2, this));
+    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 700, 100, 140, 120, 2, this));
     //buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 300, 300, 75, 75, 1));
     //buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 700, 350, 75, 75, 2));
 
@@ -67,7 +67,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     goldMines.push_back(new Gold(sdl_setup, 150, 50));
     goldMines.push_back(new Gold(sdl_setup, 600, 200));
     goldMines.push_back(new Gold(sdl_setup, 550, 500));
-    goldMines.push_back(new Gold(sdl_setup, 720, 100));
+    goldMines.push_back(new Gold(sdl_setup, 620, 100));
 }
 
 Environment::~Environment()
@@ -455,6 +455,21 @@ void Environment::createHouse(int x, int y)
     buildings.push_back(new House(sdl_setup, "images/collision_rectangle.png", x, y, 50, 50, 2, this)); //initially display construction zone
 }
 
+void Environment::createBarracks(int x, int y)
+{
+    buildings.push_back(new Barracks(sdl_setup, "images/collision_rectangle.png", x, y, 50, 50, 2, this)); //initially display construction zone
+}
 
+void Environment::notBuildingHouse() { ai->notBuildingHouse(); }
+void Environment::notBuildingBarracks() { ai->notBuildingBarracks(); }
+void Environment::barracksDestroyed() { ai->barracksDestroyed(); }
+void Environment::notBuildingHouse();
+void Environment::notBuildingBarracks();
+void Environment::addVillager() { ai->addVillager(); }
+void Environment::addMilitia() { ai->addMilitia(); }
+void Environment::addChampion() { ai->addChampion(); }
+void Environment::removeVillager() { ai->removeVillager(); }
+void Environment::removeMilitia() { ai->removeMilitia(); }
+void Environment::removeChampion() { ai->removeChampion(); }
 
 

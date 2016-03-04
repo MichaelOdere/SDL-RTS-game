@@ -20,6 +20,9 @@ Character::Character(SDL_Setup* passed_SDL_Setup, std::string FilePath, int star
     unit->SetUpAnimation(9,4);
     unit->SetOrigin((unit->GetWidth())/2, (unit->GetHeight())/2); //allows for unit to stand directly over target instead of offset
 
+    prevX = starting_x;
+    prevY = starting_y;
+
     timeCheck = SDL_GetTicks();
     follow = false;
     distance = 0;
@@ -198,10 +201,12 @@ void Character::Move(){
                         }
 
                         colliding = true;
-                        //distance = 0;   //stop unit on collision
-                        //follow = false;
-                        //follow_point_x = unit->GetX();
-                        //follow_point_y = unit->GetY();
+                        if (!hasTask) {
+                            distance = 0;   //stop unit on collision
+                            follow = false;
+                            follow_point_x = unit->GetX();
+                            follow_point_y = unit->GetY();
+                        }
                     }
                 }
             }
@@ -228,7 +233,8 @@ void Character::Move(){
         } else {
             follow = false;
         }
-
+    prevX = unit->GetX();
+    prevY = unit->GetY();
     timeCheck = SDL_GetTicks();
 
     }

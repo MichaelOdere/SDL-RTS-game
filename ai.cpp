@@ -4,9 +4,9 @@
 AI::AI()
 {
     team = 2;
-    villagerPop = 2;
-    militiaPop = 2;
-    championPop = 1;
+    villagerPop = 0;
+    militiaPop = 0;
+    championPop = 0;
     buildX = 700;
     buildY = 350;
     buildingHouse = false;
@@ -28,16 +28,37 @@ void AI::updateCharacter(Character* character)
     {
         if (!character->isBuilding() && !character->isMining() && !character->isFollowing()) //IDLE VILLAGER
         {
-            character->setFollowPoint(50,50);
+            character->setFollowPoint(600,500);
+            character->setNoTask();
         }
 
-        if (environment->getOrcResources() >= 150 && environment->getOrcPop() + 5 >= environment->getOrcMaxPop())
+        if (environment->getOrcResources() >= 150 && environment->getOrcPop() + 2 >= environment->getOrcMaxPop() && !buildingHouse)
         {
             environment->createHouse(buildX, buildY);
             environment->setOrcResources(environment->getOrcResources() - 150);
             character->setFollowPoint(buildX, buildY); //move character to construction zone
             setBuildArea();
+            buildingHouse = true;
         }
+
+        if (environment->getOrcResources() >= 250 && barracks < 1 && !buildingBarracks)
+        {
+            environment->createBarracks(buildX, buildY);
+            environment->setOrcResources(environment->getOrcResources() - 250);
+            character->setFollowPoint(buildX, buildY); //move character to construction zone
+            setBuildArea();
+            buildingBarracks = true;
+        }
+
+        if (environment->getOrcResources() >= 1000 && !buildingBarracks)
+        {
+            environment->createBarracks(buildX, buildY);
+            environment->setOrcResources(environment->getOrcResources() - 250);
+            character->setFollowPoint(buildX, buildY); //move character to construction zone
+            setBuildArea();
+            buildingBarracks = true;
+        }
+        std::cout << villagerPop << std::endl;
 
     }
 }

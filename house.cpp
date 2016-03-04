@@ -33,5 +33,9 @@ void House::constructing()
     {
         Structure->changeImage("images/house.png"); //change image to constructed state
         environment->increasePop(team); //house created, increase max pop
+        if (team == 2)
+        {
+        environment->notBuildingHouse();
+        }
     }
 }

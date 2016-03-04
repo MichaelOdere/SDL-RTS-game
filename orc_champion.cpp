@@ -8,6 +8,7 @@ Character( passed_SDL_Setup, FilePath, starting_x, starting_y, passed_MouseX, pa
     max_health = 100;
     attack = 0.02;
     defense = 0.005;
+    environment->addChampion();
 
     type = 3;
 }
@@ -19,5 +20,10 @@ OrcChampion::~OrcChampion()
 void OrcChampion::Update(){
 
     Character::Update();
+
+    if (health <= 0)
+    {
+        environment->removeChampion();
+    }
 
 }

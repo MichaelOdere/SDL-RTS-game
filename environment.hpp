@@ -70,7 +70,19 @@ class Environment
         int getOrcMaxPop() { return orcMaxPop; }
         int getOrcResources() { return orcResources; }
 
+        void notBuildingHouse();
+        void notBuildingBarracks();
+        void addVillager();
+        void addMilitia();
+        void addChampion();
+        void removeVillager();
+        void removeMilitia();
+        void removeChampion();
+
         void createHouse(int x, int y);
+        void createBarracks(int x, int y);
+
+        void barracksDestroyed();
 
         int setOrcResources(int passed_orcResources) {orcResources = passed_orcResources; }
 

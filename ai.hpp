@@ -29,6 +29,15 @@ class AI
         std::vector<Gold*> goldMines;
 
         void setEnvironment(Environment* passed_environment);
+        void notBuildingHouse() { buildingHouse = false; houses++; }
+        void notBuildingBarracks() { buildingBarracks = false; barracks++;}
+        void barracksDestroyed() { barracks--; }
+        void addVillager() { villagerPop++; }
+        void addMilitia() { militiaPop++; }
+        void addChampion() { championPop++; }
+        void removeVillager() { villagerPop--; }
+        void removeMilitia() { militiaPop--; }
+        void removeChampion() { championPop--; }
 
     private:
         int team;

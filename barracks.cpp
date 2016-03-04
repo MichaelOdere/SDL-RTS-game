@@ -8,7 +8,7 @@
 Barracks::Barracks(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_x, int size_y, int passed_team, Environment* passed_environment) : Building(sdl_setup, FilePath, x, y, size_x, size_y, passed_team, passed_environment)
 {
     health = 1;
-    max_health = 10;
+    max_health = 500;
     attack = 0.00;
 
     menuType = 5;
@@ -36,6 +36,11 @@ void Barracks::Update()
         environment->createChampion(this, unit); //unit designates human or orc champion
         creating = false;
     }
+
+    if (health <= 0)
+    {
+        environment->barracksDestroyed();
+    }
 }
 
 void Barracks::startCreating(int unit_to_create)
@@ -52,5 +57,9 @@ void Barracks::constructing()
     if (health >= max_health)
     {
         Structure->changeBarracksImage(); //reset image to created state, for some reason barracks.png doesn't work and is cropped weird
+        if (team == 2)
+        {
+            environment->notBuildingBarracks();
+        }
     }
 }
