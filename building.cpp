@@ -1,12 +1,13 @@
 #include "building.hpp"
 
-Building::Building(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_x, int size_y, int passed_team)
+Building::Building(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_x, int size_y, int passed_team, Environment* passed_environment)
 {
     Structure = new Sprite(sdl_setup->GetRenderer(), FilePath.c_str(), x, y, size_x, size_y, CollisionRectangle(0, 0, size_x, size_y));
     selected = false;
     alive = true;
     team = passed_team;
     creating = false;
+    environment = passed_environment;
 }
 
 Building::~Building()

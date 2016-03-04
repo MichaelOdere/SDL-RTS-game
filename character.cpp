@@ -198,10 +198,10 @@ void Character::Move(){
                         }
 
                         colliding = true;
-                        distance = 0;   //stop unit on collision
-                        follow = false;
-                        follow_point_x = unit->GetX();
-                        follow_point_y = unit->GetY();
+                        //distance = 0;   //stop unit on collision
+                        //follow = false;
+                        //follow_point_x = unit->GetX();
+                        //follow_point_y = unit->GetY();
                     }
                 }
             }

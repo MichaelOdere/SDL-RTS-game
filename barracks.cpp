@@ -5,13 +5,15 @@
 #include "orc_militia.hpp"
 
 
-Barracks::Barracks(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_x, int size_y, int passed_team) : Building(sdl_setup, FilePath, x, y, size_x, size_y, passed_team)
+Barracks::Barracks(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_x, int size_y, int passed_team, Environment* passed_environment) : Building(sdl_setup, FilePath, x, y, size_x, size_y, passed_team, passed_environment)
 {
     health = 1;
     max_health = 10;
     attack = 0.00;
 
     menuType = 5;
+
+    type = 2;
 
     constructed = false;
 }
@@ -36,9 +38,8 @@ void Barracks::Update()
     }
 }
 
-void Barracks::startCreating(Environment* passed_environment, int unit_to_create)
+void Barracks::startCreating(int unit_to_create)
 {
-    environment = passed_environment;
     creating = true;
     unit = unit_to_create;
     timecheck = SDL_GetTicks(); //get time at call to create

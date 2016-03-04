@@ -6,11 +6,11 @@
 class TownCenter: public Building
 {
     public:
-        TownCenter(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_x, int size_y, int passed_team);
+        TownCenter(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_x, int size_y, int passed_team, Environment* passed_environment);
         TownCenter() {}
         ~TownCenter();
         void Update();
-        void startCreating(Environment* passed_environment, int unit_to_create);
+        void startCreating(int unit_to_create);
     private:
         int timecheck;
 };

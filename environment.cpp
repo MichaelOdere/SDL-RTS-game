@@ -17,7 +17,8 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     MouseY = passed_MouseY;
     optionsMenu = passed_menu;
     ai = passed_ai;
-    
+
+
     txt = new TextMessage(sdl_setup->GetRenderer(), "hi, I'm here", 500, 300);
 
     showMenu = false;//start with menu not displayed
@@ -30,8 +31,8 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
 
     humanPop = 5;
     orcPop = 5;
-    humanMaxPop = 15;
-    orcMaxPop = 15;
+    humanMaxPop = 10;
+    orcMaxPop = 10;
 
     //Humans
     selectedCharacter = new Militia(sdl_setup, "images/militia.png", 300, 150, MouseX, MouseY, this); //game begins with villager selected to avoid error of deselecting an unselected character below
@@ -50,12 +51,12 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png", 700, 150, MouseX, MouseY, this));
 
 
-    selectedBuilding = new TownCenter(sdl_setup, "images/towncenter.png", 100, 200, 140, 120, 1);
+    selectedBuilding = new TownCenter(sdl_setup, "images/towncenter.png", 100, 200, 140, 120, 1, this);
     selectedBuilding->unSelect();
     buildings.push_back(selectedBuilding);
     //buildings.push_back(new House(sdl_setup, "images/house.png", 900, 200, 50, 50, 2));
     //buildings.push_back(new House(sdl_setup, "images/house.png", 300, 200, 50, 50, 1));
-    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 700, 200, 140, 120, 2));
+    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 700, 200, 140, 120, 2, this));
     //buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 300, 300, 75, 75, 1));
     //buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 700, 350, 75, 75, 2));
 
@@ -132,7 +133,7 @@ void Environment::AddResources(int i)
 void Environment::Update()
 {
     txt->Draw();
-    
+
     if(showMenu){
         if(selectedBuilding->selected){
             optionsMenu->UpdateType(selectedBuilding->getMenuType());
@@ -152,7 +153,7 @@ void Environment::Update()
                     //make villager next to towncenter
                     if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop){ //if enough resources and population room
                         resources = resources - optionsMenu->getOpCost(); //remove resources
-                        selectedBuilding->startCreating(this, 1); //initiate creation of unit (10 sec, multiple units may be queued)
+                        selectedBuilding->startCreating(1); //initiate creation of unit (10 sec, multiple units may be queued)
                     }else{
                         //alert insufficient funds
                     }
@@ -163,7 +164,7 @@ void Environment::Update()
                     //make orc villager next to towncenter
                     if(orcResources>=optionsMenu->getOpCost()  && orcPop < orcMaxPop){
                         orcResources = orcResources - optionsMenu->getOpCost();
-                        selectedBuilding->startCreating(this, 2);
+                        selectedBuilding->startCreating(2);
                     }else{
                         //alert insufficient funds
                     }
@@ -180,7 +181,7 @@ void Environment::Update()
                     //make militia next to barracks
                     if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop){
                         resources = resources - optionsMenu->getOpCost();
-                        selectedBuilding->startCreating(this, 1);
+                        selectedBuilding->startCreating(1);
                     }else{
                         //alert insufficient funds
                     }
@@ -189,7 +190,7 @@ void Environment::Update()
                     //make champion next to barracks
                     if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop){
                         resources = resources - optionsMenu->getOpCost();
-                        selectedBuilding->startCreating(this, 3);
+                        selectedBuilding->startCreating(3);
                     }else{
                         //alert insufficient funds
                     }
@@ -200,7 +201,7 @@ void Environment::Update()
                     //make orc militia next to barracks
                     if(orcResources>=optionsMenu->getOpCost() && orcPop < orcMaxPop){
                         orcResources = orcResources - optionsMenu->getOpCost();
-                        selectedBuilding->startCreating(this, 2);
+                        selectedBuilding->startCreating(2);
                     }else{
                         //alert insufficient funds
                     }
@@ -209,7 +210,7 @@ void Environment::Update()
                     //make champion next to barracks
                     if(orcResources>=optionsMenu->getOpCost()  && orcPop < orcMaxPop){
                         orcResources = orcResources - optionsMenu->getOpCost();
-                        selectedBuilding->startCreating(this, 4);
+                        selectedBuilding->startCreating(4);
                     }else{
                         //alert insufficient funds
                     }
@@ -296,15 +297,13 @@ void Environment::Update()
             if(optionsMenu->getWhatToMake() == 1 && !buildingConstructionCollision(*MouseX-50, *MouseY-50)){
                 if (selectedCharacter->getTeam() == 1) {//check villager team
                     if(resources >= optionsMenu->getOpCost()){
-                        buildings.push_back(new House(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 50, 50, 1)); //initially display construction zone
+                        buildings.push_back(new House(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 50, 50, 1, this)); //initially display construction zone
                         resources = resources - optionsMenu->getOpCost();
-                        humanMaxPop += 5;
                     }
                 } else {
                     if(orcResources >= optionsMenu->getOpCost()){
-                        buildings.push_back(new House(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 50, 50, 2));
+                        buildings.push_back(new House(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 50, 50, 2, this));
                         orcResources = orcResources - optionsMenu->getOpCost();
-                        orcMaxPop += 5;
                     }
                 }
                 selectedCharacter->setFollowPoint(*MouseX, *MouseY); //move villager to construction zone
@@ -312,12 +311,12 @@ void Environment::Update()
             }else if(optionsMenu->getWhatToMake() == 2 && !buildingConstructionCollision(*MouseX-50, *MouseY-50)){
                 if (selectedCharacter->getTeam() == 1) {//check villager team
                     if(resources >= optionsMenu->getOpCost()){
-                        buildings.push_back(new Barracks(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 75, 75, 1));
+                        buildings.push_back(new Barracks(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 75, 75, 1, this));
                         resources = resources - optionsMenu->getOpCost();
                     }
                 } else {
                     if(orcResources >= optionsMenu->getOpCost()){
-                        buildings.push_back(new Barracks(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 75, 75, 2));
+                        buildings.push_back(new Barracks(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 75, 75, 2, this));
                         orcResources = orcResources - optionsMenu->getOpCost();
                     }
                 }
@@ -382,6 +381,15 @@ void Environment::decreasePop(int team)
     }
 }
 
+void Environment::increasePop(int team)
+{
+    if (team == 1) {
+        humanMaxPop += 5;
+    } else {
+        orcMaxPop += 5;
+    }
+}
+
 bool Environment::buildingConstructionCollision(int x, int y)
 {
     for (int j = 0; j < buildings.size(); j++) //check for collision
@@ -440,6 +448,13 @@ void Environment::createChampion(Building* passed_building, int unit)
         orcPop++;
     }
 }
+
+
+void Environment::createHouse(int x, int y)
+{
+    buildings.push_back(new House(sdl_setup, "images/collision_rectangle.png", x, y, 50, 50, 2, this)); //initially display construction zone
+}
+
 
 
 

@@ -5,11 +5,11 @@
 class Barracks: public Building
 {
     public:
-        Barracks(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_x, int size_y, int passed_team);
+        Barracks(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_x, int size_y, int passed_team, Environment* passed_environment);
         Barracks() {}
         ~Barracks();
         void Update();
-        void startCreating(Environment* passed_environment, int unit_to_create);
+        void startCreating(int unit_to_create);
         void constructing();
     private:
         int timecheck;

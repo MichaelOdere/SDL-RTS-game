@@ -59,6 +59,7 @@ class Environment
         bool buildingConstructionCollision(int x, int y);
 
         void decreasePop(int team);
+        void increasePop(int team);
 
         int humanPop;
         int orcPop;
@@ -67,12 +68,17 @@ class Environment
 
         int getOrcPop() { return orcPop; }
         int getOrcMaxPop() { return orcMaxPop; }
+        int getOrcResources() { return orcResources; }
+
+        void createHouse(int x, int y);
+
+        int setOrcResources(int passed_orcResources) {orcResources = passed_orcResources; }
 
         void createVillager(Building* passed_building, int unit);
         void createMilitia(Building* passed_building, int unit);
         void createChampion(Building* passed_building, int unit);
-    
-        
+
+
 
     private:
 
@@ -86,7 +92,7 @@ class Environment
         int menuType;
         int whatToMake;
         bool showMenu;
-    
+
         TextMessage* txt;
 
         Character* dead;

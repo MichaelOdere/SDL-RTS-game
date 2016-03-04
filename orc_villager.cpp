@@ -36,6 +36,7 @@ void OrcVillager::Update(){
             } else {
                 mining = false;
             }
+            break;
         } else
         {
             mining = false;
@@ -51,6 +52,7 @@ void OrcVillager::Update(){
         {
             environment->getBuildings()[i]->constructing();
             building = true;
+            break;
         } else
         {
             building = false;

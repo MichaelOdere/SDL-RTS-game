@@ -10,7 +10,7 @@ class Environment;
 class Building
 {
     public:
-        Building(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_x, int size_y, int passed_team);
+        Building(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_x, int size_y, int passed_team, Environment* passed_environment);
         Building() {}
         ~Building();
 
@@ -51,11 +51,15 @@ class Building
         int menuType;
 
         bool creating;
-        virtual void startCreating(Environment* passed_environment, int unit_to_create) {}
+        virtual void startCreating(int unit_to_create) {}
         bool Creating() { return creating; }
         Environment* environment;
 
         int unit;
+
+        int type;
+
+        int getType() { return type; }
 
         bool constructed;
 

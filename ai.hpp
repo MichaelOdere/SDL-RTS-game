@@ -28,9 +28,21 @@ class AI
         std::vector<Building*> buildings;
         std::vector<Gold*> goldMines;
 
+        void setEnvironment(Environment* passed_environment);
+
     private:
         int team;
+        int villagerPop;
+        int militiaPop;
+        int championPop;
+        int buildX;
+        int buildY;
+        int houses;
+        int barracks;
+        bool buildingHouse;
+        bool buildingBarracks;
         Environment* environment;
+        void setBuildArea();
 
 };
 
