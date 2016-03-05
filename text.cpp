@@ -15,7 +15,6 @@ TextMessage::TextMessage(SDL_Renderer* passed_renderer, std::string message, int
         //logSDLError(std::cout, "TTF_Init");
         SDL_Quit();
     }
-    SDL_Color color = { 255, 255, 255, 255 };
     textTexture = renderText(message, "fontFile.ttf", color, 64, passed_renderer);
 }
 
@@ -47,14 +46,21 @@ SDL_Texture* TextMessage::renderText(const std::string &message, const std::stri
     }
 
     rect = { 0, 0, surf->w, surf->h };
-    crop = { 0, 0, surf->w, surf->h };
+    crop = { static_cast<int>(this->X_pos), static_cast<int>(this->Y_pos), surf->w, surf->h };
     //Clean up the surface and font
     SDL_FreeSurface(surf);
     TTF_CloseFont(font);
     return texture;
 }
 
-void TextMessage::Draw(){
+
+
+void TextMessage::Draw(std::string message){
+    SDL_DestroyTexture(textTexture); // Free memory from previous texture
+    
+    textTexture = renderText(message, "fontFile.ttf", color, 20, this->renderer);
     SDL_RenderCopy(renderer, textTexture, &rect, &crop);
+
 }
+
 

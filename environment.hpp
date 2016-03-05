@@ -86,13 +86,13 @@ class Environment
 
         void barracksDestroyed();
 
-        int setOrcResources(int passed_orcResources) {orcResources = passed_orcResources; }
+        void setOrcResources(int passed_orcResources) {orcResources = passed_orcResources; }
 
         void createVillager(Building* passed_building, int unit);
         void createMilitia(Building* passed_building, int unit);
         void createChampion(Building* passed_building, int unit);
 
-
+        std::string timeHandler(int time);
 
     private:
 
@@ -107,8 +107,9 @@ class Environment
         int whatToMake;
         bool showMenu;
 
-        TextMessage* txt;
-
+        TextMessage* goldText;
+        TextMessage* timeText;
+    
         Character* dead;
 
         SDL_Setup* sdl_setup;

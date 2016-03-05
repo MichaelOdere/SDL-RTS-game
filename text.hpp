@@ -14,7 +14,7 @@ public:
     SDL_Rect rect;
     SDL_Rect crop;
 
-    void Draw();
+    void Draw(std::string message);
 
     void SetX(float x);
     void SetY(float y);
@@ -27,9 +27,9 @@ public:
     int GetHeight();
 
     void SetOrigin(float x, float y);
-    
-    SDL_Texture* renderText(const std::string &message, const std::string &fontFile, SDL_Color color, int fontSize, SDL_Renderer *renderer);
+    SDL_Color color = { 255, 255, 255, 255 };
 
+    SDL_Texture* renderText(const std::string &message, const std::string &fontFile, SDL_Color color, int fontSize, SDL_Renderer *renderer);
 private:
     float X_pos;
     float Y_pos;
