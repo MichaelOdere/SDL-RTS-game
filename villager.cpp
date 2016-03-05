@@ -6,7 +6,7 @@ Villager::Villager(SDL_Setup* passed_SDL_Setup, std::string FilePath, int starti
     team = 1;
     health = 50;
     max_health = 50;
-    attack = 0.01;
+    attack = 0.005;
     defense = 0;
 
     menuType = 3;

@@ -1,7 +1,6 @@
 #ifndef AI_HPP
 #define AI_HPP
 #include "imports.hpp"
-//#include "environment.hpp"
 #include "building.hpp"
 #include "character.hpp"
 #include "gold.hpp"
@@ -14,6 +13,7 @@
 class Environment;
 class Character;
 class Building;
+class Gold;
 
 class AI
 {
@@ -38,6 +38,8 @@ class AI
         void removeVillager() { villagerPop--; }
         void removeMilitia() { militiaPop--; }
         void removeChampion() { championPop--; }
+        void goldMineDepleted(int gold_x, int gold_y);
+        void buildingNotConstructing(int structure_x, int structure_y);
 
     private:
         int team;
@@ -48,10 +50,15 @@ class AI
         int buildY;
         int houses;
         int barracks;
+        int idle_x;
+        int idle_y;
         bool buildingHouse;
         bool buildingBarracks;
         Environment* environment;
         void setBuildArea();
+        bool notConstructing;
+        int struct_x;
+        int struct_y;
 
 };
 

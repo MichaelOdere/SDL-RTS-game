@@ -35,39 +35,39 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     orcMaxPop = 10;
 
     //Humans
-    selectedCharacter = new Militia(sdl_setup, "images/militia.png", 300, 150, MouseX, MouseY, this); //game begins with villager selected to avoid error of deselecting an unselected character below
+    selectedCharacter = new Villager(sdl_setup, "images/villager.png", 300, 200, MouseX, MouseY, this); //game begins with villager selected to avoid error of deselecting an unselected character below
     selectedCharacter->unSelect();
     characters.push_back(selectedCharacter);
-    characters.push_back(new Villager(sdl_setup, "images/villager.png", 200, 150, MouseX, MouseY, this));
-    characters.push_back(new Villager(sdl_setup, "images/villager.png", 250, 150, MouseX, MouseY, this));
-    characters.push_back(new Militia(sdl_setup, "images/militia.png", 350, 150, MouseX, MouseY, this));
-    characters.push_back(new Champion(sdl_setup, "images/Champion.png", 400, 150, MouseX, MouseY, this));
+    characters.push_back(new Villager(sdl_setup, "images/villager.png", 200, 200, MouseX, MouseY, this));
+    characters.push_back(new Villager(sdl_setup, "images/villager.png", 250, 200, MouseX, MouseY, this));
 
     //Orcs
-    characters.push_back(new OrcChampion(sdl_setup, "images/orcChampion.png", 600, 250, MouseX, MouseY, this)); // "this" is instance of current class
-    characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png", 500, 250, MouseX, MouseY, this));
-    characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png", 550, 250, MouseX, MouseY, this));
-    characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png", 650, 250, MouseX, MouseY, this));
-    characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png", 700, 250, MouseX, MouseY, this));
+    characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png", 650, 200, MouseX, MouseY, this));
+    characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png", 700, 200, MouseX, MouseY, this));
+    characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png", 750, 200, MouseX, MouseY, this));
 
 
-    selectedBuilding = new TownCenter(sdl_setup, "images/towncenter.png", 100, 200, 140, 120, 1, this);
+
+    selectedBuilding = new TownCenter(sdl_setup, "images/towncenter.png", 100, 50, 140, 120, 1, this);
     selectedBuilding->unSelect();
     buildings.push_back(selectedBuilding);
-    //buildings.push_back(new House(sdl_setup, "images/house.png", 900, 200, 50, 50, 2));
-    //buildings.push_back(new House(sdl_setup, "images/house.png", 300, 200, 50, 50, 1));
-    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 700, 100, 140, 120, 2, this));
-    //buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 300, 300, 75, 75, 1));
-    //buildings.push_back(new Barracks(sdl_setup, "images/barracks.png", 700, 350, 75, 75, 2));
+    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 800, 50, 140, 120, 2, this));
 
 
-    selectedGold = new Gold(sdl_setup, 50, 50);
+    selectedGold = new Gold(sdl_setup, 500, 500, this);
     selectedGold->unSelect();
     goldMines.push_back(selectedGold);
-    goldMines.push_back(new Gold(sdl_setup, 150, 50));
-    goldMines.push_back(new Gold(sdl_setup, 600, 200));
-    goldMines.push_back(new Gold(sdl_setup, 550, 500));
-    goldMines.push_back(new Gold(sdl_setup, 620, 100));
+    goldMines.push_back(new Gold(sdl_setup, 550, 500, this));
+    goldMines.push_back(new Gold(sdl_setup, 500, 450, this));
+    goldMines.push_back(new Gold(sdl_setup, 550, 450, this));
+    goldMines.push_back(new Gold(sdl_setup, 500, 400, this));
+    goldMines.push_back(new Gold(sdl_setup, 550, 400, this));
+    goldMines.push_back(new Gold(sdl_setup, 500, 200, this));
+    goldMines.push_back(new Gold(sdl_setup, 550, 200, this));
+    goldMines.push_back(new Gold(sdl_setup, 500, 150, this));
+    goldMines.push_back(new Gold(sdl_setup, 550, 150, this));
+    goldMines.push_back(new Gold(sdl_setup, 500, 100, this));
+    goldMines.push_back(new Gold(sdl_setup, 550, 100, this));
 }
 
 Environment::~Environment()
@@ -123,10 +123,10 @@ void Environment::AddResources(int i)
 {
     if (i == 1)
     {
-    resources = resources + 0.005;
+    resources = resources + 0.0025;
     } else
     {
-    orcResources = orcResources + 0.005;
+    orcResources = orcResources + 0.0025;
     }
 }
 
@@ -457,7 +457,7 @@ void Environment::createHouse(int x, int y)
 
 void Environment::createBarracks(int x, int y)
 {
-    buildings.push_back(new Barracks(sdl_setup, "images/collision_rectangle.png", x, y, 50, 50, 2, this)); //initially display construction zone
+    buildings.push_back(new Barracks(sdl_setup, "images/collision_rectangle.png", x, y, 75, 75, 2, this)); //initially display construction zone
 }
 
 void Environment::notBuildingHouse() { ai->notBuildingHouse(); }
@@ -471,5 +471,7 @@ void Environment::addChampion() { ai->addChampion(); }
 void Environment::removeVillager() { ai->removeVillager(); }
 void Environment::removeMilitia() { ai->removeMilitia(); }
 void Environment::removeChampion() { ai->removeChampion(); }
+void Environment::goldMineDepleted(int gold_x, int gold_y) { ai->goldMineDepleted(gold_x, gold_y); }
+void Environment::buildingNotConstructing(int structure_x, int structure_y) { ai->buildingNotConstructing(structure_x, structure_y); }
 
 

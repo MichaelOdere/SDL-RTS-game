@@ -3,11 +3,14 @@
 #include "imports.hpp"
 #include "sdl_setup.hpp"
 #include "sprite.hpp"
+#include "environment.hpp"
+
+class Environment;
 
 class Gold
 {
     public:
-        Gold(SDL_Setup* sdl_setup, int x, int y);
+        Gold(SDL_Setup* sdl_setup, int x, int y, Environment* passed_environment);
         ~Gold();
 
         void DrawGold();
@@ -39,6 +42,7 @@ class Gold
 
     private:
         Sprite* Mine;
+        Environment* environment;
 
 };
 

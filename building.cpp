@@ -8,6 +8,7 @@ Building::Building(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int
     team = passed_team;
     creating = false;
     environment = passed_environment;
+    previous_health = 0;
 }
 
 Building::~Building()
@@ -31,12 +32,19 @@ void Building::Update()
         Structure->DisplayRectangle(health/max_health);
     }
 
+    if (health == previous_health && health != 1 && !constructed) //not being constructed after construction starts
+    {
+        environment->buildingNotConstructing(Structure->GetX(), Structure->GetY());
+
+    }
+
     if (health <= 0)
     {
         alive = false;
         selected = false;
         delete Structure;
     }
+    previous_health = health;
 }
 
 void Building::Select(){
@@ -69,7 +77,7 @@ void Building::attacked(float attacker_attack) //called if attacked by another c
 
 void Building::constructing()
 {
-    health += 0.01;
+    health += 0.02;
     if (health >= max_health)
     {
         constructed = true; //allows use of building and stops villager from constructing

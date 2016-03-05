@@ -61,6 +61,8 @@ class Building
 
         int getType() { return type; }
 
+        float previous_health;
+
         bool constructed;
 
         bool isConstructed() { return constructed; }
