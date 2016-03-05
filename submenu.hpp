@@ -50,13 +50,20 @@ private:
     MenuOption newBarracks;
 
     std::vector<MenuOption> options; //the options
-    std::vector<Sprite*> sprites; //corresponding sprites for options
+    std::vector<Sprite*> displayed;
+    std::vector<Sprite*> main;
+    std::vector<Sprite*> house;
+    std::vector<Sprite*> barracks;
+    std::vector<Sprite*> villager;
+    std::vector<Sprite*> townCenter;
 
     SDL_Setup* sdl_setup;
 
     Sprite* bar;
 
     int selectedI;//index of selected option
+
+    std::vector<Sprite*> newMenu(std::vector<MenuOption> passed_options);
 
 
 
