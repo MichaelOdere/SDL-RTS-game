@@ -11,13 +11,14 @@
 #include "text.hpp"
 #include <math.h>       /* floor */
 
-Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *passed_MouseY, SubMenu* passed_menu, AI* passed_ai)
+Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *passed_MouseY, SubMenu* passed_menu, AI* passed_ai, Main* passed_main)
 {
     sdl_setup = passed_sdl_setup;
     MouseX = passed_MouseX;
     MouseY = passed_MouseY;
     optionsMenu = passed_menu;
     ai = passed_ai;
+    main = passed_main;
     startTime = SDL_GetTicks()/1000;
 
 
@@ -546,6 +547,9 @@ std::string Environment::timeHandler(int time){
     int mins = floor((int)(time/60));
     int secs = time-mins*60;
     return "Time: "+ std::to_string(mins) +":" +std::to_string(secs);
+}
 
-
+void Environment::endGame(int loser)
+{
+    main->endGame(loser);
 }

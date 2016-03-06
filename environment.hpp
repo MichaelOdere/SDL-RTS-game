@@ -12,15 +12,17 @@
 #include "ai.hpp"
 #include <math.h>
 #include "text.hpp"
+#include "main.hpp"
 
 class Character; //avoids error because Environment includes Character and vice versa
 class Building;
 class AI;
+class Main;
 
 class Environment
 {
     public:
-        Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *passed_MouseY, SubMenu* passed_menu, AI* passed_ai);
+        Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *passed_MouseY, SubMenu* passed_menu, AI* passed_ai, Main* passed_main);
         ~Environment();
 
         void DrawBack();
@@ -98,6 +100,9 @@ class Environment
         int brokeTime;
 
         std::string timeHandler(int time);
+
+        Main* main;
+        void endGame(int loser);
 
     private:
 

@@ -8,6 +8,9 @@
 #include "submenu.hpp"
 #include "ai.hpp"
 
+class Environment;
+class AI;
+
 class Main
 {
 public:
@@ -17,6 +20,8 @@ public:
     void GameLoop();
 
     double GetDistance(int x1, int y1, int x2, int y2);
+
+    void endGame(int loser);
 
 private:
 

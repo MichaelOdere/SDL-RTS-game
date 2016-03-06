@@ -46,7 +46,7 @@ void Main::GameLoop()
 
     optionsMenu = new SubMenu(sdl_setup, &MouseX, &MouseY,0);
     ai = new AI();
-    gameMap = new Environment(sdl_setup, &MouseX, &MouseY, optionsMenu, ai);
+    gameMap = new Environment(sdl_setup, &MouseX, &MouseY, optionsMenu, ai, this);
     ai->setEnvironment(gameMap);
     grass = new Sprite(sdl_setup->GetRenderer(), "images/grass.png", 0, 0, 1024, 768, CollisionRectangle(0,0,0,0)); //map, one big grass tile
 
@@ -61,5 +61,32 @@ void Main::GameLoop()
         gameMap->Update();
 
         sdl_setup->End();
+    }
+
+    quit = false;
+    while (!quit)
+    {
+        sdl_setup->Begin();
+        if (sdl_setup->GetEv()->type == SDL_KEYDOWN)
+        {
+            if (sdl_setup->GetEv()->key.keysym.sym == SDLK_ESCAPE)
+            {
+                quit = true;
+            }
+        }
+        grass->Draw();
+        sdl_setup->End();
+    }
+
+}
+
+void Main::endGame(int loser)
+{
+    quit = true;
+    if (loser == 1) {
+        grass = new Sprite(sdl_setup->GetRenderer(), "images/orcVictory.png", 0, 0, 1024, 768, CollisionRectangle(0,0,0,0)); //orcs won
+    } else
+    {
+        grass = new Sprite(sdl_setup->GetRenderer(), "images/humanVictory.png", 0, 0, 1024, 768, CollisionRectangle(0,0,0,0)); //humans won
     }
 }
