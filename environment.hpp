@@ -93,6 +93,7 @@ class Environment
         void createChampion(Building* passed_building, int unit);
     
         void alertInsufficientFunds();
+        void alertNoHousing();
         int brokeTime;
 
         std::string timeHandler(int time);
@@ -110,10 +111,12 @@ class Environment
         int whatToMake;
         bool showMenu;
         bool broke;
+        bool overpopulated;
 
         TextMessage* goldText;
         TextMessage* timeText;
         TextMessage* insufficientFunds;
+        TextMessage* noHousing;
     
         Character* dead;
 
