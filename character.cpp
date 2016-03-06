@@ -55,6 +55,11 @@ void Character::Update()
         Select();  // Selects the character
         Move();    // Moves the character
 
+        if (unit->GetX() > 512 && team == 1) //if human crosses into orc territory
+        {
+
+        }
+
         //COMBAT
         target = environment->Combat(unit, team); //search for enemy in collision box, returns first enemy found
         buildingTarget = environment->CombatBuilding(unit, team);
@@ -71,6 +76,7 @@ void Character::Update()
         {
             alive = false;
             selected = false;
+            environment->removeCharacter(team);
         }
 }
 

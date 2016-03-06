@@ -5,8 +5,8 @@ Gold::Gold(SDL_Setup* sdl_setup, int x, int y, Environment* passed_environment)
     //each gold tile 50x50, location in map passed through x and y (mouse location when clicked)
     Mine = new Sprite(sdl_setup->GetRenderer(), "images/gold.png", x, y, 50, 50, CollisionRectangle(0,0,50,50));
 
-    resources = 1000; //amount of resources to be mined, mining method to be implemented
-    max_resources = 1000;
+    resources = 500; //amount of resources to be minedS
+    max_resources = 500;
 
     selected = false;
     alive = true;
@@ -23,7 +23,6 @@ void Gold::Update()
     if (selected)
     {
         Mine->DisplayRectangle(resources/max_resources);
-        std::cout << "Gold left: " << resources << std::endl; //for testing, will eventually be implemented as part of submenu
     }
 
     if (resources <= 0)

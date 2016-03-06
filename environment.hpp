@@ -83,6 +83,7 @@ class Environment
         void removeChampion();
         void goldMineDepleted(int gold_x, int gold_y);
         void buildingNotConstructing(int structure_x, int structure_y);
+        void removeCharacter(int team);
 
         void createHouse(int x, int y);
         void createBarracks(int x, int y);

@@ -28,6 +28,11 @@ void TownCenter::Update()
         environment->createVillager(this, unit); //unit designates human or orc villager
         creating = false;
     }
+
+    if (health <= 0)
+    {
+        environment->endGame(team);
+    }
 }
 
 void TownCenter::startCreating(int unit_to_create)

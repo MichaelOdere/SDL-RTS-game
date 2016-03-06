@@ -28,13 +28,13 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     insufficientFunds = new TextMessage(sdl_setup->GetRenderer(), "You don't have " + std::to_string(optionsMenu->getOpCost()) + " gold!", 350, 300);
     noHousing = new TextMessage(sdl_setup->GetRenderer(), "You don't have enough houses for a new character", 350, 300);
 
-    showMenu = false;//start with menu not displayed
+    showMenu = true;//start with menu displayed
     optionsMenu->UpdateType(1);// 1 is main menu
     broke = false;
     overpopulated = false;
 
-    resources = 300;
-    orcResources = 300;
+    resources = 100;
+    orcResources = 100;
 
     team = 1;
 
@@ -541,6 +541,17 @@ void Environment::removeMilitia() { ai->removeMilitia(); }
 void Environment::removeChampion() { ai->removeChampion(); }
 void Environment::goldMineDepleted(int gold_x, int gold_y) { ai->goldMineDepleted(gold_x, gold_y); }
 void Environment::buildingNotConstructing(int structure_x, int structure_y) { ai->buildingNotConstructing(structure_x, structure_y); }
+
+void Environment::removeCharacter(int team)
+{
+    if (team == 1)
+    {
+        humanPop--;
+    } else
+    {
+        orcPop--;
+    }
+}
 
 std::string Environment::timeHandler(int time){
 
