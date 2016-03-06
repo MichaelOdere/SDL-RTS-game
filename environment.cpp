@@ -22,9 +22,11 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
 
     goldText = new TextMessage(sdl_setup->GetRenderer(), "Gold: " + std::to_string((int)resources), 20, 0);
     timeText = new TextMessage(sdl_setup->GetRenderer(), "Time: " + std::to_string(SDL_GetTicks()/1000), 720, 0);
+    insufficientFunds = new TextMessage(sdl_setup->GetRenderer(), "You don't have " + std::to_string(optionsMenu->getOpCost()) + " gold!", 350, 300);
 
     showMenu = false;//start with menu not displayed
     optionsMenu->UpdateType(1);// 1 is main menu
+    broke = false;
 
     resources = 1000;
     orcResources = 1000;
@@ -137,6 +139,14 @@ void Environment::Update()
     
     goldText->Draw("Gold: " + std::to_string((int)resources));
     timeText->Draw("Time: " + timeHandler((int)(SDL_GetTicks()/1000)));
+    
+    if(broke){
+        if(SDL_GetTicks() < brokeTime+5000){
+            insufficientFunds->Draw("You don't have " + std::to_string(optionsMenu->getOpCost()) + " gold!");
+        }else{
+            broke = false;
+        }
+    }
 
     if(showMenu){
         if(selectedBuilding->selected){
@@ -159,7 +169,7 @@ void Environment::Update()
                         resources = resources - optionsMenu->getOpCost(); //remove resources
                         selectedBuilding->startCreating(1); //initiate creation of unit (10 sec, multiple units may be queued)
                     }else{
-                        //alert insufficient funds
+                        alertInsufficientFunds();
                     }
                     optionsMenu->buttonPressed = false;
                 }
@@ -170,7 +180,7 @@ void Environment::Update()
                         orcResources = orcResources - optionsMenu->getOpCost();
                         selectedBuilding->startCreating(2);
                     }else{
-                        //alert insufficient funds
+                        alertInsufficientFunds();
                     }
                     optionsMenu->buttonPressed = false;
                 }
@@ -187,7 +197,7 @@ void Environment::Update()
                         resources = resources - optionsMenu->getOpCost();
                         selectedBuilding->startCreating(1);
                     }else{
-                        //alert insufficient funds
+                        alertInsufficientFunds();
                     }
                     optionsMenu->buttonPressed = false;
                 }else if(optionsMenu->getWhatToMake() == 7){
@@ -196,7 +206,7 @@ void Environment::Update()
                         resources = resources - optionsMenu->getOpCost();
                         selectedBuilding->startCreating(3);
                     }else{
-                        //alert insufficient funds
+                        alertInsufficientFunds();
                     }
                     optionsMenu->buttonPressed = false;
                 }
@@ -207,7 +217,7 @@ void Environment::Update()
                         orcResources = orcResources - optionsMenu->getOpCost();
                         selectedBuilding->startCreating(2);
                     }else{
-                        //alert insufficient funds
+                        alertInsufficientFunds();
                     }
                     optionsMenu->buttonPressed = false;
                 }else if(optionsMenu->getWhatToMake() == 8){
@@ -216,7 +226,7 @@ void Environment::Update()
                         orcResources = orcResources - optionsMenu->getOpCost();
                         selectedBuilding->startCreating(4);
                     }else{
-                        //alert insufficient funds
+                        alertInsufficientFunds();
                     }
                     optionsMenu->buttonPressed = false;
                 }
@@ -412,6 +422,11 @@ bool Environment::buildingConstructionCollision(int x, int y)
         }
     }
     return false;
+}
+
+void Environment::alertInsufficientFunds(){
+    broke = true;
+    brokeTime = SDL_GetTicks();
 }
 
 void Environment::createVillager(Building* passed_building, int unit) //creates new unit next to passed building

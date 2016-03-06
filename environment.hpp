@@ -91,6 +91,9 @@ class Environment
         void createVillager(Building* passed_building, int unit);
         void createMilitia(Building* passed_building, int unit);
         void createChampion(Building* passed_building, int unit);
+    
+        void alertInsufficientFunds();
+        int brokeTime;
 
         std::string timeHandler(int time);
 
@@ -106,9 +109,11 @@ class Environment
         int menuType;
         int whatToMake;
         bool showMenu;
+        bool broke;
 
         TextMessage* goldText;
         TextMessage* timeText;
+        TextMessage* insufficientFunds;
     
         Character* dead;
 
