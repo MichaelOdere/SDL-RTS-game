@@ -16,20 +16,20 @@ SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_Mo
     newHouse = MenuOption(1,150, "images/house.png", false);
     newBarracks = MenuOption(2,250, "images/barracks.png", false);
     newVillager = MenuOption(3, 50, "images/villagerButton.png", true);
-    newOrcVillager = MenuOption(4, 50, "images/orcVillagerButton.png", true);
+    //newOrcVillager = MenuOption(4, 50, "images/orcVillagerButton.png", true);
     newMilitia = MenuOption(5, 75, "images/militiaButton.png", true);
-    newOrcMilitia = MenuOption(6, 75, "images/orcMilitiaButton.png", true);
+    //newOrcMilitia = MenuOption(6, 75, "images/orcMilitiaButton.png", true);
     newChampion = MenuOption(7, 100, "images/championButton.png", true);
-    newOrcChampion = MenuOption(8, 100, "images/orcChampionButton.png", true);
+    //newOrcChampion = MenuOption(8, 100, "images/orcChampionButton.png", true);
 
     villagerOptions.push_back(newHouse);
     villagerOptions.push_back(newBarracks);
     TownCenterOptions.push_back(newVillager);
-    TownCenterOptions.push_back(newOrcVillager);
+    //TownCenterOptions.push_back(newOrcVillager);
     barracksOptions.push_back(newMilitia);
-    barracksOptions.push_back(newOrcMilitia);
+    //barracksOptions.push_back(newOrcMilitia);
     barracksOptions.push_back(newChampion);
-    barracksOptions.push_back(newOrcChampion);
+    //barracksOptions.push_back(newOrcChampion);
 
     bar = new Sprite(sdl_setup->GetRenderer(), "images/optionsmenu.png", 0, 675, 1024, 100, CollisionRectangle(0,0,1024,100));
 

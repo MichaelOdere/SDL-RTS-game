@@ -20,14 +20,14 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     ai = passed_ai;
 
 
-    goldText = new TextMessage(sdl_setup->GetRenderer(), "Gold: " + std::to_string((int)resources), 20, 0);
-    timeText = new TextMessage(sdl_setup->GetRenderer(), "Time: " + std::to_string(SDL_GetTicks()/1000), 720, 0);
+    goldText = new TextMessage(sdl_setup->GetRenderer(), std::to_string((int)resources), 20, 0);
+    timeText = new TextMessage(sdl_setup->GetRenderer(), std::to_string(SDL_GetTicks()/1000), 720, 0);
 
     showMenu = false;//start with menu not displayed
     optionsMenu->UpdateType(1);// 1 is main menu
 
-    resources = 1000;
-    orcResources = 1000;
+    resources = 300;
+    orcResources = 300;
 
     team = 1;
 
@@ -134,9 +134,9 @@ void Environment::AddResources(int i)
 
 void Environment::Update()
 {
-    
+
     goldText->Draw("Gold: " + std::to_string((int)resources));
-    timeText->Draw("Time: " + timeHandler((int)(SDL_GetTicks()/1000)));
+    timeText->Draw(timeHandler((int)(SDL_GetTicks()/1000)));
 
     if(showMenu){
         if(selectedBuilding->selected){
@@ -411,6 +411,21 @@ bool Environment::buildingConstructionCollision(int x, int y)
             }
         }
     }
+    for (int j = 0; j < goldMines.size(); j++) //check for collision
+    {
+        if (goldMines[j]->Alive())
+        {
+            collision_rect = goldMines[j]->GetGold()->GetCollisionRect();
+
+            if (collision_rect.GetRectangle().x + collision_rect.GetRectangle().w > x &&
+            collision_rect.GetRectangle().y + collision_rect.GetRectangle().h > y &&
+            collision_rect.GetRectangle().x < x+50 &&
+            collision_rect.GetRectangle().y < y+50)
+            {
+                return true;
+            }
+        }
+    }
     return false;
 }
 
@@ -467,8 +482,6 @@ void Environment::createBarracks(int x, int y)
 void Environment::notBuildingHouse() { ai->notBuildingHouse(); }
 void Environment::notBuildingBarracks() { ai->notBuildingBarracks(); }
 void Environment::barracksDestroyed() { ai->barracksDestroyed(); }
-//void Environment::notBuildingHouse() { ai->notBuildingHouse(); }
-//void Environment::notBuildingBarracks(){ ai->notBuildingBarracks(); }
 void Environment::addVillager() { ai->addVillager(); }
 void Environment::addMilitia() { ai->addMilitia(); }
 void Environment::addChampion() { ai->addChampion(); }
@@ -479,10 +492,10 @@ void Environment::goldMineDepleted(int gold_x, int gold_y) { ai->goldMineDeplete
 void Environment::buildingNotConstructing(int structure_x, int structure_y) { ai->buildingNotConstructing(structure_x, structure_y); }
 
 std::string Environment::timeHandler(int time){
-    
+
     int mins = floor((int)(time/60));
     int secs = time-mins*60;
     return "Time: "+ std::to_string(mins) +":" +std::to_string(secs);
 
-    
+
 }
