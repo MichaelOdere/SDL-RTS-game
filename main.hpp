@@ -25,6 +25,7 @@ private:
     Environment* gameMap;
     SubMenu *optionsMenu;
     bool quit;
+    bool start;
 
     AI* ai;
 

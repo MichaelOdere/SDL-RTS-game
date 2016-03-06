@@ -92,7 +92,7 @@ class Environment
         void createVillager(Building* passed_building, int unit);
         void createMilitia(Building* passed_building, int unit);
         void createChampion(Building* passed_building, int unit);
-    
+
         void alertInsufficientFunds();
         void alertNoHousing();
         int brokeTime;
@@ -114,12 +114,14 @@ class Environment
         bool broke;
         bool overpopulated;
 
+        int startTime;
+
         TextMessage* goldText;
         TextMessage* populationText;
         TextMessage* timeText;
         TextMessage* insufficientFunds;
         TextMessage* noHousing;
-    
+
         Character* dead;
 
         SDL_Setup* sdl_setup;

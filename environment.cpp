@@ -18,11 +18,11 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     MouseY = passed_MouseY;
     optionsMenu = passed_menu;
     ai = passed_ai;
-
+    startTime = SDL_GetTicks()/1000;
 
 
     goldText = new TextMessage(sdl_setup->GetRenderer(), std::to_string((int)resources), 8, 0);
-    timeText = new TextMessage(sdl_setup->GetRenderer(), std::to_string(SDL_GetTicks()/1000), 900, 0);
+    timeText = new TextMessage(sdl_setup->GetRenderer(), std::to_string((SDL_GetTicks()/1000) - startTime), 900, 0);
     populationText = new TextMessage(sdl_setup->GetRenderer(), "Population: " + std::to_string(humanPop)+"/"+std::to_string(humanMaxPop), 150, 0);
     insufficientFunds = new TextMessage(sdl_setup->GetRenderer(), "You don't have " + std::to_string(optionsMenu->getOpCost()) + " gold!", 350, 300);
     noHousing = new TextMessage(sdl_setup->GetRenderer(), "You don't have enough houses for a new character", 350, 300);
@@ -42,7 +42,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     humanMaxPop = 10;
     orcMaxPop = 10;
     maxMaxPop = 30;
-    
+
     //Humans
     selectedCharacter = new Villager(sdl_setup, "images/villager.png", 300, 200, MouseX, MouseY, this); //game begins with villager selected to avoid error of deselecting an unselected character below
     selectedCharacter->unSelect();
@@ -145,7 +145,7 @@ void Environment::Update()
 
     goldText->Draw("Gold: " + std::to_string((int)resources));
     populationText->Draw("Population: " + std::to_string(humanPop)+"/"+std::to_string(humanMaxPop));
-    timeText->Draw(timeHandler((int)(SDL_GetTicks()/1000)));
+    timeText->Draw(timeHandler((int)((SDL_GetTicks()/1000))-startTime));
 
     if(broke){
         if(SDL_GetTicks() < brokeTime+5000){
