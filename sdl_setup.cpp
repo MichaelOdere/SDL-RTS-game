@@ -3,7 +3,7 @@
 SDL_Setup::SDL_Setup(bool* quit) //Constructor
 {
     window = NULL;
-    window = SDL_CreateWindow("Age of Cordes", 100, 100, 1024, 768, SDL_WINDOW_SHOWN); //Screen size: 1024x768
+    window = SDL_CreateWindow("Man vs Orc", 100, 100, 1024, 768, SDL_WINDOW_SHOWN); //Screen size: 1024x768
 
     if (window == NULL) //error checking
     {

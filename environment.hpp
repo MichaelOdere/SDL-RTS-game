@@ -65,6 +65,7 @@ class Environment
         int orcPop;
         int humanMaxPop;
         int orcMaxPop;
+        int maxMaxPop;
 
         int getOrcPop() { return orcPop; }
         int getOrcMaxPop() { return orcMaxPop; }
@@ -108,6 +109,7 @@ class Environment
         bool showMenu;
 
         TextMessage* goldText;
+        TextMessage* populationText;
         TextMessage* timeText;
     
         Character* dead;

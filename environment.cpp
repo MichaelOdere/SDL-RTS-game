@@ -20,8 +20,11 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     ai = passed_ai;
 
 
-    goldText = new TextMessage(sdl_setup->GetRenderer(), "Gold: " + std::to_string((int)resources), 20, 0);
-    timeText = new TextMessage(sdl_setup->GetRenderer(), "Time: " + std::to_string(SDL_GetTicks()/1000), 720, 0);
+    goldText = new TextMessage(sdl_setup->GetRenderer(), "Gold: " + std::to_string((int)resources), 8, 0);
+    
+    populationText = new TextMessage(sdl_setup->GetRenderer(), "Population: " + std::to_string(humanPop)+"/"+std::to_string(humanMaxPop), 150, 0);
+
+    timeText = new TextMessage(sdl_setup->GetRenderer(),std::to_string(SDL_GetTicks()/1000), 900, 0);
 
     showMenu = false;//start with menu not displayed
     optionsMenu->UpdateType(1);// 1 is main menu
@@ -31,11 +34,12 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
 
     team = 1;
 
-    humanPop = 5;
-    orcPop = 5;
+    humanPop = 3;
+    orcPop = 3;
     humanMaxPop = 10;
     orcMaxPop = 10;
-
+    maxMaxPop = 30;
+    
     //Humans
     selectedCharacter = new Villager(sdl_setup, "images/villager.png", 300, 200, MouseX, MouseY, this); //game begins with villager selected to avoid error of deselecting an unselected character below
     selectedCharacter->unSelect();
@@ -136,7 +140,8 @@ void Environment::Update()
 {
     
     goldText->Draw("Gold: " + std::to_string((int)resources));
-    timeText->Draw("Time: " + timeHandler((int)(SDL_GetTicks()/1000)));
+    populationText->Draw("Population: " + std::to_string(humanPop)+"/"+std::to_string(humanMaxPop));
+    timeText->Draw(timeHandler((int)(SDL_GetTicks()/1000)));
 
     if(showMenu){
         if(selectedBuilding->selected){
@@ -155,7 +160,7 @@ void Environment::Update()
             if (selectedBuilding->getTeam() == 1) { //check if human towncenter
                 if(optionsMenu->getWhatToMake() == 3){ //if villager selected
                     //make villager next to towncenter
-                    if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop){ //if enough resources and population room
+                    if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop && humanPop < maxMaxPop){ //if enough resources and population room
                         resources = resources - optionsMenu->getOpCost(); //remove resources
                         selectedBuilding->startCreating(1); //initiate creation of unit (10 sec, multiple units may be queued)
                     }else{
@@ -183,7 +188,7 @@ void Environment::Update()
             if (selectedBuilding->getTeam() == 1) { //check if human barracks
                 if(optionsMenu->getWhatToMake() == 5){
                     //make militia next to barracks
-                    if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop){
+                    if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop && humanPop < maxMaxPop){
                         resources = resources - optionsMenu->getOpCost();
                         selectedBuilding->startCreating(1);
                     }else{
@@ -203,7 +208,7 @@ void Environment::Update()
             } else { //orc barracks
                 if(optionsMenu->getWhatToMake() == 6){
                     //make orc militia next to barracks
-                    if(orcResources>=optionsMenu->getOpCost() && orcPop < orcMaxPop){
+                    if(orcResources>=optionsMenu->getOpCost() && orcPop < orcMaxPop ){
                         orcResources = orcResources - optionsMenu->getOpCost();
                         selectedBuilding->startCreating(2);
                     }else{

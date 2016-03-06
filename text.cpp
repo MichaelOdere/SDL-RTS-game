@@ -23,6 +23,7 @@ TextMessage::~TextMessage() //Destructor
         SDL_DestroyTexture(textTexture);
 }
 
+
 SDL_Texture* TextMessage::renderText(const std::string &message, const std::string &fontFile,
                                      SDL_Color color, int fontSize, SDL_Renderer *renderer)
 {

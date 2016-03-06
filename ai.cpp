@@ -85,7 +85,7 @@ void AI::updateBuilding(Building* building)
 //gives orders to buildings based on current game situation
     if (building->getType() == 1 && !building->Creating()) //if building is a town center
     {
-        if(environment->getOrcResources() >= 50 && environment->getOrcPop() < environment->getOrcMaxPop() && villagerPop < (2*(militiaPop+championPop))+6)
+        if(environment->getOrcResources() >= 50 && environment->getOrcPop() < environment->getOrcMaxPop()&& environment->getOrcPop() < 30 && villagerPop < (2*(militiaPop+championPop))+6)
         {
             environment->setOrcResources(environment->getOrcResources() - 50);
             building->startCreating(2);
@@ -94,7 +94,7 @@ void AI::updateBuilding(Building* building)
 
     if (building->getType() == 2 && building->constructed) //if building is a barracks
     {
-        if(environment->getOrcResources() >= 75 && militiaPop < 3 && environment->getOrcPop() < environment->getOrcMaxPop() && !building->Creating())
+        if(environment->getOrcResources() >= 75 && militiaPop < 3 && environment->getOrcPop() < environment->getOrcMaxPop() && environment->getOrcPop() < 30 && !building->Creating())
         {
             environment->setOrcResources(environment->getOrcResources() - 75);
             building->startCreating(2);
