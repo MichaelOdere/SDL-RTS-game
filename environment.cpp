@@ -20,17 +20,20 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     ai = passed_ai;
 
 
-    goldText = new TextMessage(sdl_setup->GetRenderer(), "Gold: " + std::to_string((int)resources), 8, 0);
-    
-    populationText = new TextMessage(sdl_setup->GetRenderer(), "Population: " + std::to_string(humanPop)+"/"+std::to_string(humanMaxPop), 150, 0);
 
-    timeText = new TextMessage(sdl_setup->GetRenderer(),std::to_string(SDL_GetTicks()/1000), 900, 0);
+    goldText = new TextMessage(sdl_setup->GetRenderer(), std::to_string((int)resources), 8, 0);
+    timeText = new TextMessage(sdl_setup->GetRenderer(), std::to_string(SDL_GetTicks()/1000), 900, 0);
+    populationText = new TextMessage(sdl_setup->GetRenderer(), "Population: " + std::to_string(humanPop)+"/"+std::to_string(humanMaxPop), 150, 0);
+    insufficientFunds = new TextMessage(sdl_setup->GetRenderer(), "You don't have " + std::to_string(optionsMenu->getOpCost()) + " gold!", 350, 300);
+    noHousing = new TextMessage(sdl_setup->GetRenderer(), "You don't have enough houses for a new character", 350, 300);
 
     showMenu = false;//start with menu not displayed
     optionsMenu->UpdateType(1);// 1 is main menu
+    broke = false;
+    overpopulated = false;
 
-    resources = 1000;
-    orcResources = 1000;
+    resources = 300;
+    orcResources = 300;
 
     team = 1;
 
@@ -138,10 +141,27 @@ void Environment::AddResources(int i)
 
 void Environment::Update()
 {
-    
+
+
     goldText->Draw("Gold: " + std::to_string((int)resources));
     populationText->Draw("Population: " + std::to_string(humanPop)+"/"+std::to_string(humanMaxPop));
     timeText->Draw(timeHandler((int)(SDL_GetTicks()/1000)));
+
+    if(broke){
+        if(SDL_GetTicks() < brokeTime+5000){
+            insufficientFunds->Draw("You don't have " + std::to_string(optionsMenu->getOpCost()) + " gold!");
+        }else{
+            broke = false;
+        }
+    }
+
+    if(overpopulated){
+        if(SDL_GetTicks() < brokeTime+5000){
+            noHousing->Draw("You don't have enough houses for a new character");
+        }else{
+            overpopulated = false;
+        }
+    }
 
     if(showMenu){
         if(selectedBuilding->selected){
@@ -160,22 +180,27 @@ void Environment::Update()
             if (selectedBuilding->getTeam() == 1) { //check if human towncenter
                 if(optionsMenu->getWhatToMake() == 3){ //if villager selected
                     //make villager next to towncenter
-                    if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop && humanPop < maxMaxPop){ //if enough resources and population room
+                    if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop && humanPop < maxMaxPop  && selectedBuilding->creating == false){ //if enough resources and population room
+
                         resources = resources - optionsMenu->getOpCost(); //remove resources
                         selectedBuilding->startCreating(1); //initiate creation of unit (10 sec, multiple units may be queued)
-                    }else{
-                        //alert insufficient funds
+                    }else if(resources<optionsMenu->getOpCost()){
+                        alertInsufficientFunds();
+                    }else if(humanPop >= humanMaxPop){
+                        alertNoHousing();
                     }
                     optionsMenu->buttonPressed = false;
                 }
             } else { //orc towncenter
                 if(optionsMenu->getWhatToMake() == 4){ //if orc villager selected
                     //make orc villager next to towncenter
-                    if(orcResources>=optionsMenu->getOpCost()  && orcPop < orcMaxPop){
+                    if(orcResources>=optionsMenu->getOpCost()  && orcPop < orcMaxPop && selectedBuilding->creating == false){
                         orcResources = orcResources - optionsMenu->getOpCost();
                         selectedBuilding->startCreating(2);
-                    }else{
-                        //alert insufficient funds
+                    }else if(resources<optionsMenu->getOpCost()){
+                        alertInsufficientFunds();
+                    }else if(humanPop >= humanMaxPop){
+                        alertNoHousing();
                     }
                     optionsMenu->buttonPressed = false;
                 }
@@ -188,40 +213,46 @@ void Environment::Update()
             if (selectedBuilding->getTeam() == 1) { //check if human barracks
                 if(optionsMenu->getWhatToMake() == 5){
                     //make militia next to barracks
-                    if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop && humanPop < maxMaxPop){
+                    if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop && humanPop < maxMaxPop && selectedBuilding->creating == false){
+
                         resources = resources - optionsMenu->getOpCost();
                         selectedBuilding->startCreating(1);
-                    }else{
-                        //alert insufficient funds
+                    }else if(resources<optionsMenu->getOpCost()){
+                        alertInsufficientFunds();
+                    }else if(humanPop>=humanMaxPop){
+                        alertNoHousing();
                     }
                     optionsMenu->buttonPressed = false;
                 }else if(optionsMenu->getWhatToMake() == 7){
                     //make champion next to barracks
-                    if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop){
+                    if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop && selectedBuilding->creating == false){
                         resources = resources - optionsMenu->getOpCost();
                         selectedBuilding->startCreating(3);
-                    }else{
-                        //alert insufficient funds
+                    }else if(resources<optionsMenu->getOpCost()){
+                        alertInsufficientFunds();
+                    }else if(humanPop>=humanMaxPop){
+                        alertNoHousing();
                     }
                     optionsMenu->buttonPressed = false;
                 }
             } else { //orc barracks
                 if(optionsMenu->getWhatToMake() == 6){
                     //make orc militia next to barracks
-                    if(orcResources>=optionsMenu->getOpCost() && orcPop < orcMaxPop ){
+
+                    if(orcResources>=optionsMenu->getOpCost() && orcPop < orcMaxPop && selectedBuilding->creating == false){
                         orcResources = orcResources - optionsMenu->getOpCost();
                         selectedBuilding->startCreating(2);
                     }else{
-                        //alert insufficient funds
+                        alertInsufficientFunds();
                     }
                     optionsMenu->buttonPressed = false;
                 }else if(optionsMenu->getWhatToMake() == 8){
                     //make champion next to barracks
-                    if(orcResources>=optionsMenu->getOpCost()  && orcPop < orcMaxPop){
+                    if(orcResources>=optionsMenu->getOpCost()  && orcPop < orcMaxPop && selectedBuilding->creating == false){
                         orcResources = orcResources - optionsMenu->getOpCost();
                         selectedBuilding->startCreating(4);
                     }else{
-                        //alert insufficient funds
+                        alertInsufficientFunds();
                     }
                     optionsMenu->buttonPressed = false;
                 }
@@ -308,11 +339,15 @@ void Environment::Update()
                     if(resources >= optionsMenu->getOpCost()){
                         buildings.push_back(new House(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 50, 50, 1, this)); //initially display construction zone
                         resources = resources - optionsMenu->getOpCost();
+                    }else{
+                        alertInsufficientFunds();
                     }
                 } else {
                     if(orcResources >= optionsMenu->getOpCost()){
                         buildings.push_back(new House(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 50, 50, 2, this));
                         orcResources = orcResources - optionsMenu->getOpCost();
+                    }else{
+                        alertInsufficientFunds();
                     }
                 }
                 selectedCharacter->setFollowPoint(*MouseX, *MouseY); //move villager to construction zone
@@ -416,7 +451,32 @@ bool Environment::buildingConstructionCollision(int x, int y)
             }
         }
     }
+    for (int j = 0; j < goldMines.size(); j++) //check for collision
+    {
+        if (goldMines[j]->Alive())
+        {
+            collision_rect = goldMines[j]->GetGold()->GetCollisionRect();
+
+            if (collision_rect.GetRectangle().x + collision_rect.GetRectangle().w > x &&
+            collision_rect.GetRectangle().y + collision_rect.GetRectangle().h > y &&
+            collision_rect.GetRectangle().x < x+50 &&
+            collision_rect.GetRectangle().y < y+50)
+            {
+                return true;
+            }
+        }
+    }
     return false;
+}
+
+void Environment::alertInsufficientFunds(){
+    broke = true;
+    brokeTime = SDL_GetTicks();
+}
+
+void Environment::alertNoHousing(){
+    overpopulated = true;
+    brokeTime = SDL_GetTicks();
 }
 
 void Environment::createVillager(Building* passed_building, int unit) //creates new unit next to passed building
@@ -472,8 +532,6 @@ void Environment::createBarracks(int x, int y)
 void Environment::notBuildingHouse() { ai->notBuildingHouse(); }
 void Environment::notBuildingBarracks() { ai->notBuildingBarracks(); }
 void Environment::barracksDestroyed() { ai->barracksDestroyed(); }
-//void Environment::notBuildingHouse() { ai->notBuildingHouse(); }
-//void Environment::notBuildingBarracks(){ ai->notBuildingBarracks(); }
 void Environment::addVillager() { ai->addVillager(); }
 void Environment::addMilitia() { ai->addMilitia(); }
 void Environment::addChampion() { ai->addChampion(); }
@@ -484,10 +542,10 @@ void Environment::goldMineDepleted(int gold_x, int gold_y) { ai->goldMineDeplete
 void Environment::buildingNotConstructing(int structure_x, int structure_y) { ai->buildingNotConstructing(structure_x, structure_y); }
 
 std::string Environment::timeHandler(int time){
-    
+
     int mins = floor((int)(time/60));
     int secs = time-mins*60;
     return "Time: "+ std::to_string(mins) +":" +std::to_string(secs);
 
-    
+
 }
