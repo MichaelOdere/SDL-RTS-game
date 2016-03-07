@@ -9,6 +9,7 @@
 #include "sdl_setup.hpp"
 #include <vector>
 #include <list>
+#include <algorithm>
 
 class Environment;
 class Character;
@@ -40,6 +41,7 @@ class AI
         void removeChampion() { championPop--; }
         void goldMineDepleted(int gold_x, int gold_y);
         void buildingNotConstructing(int structure_x, int structure_y);
+        void addEnemy(Character* enemy) { if(std::find(enemies.begin(), enemies.end(), enemy) == enemies.end()) { enemies.push_back(enemy); } }
 
     private:
         int team;
@@ -56,9 +58,13 @@ class AI
         bool buildingBarracks;
         Environment* environment;
         void setBuildArea();
-        bool notConstructing;
+        bool notConstructing1;
+        bool notConstructing2;
+        bool barracksConstructionInitiated;
         int struct_x;
         int struct_y;
+        std::vector<Character*> enemies;
+        Character* enemy_target;
 
 };
 

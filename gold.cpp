@@ -3,7 +3,7 @@
 Gold::Gold(SDL_Setup* sdl_setup, int x, int y, Environment* passed_environment)
 {
     //each gold tile 50x50, location in map passed through x and y (mouse location when clicked)
-    Mine = new Sprite(sdl_setup->GetRenderer(), "images/gold.png", x, y, 50, 50, CollisionRectangle(0,0,50,50));
+    Mine = new Sprite(sdl_setup->GetRenderer(), "images/gold.png", x, y, 75, 75, CollisionRectangle(0,0,75,75));
 
     resources = 500; //amount of resources to be minedS
     max_resources = 500;
@@ -29,7 +29,7 @@ void Gold::Update()
     {
         alive = false;
         selected = false;
-        environment->goldMineDepleted(Mine->GetX()+25, Mine->GetY()+25);
+        environment->goldMineDepleted(Mine->GetX()+30, Mine->GetY()+30);
     }
 }
 

@@ -64,20 +64,20 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 800, 50, 140, 120, 2, this));
 
 
-    selectedGold = new Gold(sdl_setup, 500, 500, this);
+    selectedGold = new Gold(sdl_setup, 475, 550, this);
     selectedGold->unSelect();
     goldMines.push_back(selectedGold);
-    goldMines.push_back(new Gold(sdl_setup, 550, 500, this));
-    goldMines.push_back(new Gold(sdl_setup, 500, 450, this));
-    goldMines.push_back(new Gold(sdl_setup, 550, 450, this));
-    goldMines.push_back(new Gold(sdl_setup, 500, 400, this));
+    goldMines.push_back(new Gold(sdl_setup, 550, 550, this));
+    goldMines.push_back(new Gold(sdl_setup, 475, 475, this));
+    goldMines.push_back(new Gold(sdl_setup, 550, 475, this));
+    goldMines.push_back(new Gold(sdl_setup, 475, 400, this));
     goldMines.push_back(new Gold(sdl_setup, 550, 400, this));
-    goldMines.push_back(new Gold(sdl_setup, 500, 200, this));
-    goldMines.push_back(new Gold(sdl_setup, 550, 200, this));
-    goldMines.push_back(new Gold(sdl_setup, 500, 150, this));
-    goldMines.push_back(new Gold(sdl_setup, 550, 150, this));
-    goldMines.push_back(new Gold(sdl_setup, 500, 100, this));
+    goldMines.push_back(new Gold(sdl_setup, 475, 175, this));
+    goldMines.push_back(new Gold(sdl_setup, 550, 175, this));
+    goldMines.push_back(new Gold(sdl_setup, 475, 100, this));
     goldMines.push_back(new Gold(sdl_setup, 550, 100, this));
+    goldMines.push_back(new Gold(sdl_setup, 475, 25, this));
+    goldMines.push_back(new Gold(sdl_setup, 550, 25, this));
 }
 
 Environment::~Environment()
@@ -184,7 +184,7 @@ void Environment::Update()
                     if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop && humanPop < maxMaxPop  && selectedBuilding->creating == false){ //if enough resources and population room
 
                         resources = resources - optionsMenu->getOpCost(); //remove resources
-                        selectedBuilding->startCreating(1); //initiate creation of unit (10 sec, multiple units may be queued)
+                        selectedBuilding->startCreating(1); //initiate creation of unit (10 sec)
                     }else if(resources<optionsMenu->getOpCost()){
                         alertInsufficientFunds();
                     }else if(humanPop >= humanMaxPop){
@@ -192,7 +192,7 @@ void Environment::Update()
                     }
                     optionsMenu->buttonPressed = false;
                 }
-            } else { //orc towncenter
+            } else if (team == 2) { //orc towncenter
                 if(optionsMenu->getWhatToMake() == 4){ //if orc villager selected
                     //make orc villager next to towncenter
                     if(orcResources>=optionsMenu->getOpCost()  && orcPop < orcMaxPop && selectedBuilding->creating == false){
@@ -236,7 +236,7 @@ void Environment::Update()
                     }
                     optionsMenu->buttonPressed = false;
                 }
-            } else { //orc barracks
+            } else if (team == 2) { //orc barracks
                 if(optionsMenu->getWhatToMake() == 6){
                     //make orc militia next to barracks
 
@@ -548,6 +548,7 @@ void Environment::removeMilitia() { ai->removeMilitia(); }
 void Environment::removeChampion() { ai->removeChampion(); }
 void Environment::goldMineDepleted(int gold_x, int gold_y) { ai->goldMineDepleted(gold_x, gold_y); }
 void Environment::buildingNotConstructing(int structure_x, int structure_y) { ai->buildingNotConstructing(structure_x, structure_y); }
+void Environment::inEnemyTerritory(Character* enemy) { ai->addEnemy(enemy); }
 
 void Environment::removeCharacter(int team)
 {

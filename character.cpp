@@ -9,6 +9,9 @@ Character::Character(SDL_Setup* passed_SDL_Setup, std::string FilePath, int star
 
     selected = false;
     alive = true;
+    attacking = false;
+    targeted = false;
+    enemy = NULL;
 
     character_target = false;
 
@@ -55,9 +58,18 @@ void Character::Update()
         Select();  // Selects the character
         Move();    // Moves the character
 
+        if (targeted)
+        {
+            //std::cout << "targeted" << std::endl;
+            if (!attacker->Alive())
+            {
+                targeted = false;
+            }
+        }
+
         if (unit->GetX() > 512 && team == 1) //if human crosses into orc territory
         {
-
+            environment->inEnemyTerritory(this);
         }
 
         //COMBAT
@@ -66,8 +78,13 @@ void Character::Update()
         if( target != NULL) //if no enemies, Combat returns NULL
         {
             target->attacked(attack); //attack enemy by passing character's attack to enemy
+            attacking = true;
         }else if(buildingTarget != NULL){
             buildingTarget->attacked(attack);
+            attacking = true;
+        } else
+        {
+            attacking = false;
         }
 
 
@@ -134,7 +151,7 @@ void Character::Select(){
     {
         unit->DisplayRectangle(health/max_health); //selection box around unit
 
-        if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN) //mouse button clicked
+        if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN && team == 1) //mouse button clicked
         {
             if (sdl_setup->GetEv()->button.button == SDL_BUTTON_RIGHT) //specifically, the right mouse button
             //if (sdl_setup->GetEv()->button.button == SDL_BUTTON_LEFT) //specifically, for charlie lol ;)
@@ -274,3 +291,10 @@ void Character::setFollowPoint(int x, int y)
     follow_point_y = y;
     follow = true;
 }
+
+void Character::Target(Character* passed_attacker)
+{
+    attacker = passed_attacker;
+    targeted = true;
+}
+

@@ -73,10 +73,20 @@ class Character
         bool building;
         bool mining;
         bool follow;
+        bool attacking;
+        bool targeted;
 
         bool isMining() { return mining; }
         bool isBuilding() { return building; }
         bool isFollowing() { return follow; }
+        bool isAttacking() { return attacking; }
+        bool isTargeted() { return targeted; }
+
+        void Target(Character* passed_attacker);
+
+        Character* enemy;
+        Character* getEnemy() { return enemy; }
+        void setEnemy(Character* passed_enemy) { enemy = passed_enemy; }
 
     protected:
 
@@ -100,6 +110,8 @@ class Character
 
         float distance;
         bool stopAnimation;
+
+        Character* attacker;
 };
 
 
