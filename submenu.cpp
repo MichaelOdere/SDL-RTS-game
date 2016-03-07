@@ -13,11 +13,11 @@ SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_Mo
     opSelected = false;
     buttonPressed = false;
 
-    newHouse = MenuOption(1,150, "images/house.png", false);
+    newHouse = MenuOption(1,100, "images/house.png", false);
     newBarracks = MenuOption(2,250, "images/barracks.png", false);
     newVillager = MenuOption(3, 50, "images/villagerButton.png", true);
     //newOrcVillager = MenuOption(4, 50, "images/orcVillagerButton.png", true);
-    newMilitia = MenuOption(5, 75, "images/militiaButton.png", true);
+    newMilitia = MenuOption(5, 50, "images/militiaButton.png", true);
     //newOrcMilitia = MenuOption(6, 75, "images/orcMilitiaButton.png", true);
     newChampion = MenuOption(7, 100, "images/championButton.png", true);
     //newOrcChampion = MenuOption(8, 100, "images/orcChampionButton.png", true);

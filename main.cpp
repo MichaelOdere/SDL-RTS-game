@@ -6,6 +6,7 @@ Main::Main() //Constructor
     SDL_Init(SDL_INIT_EVERYTHING); //Initialize everything in SDL
     quit = false; //boolean for game loop
     start = false;
+    quitEarly = true;
     sdl_setup = new SDL_Setup(&quit);
 
     MouseX = 0;
@@ -64,7 +65,7 @@ void Main::GameLoop()
     }
 
     quit = false;
-    while (!quit)
+    while (!quit && !quitEarly)
     {
         sdl_setup->Begin();
         if (sdl_setup->GetEv()->type == SDL_KEYDOWN)
@@ -82,6 +83,7 @@ void Main::GameLoop()
 
 void Main::endGame(int loser)
 {
+    quitEarly = false;
     quit = true;
     if (loser == 1) {
         grass = new Sprite(sdl_setup->GetRenderer(), "images/orcVictory.png", 0, 0, 1024, 768, CollisionRectangle(0,0,0,0)); //orcs won

@@ -37,10 +37,10 @@ void AI::updateCharacter(Character* character)
             character->setNoTask();
         }
 
-        if (environment->getOrcResources() >= 150 && environment->getOrcPop() + 2 >= environment->getOrcMaxPop() && !buildingHouse)
+        if (environment->getOrcResources() >= 100 && environment->getOrcPop() + 2 >= environment->getOrcMaxPop() && !buildingHouse)
         {
             environment->createHouse(buildX, buildY);
-            environment->setOrcResources(environment->getOrcResources() - 150);
+            environment->setOrcResources(environment->getOrcResources() - 100);
             character->setFollowPoint(buildX, buildY); //move character to construction zone
             setBuildArea();
             buildingHouse = true;
@@ -94,9 +94,9 @@ void AI::updateBuilding(Building* building)
 
     if (building->getType() == 2 && building->constructed) //if building is a barracks
     {
-        if(environment->getOrcResources() >= 75 && militiaPop < 3 && environment->getOrcPop() < environment->getOrcMaxPop() && environment->getOrcPop() < 30 && !building->Creating())
+        if(environment->getOrcResources() >= 50 && militiaPop < 3 && environment->getOrcPop() < environment->getOrcMaxPop() && environment->getOrcPop() < 30 && !building->Creating())
         {
-            environment->setOrcResources(environment->getOrcResources() - 75);
+            environment->setOrcResources(environment->getOrcResources() - 50);
             building->startCreating(2);
         }
         if(environment->getOrcResources() >= 100 && environment->getOrcPop() < environment->getOrcMaxPop() && !building->Creating())

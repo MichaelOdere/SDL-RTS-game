@@ -31,6 +31,7 @@ private:
     SubMenu *optionsMenu;
     bool quit;
     bool start;
+    bool quitEarly;
 
     AI* ai;
 
