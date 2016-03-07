@@ -24,11 +24,6 @@ class AI
 
         void updateCharacter(Character* character);
         void updateBuilding(Building* building);
-
-        std::list<Character*> characters;
-        std::vector<Building*> buildings;
-        std::vector<Gold*> goldMines;
-
         void setEnvironment(Environment* passed_environment);
         void notBuildingHouse() { buildingHouse = false; houses++; }
         void notBuildingBarracks() { buildingBarracks = false; barracks++;}

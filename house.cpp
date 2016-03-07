@@ -4,7 +4,6 @@ House::House(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_
 {
     health = 1;
     max_health = 200;
-    attack = 0.00;
 
     menuType = 2;
 
@@ -23,6 +22,10 @@ void House::Update()
     {
         environment->decreasePop(team); //house destroyed, decrease max pop
     }
+    if (health <= 0 && !constructed)
+    {
+        environment->notBuildingHouse(); //tell AI house construction halted
+    }
 }
 
 void House::constructing()
@@ -35,7 +38,7 @@ void House::constructing()
         environment->increasePop(team); //house created, increase max pop
         if (team == 2)
         {
-        environment->notBuildingHouse();
+            environment->notBuildingHouse(); //tell AI house construction completed
         }
     }
 }

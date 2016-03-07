@@ -60,14 +60,13 @@ void Character::Update()
 
         if (targeted)
         {
-            //std::cout << "targeted" << std::endl;
-            if (!attacker->Alive())
+            if (!attacker->isAlive())
             {
                 targeted = false;
             }
         }
 
-        if (unit->GetX() > 512 && team == 1) //if human crosses into orc territory
+        if (unit->GetX() > 600 && team == 1) //if human crosses into orc territory, tell AI
         {
             environment->inEnemyTerritory(this);
         }
@@ -200,7 +199,6 @@ void Character::Move(){
                     //check if colliding with building that is either constructed or on your team (prevents builder from getting stuck in completed building, cannot collide with unfinished enemy buildings)
                     if (unit->isCollidingBuilding(environment->getBuildings()[i]->GetBuilding()->GetCollisionRect()) && (environment->getBuildings()[i]->isConstructed() || environment->getBuildings()[i]->getTeam() == team))
                     {
-
                         //below if statements move character away from collision to avoid getting stuck on it
                         if (unit->GetX() > follow_point_x)
                         {
@@ -222,7 +220,6 @@ void Character::Move(){
                             unit->SetY(unit->GetY()-1);
                             unit->SetX(unit->GetX()-1);
                         }
-
                         colliding = true;
                         if (!hasTask) {
                             distance = 0;   //stop unit on collision
@@ -259,10 +256,8 @@ void Character::Move(){
     prevX = unit->GetX();
     prevY = unit->GetY();
     timeCheck = SDL_GetTicks();
-
     }
 }
-
 
 int Character::getCharacterX(){
     return unit->GetX();

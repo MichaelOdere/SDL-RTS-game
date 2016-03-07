@@ -13,23 +13,19 @@ SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_Mo
     opSelected = false;
     buttonPressed = false;
 
+    //Buttons
     newHouse = MenuOption(1,100, "images/house.png", false);
     newBarracks = MenuOption(2,250, "images/barracks.png", false);
     newVillager = MenuOption(3, 50, "images/villagerButton.png", true);
-    //newOrcVillager = MenuOption(4, 50, "images/orcVillagerButton.png", true);
     newMilitia = MenuOption(5, 50, "images/militiaButton.png", true);
-    //newOrcMilitia = MenuOption(6, 75, "images/orcMilitiaButton.png", true);
-    newChampion = MenuOption(7, 100, "images/championButton.png", true);
-    //newOrcChampion = MenuOption(8, 100, "images/orcChampionButton.png", true);
+    newChampion = MenuOption(7, 150, "images/championButton.png", true);
 
+    //Menu Options
     villagerOptions.push_back(newHouse);
     villagerOptions.push_back(newBarracks);
     TownCenterOptions.push_back(newVillager);
-    //TownCenterOptions.push_back(newOrcVillager);
     barracksOptions.push_back(newMilitia);
-    //barracksOptions.push_back(newOrcMilitia);
     barracksOptions.push_back(newChampion);
-    //barracksOptions.push_back(newOrcChampion);
 
     bar = new Sprite(sdl_setup->GetRenderer(), "images/optionsmenu.png", 0, 675, 1024, 100, CollisionRectangle(0,0,1024,100));
 
@@ -40,7 +36,6 @@ SubMenu::SubMenu(SDL_Setup* passed_SDL_Setup, int *passed_MouseX, int *passed_Mo
     villager = newMenu(villagerOptions);
     townCenter = newMenu(TownCenterOptions);
     displayed = main;
-
 
     type = kind;
 }
@@ -77,13 +72,13 @@ SubMenu::~SubMenu() //Destructor
     displayed.clear();
 }
 
-void SubMenu::Draw()
+void SubMenu::Draw() //display menu bar and buttons
 {
     bar->Draw();
     DrawOptions();
 }
 
-void SubMenu::DrawOptions(){
+void SubMenu::DrawOptions(){ //display each button in menu
     for(int j = 0; j < options.size(); j++){
         displayed[j]->Draw();
         if(options[j].selected){
@@ -161,7 +156,6 @@ int SubMenu::getWhatToMake(){
     }
 }
 
-
 int SubMenu::getOpCost(){
     if(opSelected){
         return options[selectedI].getCost();
@@ -170,7 +164,7 @@ int SubMenu::getOpCost(){
     }
 }
 
-std::vector<Sprite*> SubMenu::newMenu(std::vector<MenuOption> passed_options)
+std::vector<Sprite*> SubMenu::newMenu(std::vector<MenuOption> passed_options) //create vector of sprites for each menu
 {
     std::vector<Sprite*> result;
     for( int i = 0; i < passed_options.size(); i++){
@@ -178,4 +172,3 @@ std::vector<Sprite*> SubMenu::newMenu(std::vector<MenuOption> passed_options)
     }
     return result;
 }
-

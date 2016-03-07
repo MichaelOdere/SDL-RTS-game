@@ -16,12 +16,10 @@ public:
     void Draw();
     void DrawOptions();
     void UpdateType(int type);
-
     int getType();
     int getWhatToMake();
     int getOpCost();
     int getY();
-
     bool opSelected;
     bool buttonPressed;
 
@@ -29,17 +27,12 @@ private:
 
     int *MouseX;
     int *MouseY;
-
     int type;
-
-
     std::vector<MenuOption> mainOptions;//options presented with nothing selected
     std::vector<MenuOption> houseOptions;//options presented with a house selected
     std::vector<MenuOption> villagerOptions;//options presented with a character selected
     std::vector<MenuOption> TownCenterOptions;//options presented with a town center selected
     std::vector<MenuOption> barracksOptions;//options presented with a barracks selected
-
-
     MenuOption newHouse; //option to build a new house
     MenuOption newVillager;
     MenuOption newOrcVillager;
@@ -48,7 +41,6 @@ private:
     MenuOption newMilitia;
     MenuOption newOrcMilitia;
     MenuOption newBarracks;
-
     std::vector<MenuOption> options; //the options
     std::vector<Sprite*> displayed;
     std::vector<Sprite*> main;
@@ -56,17 +48,10 @@ private:
     std::vector<Sprite*> barracks;
     std::vector<Sprite*> villager;
     std::vector<Sprite*> townCenter;
-
     SDL_Setup* sdl_setup;
-
     Sprite* bar;
-
     int selectedI;//index of selected option
-
     std::vector<Sprite*> newMenu(std::vector<MenuOption> passed_options);
-
-
-
 };
 
 

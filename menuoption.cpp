@@ -10,13 +10,12 @@ MenuOption::MenuOption(int kind, int price, std::string picString, bool button) 
     isButton = button;
 }
 
-MenuOption::MenuOption(){
-    //it yelled at me for not having a default constructor and i don't have wifi to google why
+MenuOption::MenuOption() //Default Constructor
+{
 }
 
 MenuOption::~MenuOption() //Destructor
 {
-    
 }
 
 std::string MenuOption::getPic(){

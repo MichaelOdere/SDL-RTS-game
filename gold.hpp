@@ -14,35 +14,26 @@ class Gold
         ~Gold();
 
         void DrawGold();
-
         bool Mining();
-
         float GetResources() { return resources; }
-
         Sprite* GetGold() { return Mine; }
-
         int getGoldX();
         int getGoldY();
         int getGoldW();
         int getGoldH();
-
-        bool alive;
-
-        bool Alive() { return alive; }
-
+        bool isAlive() { return alive; }
         void Update();
-
         void setSelected() { selected = true; }
         void unSelect() { selected = false; }
 
         bool selected;
 
-        float resources;
-        float max_resources;
-
     private:
         Sprite* Mine;
         Environment* environment;
+        float resources;
+        float max_resources;
+        bool alive;
 
 };
 

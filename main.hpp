@@ -18,30 +18,22 @@ public:
     ~Main();
 
     void GameLoop();
-
     double GetDistance(int x1, int y1, int x2, int y2);
-
     void endGame(int loser);
 
 private:
 
     Character *unit;
-
     Environment* gameMap;
     SubMenu *optionsMenu;
     bool quit;
     bool start;
     bool quitEarly;
-
     AI* ai;
-
     Sprite* grass;
-
     bool showMenu;
     int menuType;
-
     SDL_Setup* sdl_setup;
-
     int MouseX;
     int MouseY;
 };

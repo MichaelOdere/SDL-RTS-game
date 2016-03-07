@@ -24,7 +24,7 @@ AI::AI()
 
 AI::~AI()
 {
-
+    enemies.clear();
 }
 
 void AI::updateCharacter(Character* character)
@@ -155,14 +155,14 @@ void AI::updateBuilding(Building* building)
 
     if (building->getType() == 2 && building->constructed) //if building is a barracks
     {
-        if(environment->getOrcResources() >= 50 && militiaPop < 3 && environment->getOrcPop() < environment->getOrcMaxPop() && environment->getOrcPop() < 30 && !building->Creating())
+        if(environment->getOrcResources() >= 50 && militiaPop < 3 && environment->getOrcResources() <= 300 && environment->getOrcPop() < environment->getOrcMaxPop() && environment->getOrcPop() < 30 && !building->Creating())
         {
             environment->setOrcResources(environment->getOrcResources() - 50);
             building->startCreating(2);
         }
-        if(environment->getOrcResources() >= 100 && environment->getOrcPop() < environment->getOrcMaxPop() && !building->Creating())
+        if(environment->getOrcResources() >= 150 && environment->getOrcPop() < environment->getOrcMaxPop() && !building->Creating())
         {
-            environment->setOrcResources(environment->getOrcResources() - 100);
+            environment->setOrcResources(environment->getOrcResources() - 150);
             building->startCreating(4);
         }
 
@@ -189,14 +189,15 @@ void AI::goldMineDepleted(int gold_x, int gold_y) //called by gold mine when dep
     if (gold_x == idle_x && gold_y == idle_y)
     {
         idle_y -= 75;
-        if (idle_y == 355) //if reach gap between gold mines
+        if (idle_x == 580 && idle_y == 355) //if reach gap between gold mines
         {
-            idle_y = 205;
-        }
-        if (idle_y == -20) //if reached top of gold mines
-        {
-            idle_x = 500;
+            idle_x = 505;
             idle_y = 580;
+        }
+        if (idle_x == 505 && idle_y == 355) //if reached gap between gold mines a second time
+        {
+            idle_x == 580;
+            idle_y = 205;
         }
     }
 }

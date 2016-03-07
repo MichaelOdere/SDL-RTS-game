@@ -23,7 +23,7 @@ void OrcChampion::Update(){
 
     if (health <= 0)
     {
-        environment->removeChampion();
+        environment->removeChampion(); //tell AI champion killed
     }
 
 }

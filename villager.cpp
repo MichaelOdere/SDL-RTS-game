@@ -4,8 +4,8 @@ Villager::Villager(SDL_Setup* passed_SDL_Setup, std::string FilePath, int starti
     Character( passed_SDL_Setup, FilePath, starting_x, starting_y, passed_MouseX, passed_MouseY, passed_environment)
 {
     team = 1;
-    health = 50;
-    max_health = 50;
+    health = 25;
+    max_health = 25;
     attack = 0.005;
     defense = 0;
 
@@ -17,10 +17,11 @@ Villager::~Villager()
 {
 }
 
-void Villager::Update(){
-
+void Villager::Update()
+{
     Character::Update();
-    //Mining for VILLAGER class
+
+    //MINING
     for (int i = 0; i < environment->getGoldMines().size(); i++) //check for collision with gold mines (mining)
     {
         if (unit->isColliding(environment->getGoldMines()[i]->GetGold()->GetCollisionRect()))
@@ -28,11 +29,11 @@ void Villager::Update(){
             if (environment->getGoldMines()[i]->Mining()) //if resources successfully mined (ie gold mine isn't empty)
             {
                 environment->AddResources(1);
-                //environment->PrintResources(); //for testing only
             }
         }
     }
-    //constructing for VILLAGER class
+
+    //CONSTRUCTING
     for (int i = 0; i < environment->getBuildings().size(); i++)
     {
         if (unit->isColliding(environment->getBuildings()[i]->GetBuilding()->GetCollisionRect()) &&

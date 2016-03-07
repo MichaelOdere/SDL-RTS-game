@@ -68,7 +68,7 @@ Sprite::Sprite(SDL_Renderer* passed_renderer, std::string FilePath, int x, int y
 
 Sprite::~Sprite() //Destructor
 {
-        SDL_DestroyTexture(image);
+    SDL_DestroyTexture(image);
 }
 
 void Sprite::SetUpAnimation(int passed_amount_x, int passed_amount_y)
@@ -154,6 +154,7 @@ int Sprite::GetHeight()
 
 void Sprite::DisplayRectangle(float health_percent) //called when Character, Building or Gold is selected
 {
+    //display health bar corresponding to health percentage
     if (health_percent < 0.95)
     {
         collisionImage = collisionImage19;
@@ -254,12 +255,12 @@ void Sprite::changeImage(std::string new_FilePath)
     image = IMG_LoadTexture(renderer, new_FilePath.c_str());
 }
 
-void Sprite::changeBarracksImage()
+void Sprite::changeBarracksImage() //called when barracks completed
 {
     image = barracksImage;
 }
 
-void Sprite::setCollisionImage()
+void Sprite::setCollisionImage() //set health bar to full health
 {
     collisionImage = collisionImage20;
 }

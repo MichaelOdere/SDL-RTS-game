@@ -12,7 +12,6 @@ TextMessage::TextMessage(SDL_Renderer* passed_renderer, std::string message, int
 
 
     if (TTF_Init() != 0){
-        //logSDLError(std::cout, "TTF_Init");
         SDL_Quit();
     }
     textTexture = renderText(message, "fontFile.ttf", color, 64, passed_renderer);
@@ -20,7 +19,7 @@ TextMessage::TextMessage(SDL_Renderer* passed_renderer, std::string message, int
 
 TextMessage::~TextMessage() //Destructor
 {
-        SDL_DestroyTexture(textTexture);
+    SDL_DestroyTexture(textTexture);
 }
 
 
@@ -31,19 +30,17 @@ SDL_Texture* TextMessage::renderText(const std::string &message, const std::stri
     TTF_Font *font = TTF_OpenFont("fontFile.ttf", fontSize);
     if (font == NULL){
         std::cout << "TTF_OpenFont";
-        return nullptr;
+        return NULL;
     }
     //We need to first render to a surface as that's what TTF_RenderText
     //returns, then load that surface into a texture
     SDL_Surface *surf = TTF_RenderText_Blended(font, message.c_str(), color);
-    if (surf == nullptr){
+    if (surf == NULL){
         TTF_CloseFont(font);
-        //logSDLError(std::cout, "TTF_RenderText");
-        return nullptr;
+        return NULL;
     }
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surf);
-    if (texture == nullptr){
-        //logSDLError(std::cout, "CreateTexture");
+    if (texture == NULL){
     }
 
     rect = { 0, 0, surf->w, surf->h };
@@ -58,7 +55,7 @@ SDL_Texture* TextMessage::renderText(const std::string &message, const std::stri
 
 void TextMessage::Draw(std::string message){
     SDL_DestroyTexture(textTexture); // Free memory from previous texture
-    
+
     textTexture = renderText(message, "fontFile.ttf", color, 20, this->renderer);
     SDL_RenderCopy(renderer, textTexture, &rect, &crop);
 

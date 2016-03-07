@@ -14,8 +14,7 @@ Champion::~Champion()
 {
 }
 
-void Champion::Update(){
-
+void Champion::Update()
+{
     Character::Update();
-
 }

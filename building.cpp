@@ -13,23 +13,23 @@ Building::Building(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int
 
 Building::~Building()
 {
-    delete Structure;
+    if (health > 0) //if destroyed, Structure would have already been deleted
+    {
+        delete Structure;
+    }
 }
 
 
 void Building::DrawBuilding()
 {
     Structure->Draw();
-    if(selected){
-        Structure->DisplayRectangle(1.0);
-    }
 }
 
 void Building::Update()
 {
     if (selected)
     {
-        Structure->DisplayRectangle(health/max_health);
+        Structure->DisplayRectangle(health/max_health); //construction/health bar
     }
 
     if (health == previous_health && health != 1 && !constructed) //not being constructed after construction starts

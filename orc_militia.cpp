@@ -23,7 +23,7 @@ void OrcMilitia::Update(){
 
     if (health <= 0)
     {
-        environment->removeMilitia();
+        environment->removeMilitia(); //tell AI militia killed
     }
 
 }

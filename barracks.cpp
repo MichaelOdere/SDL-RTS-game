@@ -9,7 +9,6 @@ Barracks::Barracks(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int
 {
     health = 1;
     max_health = 500;
-    attack = 0.00;
 
     menuType = 5;
 
@@ -59,7 +58,7 @@ void Barracks::constructing()
         Structure->changeBarracksImage(); //reset image to created state, for some reason barracks.png doesn't work and is cropped weird
         if (team == 2)
         {
-            environment->notBuildingBarracks();
+            environment->notBuildingBarracks(); //tell AI barracks construction complete
         }
     }
 }

@@ -18,7 +18,6 @@ CollisionRectangle::CollisionRectangle(int x, int y, int w, int h)
 
 CollisionRectangle::~CollisionRectangle()
 {
-
 }
 
 void CollisionRectangle::SetRectangle(int x, int y, int w, int h)

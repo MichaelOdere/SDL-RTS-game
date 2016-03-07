@@ -16,59 +16,41 @@ class Building
 
         Sprite* GetBuilding() { return Structure; }
         void SetBuilding();
-
         virtual void Update();
+        virtual void startCreating(int unit_to_create) {}
+        virtual void constructing();
         void DrawBuilding();
-
-        int team;
-
         int getMenuType() {return menuType;}
         int getTeam() { return team; }
         void Select();
-
-        Building* target;
-
         int getStructureX();
         int getStructureY();
         int getStructureW();
         int getStructureH();
-
-        float health;
-        float max_health;
-        float attack;
-
         void attacked(float attacker_attack);
-
         void setSelected() { selected = true; }
         void unSelect() { selected = false; }
-
         bool Alive() { return alive; }
-
-        bool selected;
-
-        bool alive;
-
-        int menuType;
-
-        bool creating;
-        virtual void startCreating(int unit_to_create) {}
         bool Creating() { return creating; }
-        Environment* environment;
-
-        int unit;
-
-        int type;
-
         int getType() { return type; }
-
-        float previous_health;
-
-        bool constructed;
-
         bool isConstructed() { return constructed; }
 
-        virtual void constructing();
+        bool constructed;
+        bool selected;
+        int menuType;
+        bool creating;
 
+    protected:
+
+        Environment* environment;
+        int team;
+        Building* target;
+        float health;
+        float max_health;
+        bool alive;
+        int unit;
+        int type;
+        float previous_health;
         Sprite* Structure;
 
 };

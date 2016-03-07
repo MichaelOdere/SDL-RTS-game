@@ -8,22 +8,16 @@ public:
     MenuOption(int kind, int price, std::string picString, bool button);
     MenuOption();
     ~MenuOption();
-
     std::string getPic();
     int getType();
     int getCost();
-
     bool selected;
     bool isButton;
 
 private:
-
     int type;
     int cost;
-
     std::string pic;
-
-
 };
 
 

@@ -19,33 +19,38 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     optionsMenu = passed_menu;
     ai = passed_ai;
     main = passed_main;
-    startTime = SDL_GetTicks()/1000;
+    startTime = SDL_GetTicks()/1000; //ensures game time corresponds to when spacebar hit on splash screen and game begins
 
 
     goldText = new TextMessage(sdl_setup->GetRenderer(), std::to_string((int)resources), 8, 0);
     timeText = new TextMessage(sdl_setup->GetRenderer(), std::to_string((SDL_GetTicks()/1000) - startTime), 900, 0);
     populationText = new TextMessage(sdl_setup->GetRenderer(), "Population: " + std::to_string(humanPop)+"/"+std::to_string(humanMaxPop), 150, 0);
     insufficientFunds = new TextMessage(sdl_setup->GetRenderer(), "You don't have " + std::to_string(optionsMenu->getOpCost()) + " gold!", 350, 300);
-    noHousing = new TextMessage(sdl_setup->GetRenderer(), "You don't have enough houses for a new character", 350, 300);
+    noHousing = new TextMessage(sdl_setup->GetRenderer(), "Need more houses", 350, 300);
 
     showMenu = true;//start with menu displayed
     optionsMenu->UpdateType(1);// 1 is main menu
     broke = false;
     overpopulated = false;
 
+    //starting resources
     resources = 100;
     orcResources = 100;
 
-    team = 1;
+    team = 1; //player team
 
+    //initial pop
     humanPop = 3;
     orcPop = 3;
+
+    //initial max pop
     humanMaxPop = 10;
     orcMaxPop = 10;
-    maxMaxPop = 30;
+
+    maxMaxPop = 25; //neither team may have more than 25 units
 
     //Humans
-    selectedCharacter = new Villager(sdl_setup, "images/villager.png", 300, 200, MouseX, MouseY, this); //game begins with villager selected to avoid error of deselecting an unselected character below
+    selectedCharacter = new Villager(sdl_setup, "images/villager.png", 300, 200, MouseX, MouseY, this); //need to select initial character to avoid error of deselecting an unselected character below
     selectedCharacter->unSelect();
     characters.push_back(selectedCharacter);
     characters.push_back(new Villager(sdl_setup, "images/villager.png", 200, 200, MouseX, MouseY, this));
@@ -56,14 +61,13 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png", 700, 200, MouseX, MouseY, this));
     characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png", 750, 200, MouseX, MouseY, this));
 
-
-
+    //Town Center placement on map
     selectedBuilding = new TownCenter(sdl_setup, "images/towncenter.png", 100, 50, 140, 120, 1, this);
     selectedBuilding->unSelect();
     buildings.push_back(selectedBuilding);
     buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 800, 50, 140, 120, 2, this));
 
-
+    //Gold placement on map
     selectedGold = new Gold(sdl_setup, 475, 550, this);
     selectedGold->unSelect();
     goldMines.push_back(selectedGold);
@@ -82,7 +86,6 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
 
 Environment::~Environment()
 {
-    delete optionsMenu;
 
     for (std::vector<Gold*>::iterator i = goldMines.begin(); i != goldMines.end(); ++i)
     {
@@ -106,7 +109,7 @@ void Environment::DrawBack()
 {
     for (std::vector<Gold*>::iterator i = goldMines.begin(); i != goldMines.end(); ++i)
     {
-        if ((*i)->Alive())
+        if ((*i)->isAlive())
         {
             (*i)->DrawGold();
         }
@@ -122,14 +125,14 @@ void Environment::DrawBack()
 
     for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
     {
-        if ((*i)->Alive())
+        if ((*i)->isAlive())
         {
             (*i)->Draw();
         }
     }
 }
 
-void Environment::AddResources(int i)
+void Environment::AddResources(int i) //called with a successful mine
 {
     if (i == 1)
     {
@@ -158,7 +161,7 @@ void Environment::Update()
 
     if(overpopulated){
         if(SDL_GetTicks() < brokeTime+2000){
-            noHousing->Draw("You don't have enough houses for a new character");
+            noHousing->Draw("Need more houses");
         }else{
             overpopulated = false;
         }
@@ -263,7 +266,7 @@ void Environment::Update()
 
     for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
     {
-        if ((*i)->Alive())
+        if ((*i)->isAlive())
         {
             (*i)->Update();
             if ((*i)->getTeam() == 2) { //pass each orc unit to AI to determine its next action
@@ -285,7 +288,7 @@ void Environment::Update()
 
     for (std::vector<Gold*>::iterator i = goldMines.begin(); i != goldMines.end(); ++i)
     {
-        if ((*i)->Alive())
+        if ((*i)->isAlive())
         {
             (*i)->Update();
         }
@@ -322,7 +325,7 @@ void Environment::Update()
 
             for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i) //character selection takes priority over buildings and gold mines
             {
-                if(*MouseX >= ((*i)->getCharacterX()-15) && *MouseX <= ((*i)->getCharacterX()+(*i)->getCharacterW()-15) && *MouseY >= ((*i)->getCharacterY()-20) && *MouseY <= ((*i)->getCharacterY()+(*i)->getCharacterH()-20) && (*i)->Alive())
+                if(*MouseX >= ((*i)->getCharacterX()-15) && *MouseX <= ((*i)->getCharacterX()+(*i)->getCharacterW()-15) && *MouseY >= ((*i)->getCharacterY()-20) && *MouseY <= ((*i)->getCharacterY()+(*i)->getCharacterH()-20) && (*i)->isAlive())
                 {
                     selectedCharacter->unSelect(); //unselect previously selected
                     selectedBuilding->unSelect();
@@ -376,7 +379,7 @@ void Environment::Update()
         }
     }
 }
-    if(sdl_setup->GetEv()->type == SDL_KEYDOWN){
+    if(sdl_setup->GetEv()->type == SDL_KEYDOWN){ //toggle showing of menu
        if(sdl_setup->GetEv()->key.keysym.sym == SDLK_SPACE){
             if(showMenu){
                 showMenu = false;
@@ -391,7 +394,7 @@ Character* Environment::Combat(Sprite* attacker, int attacker_team) //returns Ch
 {
     for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
     {
-        if (attacker->isColliding((*i)->GetCharacter()->GetCollisionRect()) && (*i)->Alive() && (*i)->getTeam() != attacker_team) //check for collision with character, excluding allies and dead characters
+        if (attacker->isColliding((*i)->GetCharacter()->GetCollisionRect()) && (*i)->isAlive() && (*i)->getTeam() != attacker_team) //check for collision with character, excluding allies and dead characters
         {
             return (*i);
         }
@@ -399,11 +402,11 @@ Character* Environment::Combat(Sprite* attacker, int attacker_team) //returns Ch
     return NULL;
 }
 
-Building* Environment::CombatBuilding(Sprite* attacker, int attacker_team) //returns Character attacked by input, if no collision, return NULL
+Building* Environment::CombatBuilding(Sprite* attacker, int attacker_team) //returns Building attacked by input, if no collision, return NULL
 {
     for (std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i)
     {
-        if (attacker->isColliding((*i)->GetBuilding()->GetCollisionRect()) && (*i)->Alive() && (*i)->getTeam() != attacker_team) //check for collision with character, excluding allies and dead characters
+        if (attacker->isColliding((*i)->GetBuilding()->GetCollisionRect()) && (*i)->Alive() && (*i)->getTeam() != attacker_team) //check for collision with Building, excluding team buildings and destroyed buildings
         {
             return (*i);
         }
@@ -411,9 +414,9 @@ Building* Environment::CombatBuilding(Sprite* attacker, int attacker_team) //ret
     return NULL;
 }
 
-Character* Environment::FindTarget(int x, int y) //used for following, currently not called because of bug which entails from it
+Character* Environment::FindTarget(int x, int y) //used for following, searches for Character in click location
 {
-    for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i) //character selection takes priority over buildings and gold mines
+    for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
         {
             if(x >= ((*i)->getCharacterX()-15) && x <= ((*i)->getCharacterX()+(*i)->getCharacterW()-15) && y >= ((*i)->getCharacterY()-20) && y <= ((*i)->getCharacterY()+(*i)->getCharacterH()-20))
             {
@@ -423,7 +426,7 @@ Character* Environment::FindTarget(int x, int y) //used for following, currently
     return NULL;
 }
 
-void Environment::decreasePop(int team)
+void Environment::decreasePop(int team) //called when house destroyed
 {
     if (team == 1) {
         humanMaxPop -= 5;
@@ -432,7 +435,7 @@ void Environment::decreasePop(int team)
     }
 }
 
-void Environment::increasePop(int team)
+void Environment::increasePop(int team) //called when house created
 {
     if (team == 1) {
         humanMaxPop += 5;
@@ -441,7 +444,7 @@ void Environment::increasePop(int team)
     }
 }
 
-bool Environment::buildingConstructionCollision(int x, int y)
+bool Environment::buildingConstructionCollision(int x, int y) //Cannot build on other buildings or gold mines
 {
     for (int j = 0; j < buildings.size(); j++) //check for collision
     {
@@ -460,7 +463,7 @@ bool Environment::buildingConstructionCollision(int x, int y)
     }
     for (int j = 0; j < goldMines.size(); j++) //check for collision
     {
-        if (goldMines[j]->Alive())
+        if (goldMines[j]->isAlive())
         {
             collision_rect = goldMines[j]->GetGold()->GetCollisionRect();
 
@@ -526,7 +529,6 @@ void Environment::createChampion(Building* passed_building, int unit)
     }
 }
 
-
 void Environment::createHouse(int x, int y)
 {
     buildings.push_back(new House(sdl_setup, "images/collision_rectangle.png", x, y, 50, 50, 2, this)); //initially display construction zone
@@ -537,6 +539,7 @@ void Environment::createBarracks(int x, int y)
     buildings.push_back(new Barracks(sdl_setup, "images/collision_rectangle.png", x, y, 75, 75, 2, this)); //initially display construction zone
 }
 
+//Methods to pass information to AI
 void Environment::notBuildingHouse() { ai->notBuildingHouse(); }
 void Environment::notBuildingBarracks() { ai->notBuildingBarracks(); }
 void Environment::barracksDestroyed() { ai->barracksDestroyed(); }
@@ -550,7 +553,7 @@ void Environment::goldMineDepleted(int gold_x, int gold_y) { ai->goldMineDeplete
 void Environment::buildingNotConstructing(int structure_x, int structure_y) { ai->buildingNotConstructing(structure_x, structure_y); }
 void Environment::inEnemyTerritory(Character* enemy) { ai->addEnemy(enemy); }
 
-void Environment::removeCharacter(int team)
+void Environment::removeCharacter(int team) //handles population
 {
     if (team == 1)
     {
@@ -568,7 +571,7 @@ std::string Environment::timeHandler(int time){
     return "Time: "+ std::to_string(mins) +":" +std::to_string(secs);
 }
 
-void Environment::endGame(int loser)
+void Environment::endGame(int loser) //tells Main game is over and declares winner
 {
     main->endGame(loser);
 }

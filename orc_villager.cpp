@@ -4,8 +4,8 @@ OrcVillager::OrcVillager(SDL_Setup* passed_SDL_Setup, std::string FilePath, int 
     Character( passed_SDL_Setup, FilePath, starting_x, starting_y, passed_MouseX, passed_MouseY, passed_environment)
 {
     team = 2;
-    health = 50;
-    max_health = 50;
+    health = 25;
+    max_health = 25;
     attack = 0.005;
     defense = 0;
 
@@ -26,7 +26,8 @@ OrcVillager::~OrcVillager()
 void OrcVillager::Update(){
 
     Character::Update();
-    //Mining for VILLAGER class
+
+    //MINING
     for (int i = 0; i < environment->getGoldMines().size(); i++) //check for collision with gold mines (mining)
     {
         if (unit->isColliding(environment->getGoldMines()[i]->GetGold()->GetCollisionRect()))
@@ -44,12 +45,13 @@ void OrcVillager::Update(){
             mining = false;
         }
     }
-    //constructing for VILLAGER class
+
+    //CONSTRUCTING
     for (int i = 0; i < environment->getBuildings().size(); i++)
     {
-        if (unit->isColliding(environment->getBuildings()[i]->GetBuilding()->GetCollisionRect()) &&
-            environment->getBuildings()[i]->getTeam() == team &&
-            environment->getBuildings()[i]->Alive() &&
+        if (unit->isColliding(environment->getBuildings()[i]->GetBuilding()->GetCollisionRect()) && //if collides
+            environment->getBuildings()[i]->getTeam() == team && //building on team
+            environment->getBuildings()[i]->Alive() && //building not destroyed
             !environment->getBuildings()[i]->isConstructed()) //not constructed
         {
             environment->getBuildings()[i]->constructing();
@@ -58,7 +60,7 @@ void OrcVillager::Update(){
             follow = false;
             follow_point_x = unit->GetX();
             follow_point_y = unit->GetY();
-            break;
+            break; //stop looking for other building to construct
         } else
         {
             building = false;
@@ -67,7 +69,7 @@ void OrcVillager::Update(){
 
     if (health <= 0)
     {
-        environment->removeVillager();
+        environment->removeVillager(); //tell AI villager killed
     }
 }
 

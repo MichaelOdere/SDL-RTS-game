@@ -65,7 +65,7 @@ void Main::GameLoop()
     }
 
     quit = false;
-    while (!quit && !quitEarly)
+    while (!quit && !quitEarly) //endgame screen declaring winner
     {
         sdl_setup->Begin();
         if (sdl_setup->GetEv()->type == SDL_KEYDOWN)
@@ -83,7 +83,7 @@ void Main::GameLoop()
 
 void Main::endGame(int loser)
 {
-    quitEarly = false;
+    quitEarly = false; //winner decided, so allow display of endgame screen
     quit = true;
     if (loser == 1) {
         grass = new Sprite(sdl_setup->GetRenderer(), "images/orcVictory.png", 0, 0, 1024, 768, CollisionRectangle(0,0,0,0)); //orcs won
