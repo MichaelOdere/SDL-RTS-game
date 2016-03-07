@@ -149,15 +149,15 @@ void Environment::Update()
     timeText->Draw(timeHandler((int)((SDL_GetTicks()/1000))-startTime));
 
     if(broke){
-        if(SDL_GetTicks() < brokeTime+5000){
-            insufficientFunds->Draw("You don't have " + std::to_string(optionsMenu->getOpCost()) + " gold!");
+        if(SDL_GetTicks() < brokeTime+2000){
+            insufficientFunds->Draw("You don't have " + std::to_string(brokeCost) + " gold!");
         }else{
             broke = false;
         }
     }
 
     if(overpopulated){
-        if(SDL_GetTicks() < brokeTime+5000){
+        if(SDL_GetTicks() < brokeTime+2000){
             noHousing->Draw("You don't have enough houses for a new character");
         }else{
             overpopulated = false;
@@ -218,20 +218,20 @@ void Environment::Update()
 
                         resources = resources - optionsMenu->getOpCost();
                         selectedBuilding->startCreating(1);
-                    }else if(resources<optionsMenu->getOpCost()){
+                    }else if(resources < optionsMenu->getOpCost()){
                         alertInsufficientFunds();
-                    }else if(humanPop>=humanMaxPop){
+                    }else if(humanPop >= humanMaxPop){
                         alertNoHousing();
                     }
                     optionsMenu->buttonPressed = false;
                 }else if(optionsMenu->getWhatToMake() == 7){
                     //make champion next to barracks
-                    if(resources>=optionsMenu->getOpCost() && humanPop < humanMaxPop && selectedBuilding->creating == false){
+                    if(resources >= optionsMenu->getOpCost() && humanPop < humanMaxPop && selectedBuilding->creating == false){
                         resources = resources - optionsMenu->getOpCost();
                         selectedBuilding->startCreating(3);
-                    }else if(resources<optionsMenu->getOpCost()){
+                    }else if(resources < optionsMenu->getOpCost()){
                         alertInsufficientFunds();
-                    }else if(humanPop>=humanMaxPop){
+                    }else if(humanPop >= humanMaxPop){
                         alertNoHousing();
                     }
                     optionsMenu->buttonPressed = false;
@@ -359,10 +359,16 @@ void Environment::Update()
                         buildings.push_back(new Barracks(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 75, 75, 1, this));
                         resources = resources - optionsMenu->getOpCost();
                     }
+                    else{
+                        alertInsufficientFunds();
+                    }
                 } else {
                     if(orcResources >= optionsMenu->getOpCost()){
                         buildings.push_back(new Barracks(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 75, 75, 2, this));
                         orcResources = orcResources - optionsMenu->getOpCost();
+                    }
+                    else{
+                        alertInsufficientFunds();
                     }
                 }
                 selectedCharacter->setFollowPoint(*MouseX, *MouseY); //move character to construction zone
@@ -473,6 +479,7 @@ bool Environment::buildingConstructionCollision(int x, int y)
 void Environment::alertInsufficientFunds(){
     broke = true;
     brokeTime = SDL_GetTicks();
+    brokeCost =optionsMenu->getOpCost();
 }
 
 void Environment::alertNoHousing(){

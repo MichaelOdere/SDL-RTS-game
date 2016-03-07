@@ -99,6 +99,7 @@ class Environment
         void alertInsufficientFunds();
         void alertNoHousing();
         int brokeTime;
+        int brokeCost;
 
         std::string timeHandler(int time);
 
