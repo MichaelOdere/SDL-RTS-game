@@ -6,8 +6,8 @@ Character( passed_SDL_Setup, FilePath, starting_x, starting_y, passed_MouseX, pa
     team = 2;
     health = 100;
     max_health = 100;
-    attack = 0.02;
-    defense = 0.005;
+    attack = 0.025;
+    defense = 0.0025;
     environment->addChampion();
 
     type = 3;

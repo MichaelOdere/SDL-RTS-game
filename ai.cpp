@@ -8,7 +8,7 @@ AI::AI()
     militiaPop = 0;
     championPop = 0;
     buildX = 700;
-    buildY = 250;
+    buildY = 200;
     buildingHouse = false;
     buildingBarracks = false;
     notConstructing1 = false;
@@ -20,6 +20,8 @@ AI::AI()
     idle_y = 580;
     struct_x = 0;
     struct_y = 0;
+    militiaCreations = 0;
+    villagerDefender = NULL;
 }
 
 AI::~AI()
@@ -113,6 +115,11 @@ void AI::updateCharacter(Character* character)
         {
             character->setFollowPoint(100, 50); //attack human town center
         }
+        if (villagerDefender == NULL || !villagerDefender->isAlive()) //send one militia to guard villagers
+        {
+            villagerDefender = character;
+            character->setFollowPoint(idle_x, idle_y);
+        }
     }
     if (character->getType() == 3) //check if orc a CHAMPION
     {
@@ -155,17 +162,18 @@ void AI::updateBuilding(Building* building)
 
     if (building->getType() == 2 && building->constructed) //if building is a barracks
     {
-        if(environment->getOrcResources() >= 50 && militiaPop < 3 && environment->getOrcResources() <= 300 && environment->getOrcPop() < environment->getOrcMaxPop() && environment->getOrcPop() < 30 && !building->Creating())
+        if(environment->getOrcResources() >= 50 && (militiaCreations < 3 || environment->getOrcResources() <= 75) && environment->getOrcResources() <= 300 && environment->getOrcPop() < environment->getOrcMaxPop()
+           && environment->getOrcPop() < 25 && !building->Creating())
         {
             environment->setOrcResources(environment->getOrcResources() - 50);
             building->startCreating(2);
+            militiaCreations++;
         }
         if(environment->getOrcResources() >= 150 && environment->getOrcPop() < environment->getOrcMaxPop() && !building->Creating())
         {
             environment->setOrcResources(environment->getOrcResources() - 150);
             building->startCreating(4);
         }
-
     }
 }
 

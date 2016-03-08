@@ -66,7 +66,7 @@ void Character::Update()
             }
         }
 
-        if (unit->GetX() > 600 && team == 1) //if human crosses into orc territory, tell AI
+        if (unit->GetX() > 550 && team == 1) //if human crosses into orc territory, tell AI
         {
             environment->inEnemyTerritory(this);
         }
