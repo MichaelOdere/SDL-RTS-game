@@ -1,8 +1,8 @@
 #include "building.hpp"
 
-Building::Building(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_x, int size_y, int passed_team, Environment* passed_environment)
+Building::Building(SDL_Setup* sdl_setup, SDL_Texture* passed_image, int x, int y, int size_x, int size_y, int passed_team, Environment* passed_environment)
 {
-    Structure = new Sprite(sdl_setup->GetRenderer(), FilePath.c_str(), x, y, size_x, size_y, CollisionRectangle(0, 0, size_x, size_y));
+    Structure = new Sprite(sdl_setup->GetRenderer(), passed_image, x, y, size_x, size_y, CollisionRectangle(0, 0, size_x, size_y));
     selected = false;
     alive = true;
     team = passed_team;
@@ -29,7 +29,7 @@ void Building::Update()
 {
     if (selected)
     {
-        Structure->DisplayRectangle(health/max_health); //construction/health bar
+        environment->displayHealthBar(Structure, health/max_health); //construction/health bar
     }
 
     if (health == previous_health && health != 1 && !constructed) //not being constructed after construction starts
@@ -82,6 +82,6 @@ void Building::constructing()
     {
         constructed = true; //allows use of building and stops villager from constructing
         health = max_health; //ensures health is not greater than max
-        Structure->setCollisionImage(); //set health bar to max health
+        environment->setCollisionImage(Structure); //set health bar to max health
     }
 }

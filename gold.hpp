@@ -10,7 +10,7 @@ class Environment;
 class Gold
 {
     public:
-        Gold(SDL_Setup* sdl_setup, int x, int y, Environment* passed_environment);
+        Gold(SDL_Setup* sdl_setup, SDL_Texture* passed_image, int x, int y, Environment* passed_environment);
         ~Gold();
 
         void DrawGold();

@@ -9,7 +9,7 @@ class Environment;
 class OrcVillager : public Character
 {
     public:
-        OrcVillager(SDL_Setup* passed_SDL_Setup, std::string FilePath, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment);
+        OrcVillager(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment);
         OrcVillager() {}
         ~OrcVillager();
         void Update();
