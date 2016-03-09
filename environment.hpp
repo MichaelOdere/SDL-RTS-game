@@ -72,7 +72,10 @@ class Environment
         void createChampion(Building* passed_building, int unit);
         void alertInsufficientFunds();
         void alertNoHousing();
+        void changeImage(Sprite* building, int type);
+        void setCollisionImage(Sprite* building);
         std::string timeHandler(int time);
+        void displayHealthBar(Sprite* item, float health_percent);
         void endGame(int loser);
 
     private:
@@ -107,6 +110,38 @@ class Environment
         std::list<Character*> characters;
         AI* ai;
         Main* main;
+        SDL_Texture* collisionImage20;
+        SDL_Texture* collisionImage19;
+        SDL_Texture* collisionImage18;
+        SDL_Texture* collisionImage17;
+        SDL_Texture* collisionImage16;
+        SDL_Texture* collisionImage15;
+        SDL_Texture* collisionImage14;
+        SDL_Texture* collisionImage13;
+        SDL_Texture* collisionImage12;
+        SDL_Texture* collisionImage11;
+        SDL_Texture* collisionImage10;
+        SDL_Texture* collisionImage9;
+        SDL_Texture* collisionImage8;
+        SDL_Texture* collisionImage7;
+        SDL_Texture* collisionImage6;
+        SDL_Texture* collisionImage5;
+        SDL_Texture* collisionImage4;
+        SDL_Texture* collisionImage3;
+        SDL_Texture* collisionImage2;
+        SDL_Texture* collisionImage1;
+        SDL_Texture* villagerImage;
+        SDL_Texture* militiaImage;
+        SDL_Texture* championImage;
+        SDL_Texture* orcVillagerImage;
+        SDL_Texture* orcMilitiaImage;
+        SDL_Texture* orcChampionImage;
+        SDL_Texture* houseImage;
+        SDL_Texture* barracksImage;
+        SDL_Texture* barracksImage1;
+        SDL_Texture* townCenterImage;
+        SDL_Texture* goldImage;
+        SDL_Texture* constructionImage;
 };
 
 #endif // ENVIRONMENT_HPP

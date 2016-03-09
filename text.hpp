@@ -6,6 +6,7 @@
 class TextMessage
 {
 public:
+
     TextMessage(SDL_Renderer* passed_renderer, std::string message, int x, int y);
     ~TextMessage();
 
@@ -25,6 +26,7 @@ public:
     SDL_Texture* renderText(const std::string &message, const std::string &fontFile, SDL_Color color, int fontSize, SDL_Renderer *renderer);
 
 private:
+
     float X_pos;
     float Y_pos;
     float origin_x;

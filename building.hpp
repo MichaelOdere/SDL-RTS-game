@@ -10,7 +10,7 @@ class Environment;
 class Building
 {
     public:
-        Building(SDL_Setup* sdl_setup, std::string FilePath, int x, int y, int size_x, int size_y, int passed_team, Environment* passed_environment);
+        Building(SDL_Setup* sdl_setup, SDL_Texture* passed_image, int x, int y, int size_x, int size_y, int passed_team, Environment* passed_environment);
         Building() {}
         ~Building();
 
@@ -30,7 +30,7 @@ class Building
         void attacked(float attacker_attack);
         void setSelected() { selected = true; }
         void unSelect() { selected = false; }
-        bool Alive() { return alive; }
+        bool isAlive() { return alive; }
         bool Creating() { return creating; }
         int getType() { return type; }
         bool isConstructed() { return constructed; }

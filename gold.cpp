@@ -1,9 +1,9 @@
 #include "gold.hpp"
 
-Gold::Gold(SDL_Setup* sdl_setup, int x, int y, Environment* passed_environment)
+Gold::Gold(SDL_Setup* sdl_setup, SDL_Texture* passed_image, int x, int y, Environment* passed_environment)
 {
     //each gold tile 75x75, location in map passed through x and y
-    Mine = new Sprite(sdl_setup->GetRenderer(), "images/gold.png", x, y, 75, 75, CollisionRectangle(0,0,75,75));
+    Mine = new Sprite(sdl_setup->GetRenderer(), passed_image, x, y, 75, 75, CollisionRectangle(0,0,75,75));
 
     resources = 750; //amount of resources to be mined
     max_resources = 750;
@@ -22,7 +22,7 @@ void Gold::Update()
 {
     if (selected)
     {
-        Mine->DisplayRectangle(resources/max_resources); //display remaining resources as health bar when selected
+        environment->displayHealthBar(Mine, resources/max_resources);; //display remaining resources as health bar when selected
     }
 
     if (resources <= 0)

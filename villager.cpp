@@ -1,11 +1,11 @@
 #include "villager.hpp"
 
-Villager::Villager(SDL_Setup* passed_SDL_Setup, std::string FilePath, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment) :
-    Character( passed_SDL_Setup, FilePath, starting_x, starting_y, passed_MouseX, passed_MouseY, passed_environment)
+Villager::Villager(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment) :
+    Character( passed_SDL_Setup, passed_image, starting_x, starting_y, passed_MouseX, passed_MouseY, passed_environment)
 {
     team = 1;
-    health = 25;
-    max_health = 25;
+    health = 50;
+    max_health = 50;
     attack = 0.005;
     defense = 0;
 
@@ -38,7 +38,7 @@ void Villager::Update()
     {
         if (unit->isColliding(environment->getBuildings()[i]->GetBuilding()->GetCollisionRect()) &&
             environment->getBuildings()[i]->getTeam() == team &&
-            environment->getBuildings()[i]->Alive() &&
+            environment->getBuildings()[i]->isAlive() &&
             !environment->getBuildings()[i]->isConstructed()) //not constructed
         {
             environment->getBuildings()[i]->constructing();

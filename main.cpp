@@ -9,6 +9,9 @@ Main::Main() //Constructor
     quitEarly = true;
     sdl_setup = new SDL_Setup(&quit);
 
+    orcVictory = new Sprite(sdl_setup->GetRenderer(), "images/orcVictory.png", 0, 0, 1024, 768, CollisionRectangle(0,0,0,0));
+    humanVictory = new Sprite(sdl_setup->GetRenderer(), "images/humanVictory.png", 0, 0, 1024, 768, CollisionRectangle(0,0,0,0));
+
     MouseX = 0;
     MouseY = 0;
 }
@@ -86,9 +89,9 @@ void Main::endGame(int loser)
     quitEarly = false; //winner decided, so allow display of endgame screen
     quit = true;
     if (loser == 1) {
-        grass = new Sprite(sdl_setup->GetRenderer(), "images/orcVictory.png", 0, 0, 1024, 768, CollisionRectangle(0,0,0,0)); //orcs won
+        grass =  orcVictory; //orcs won
     } else
     {
-        grass = new Sprite(sdl_setup->GetRenderer(), "images/humanVictory.png", 0, 0, 1024, 768, CollisionRectangle(0,0,0,0)); //humans won
+        grass = humanVictory; //humans won
     }
 }

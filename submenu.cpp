@@ -81,9 +81,6 @@ void SubMenu::Draw() //display menu bar and buttons
 void SubMenu::DrawOptions(){ //display each button in menu
     for(int j = 0; j < options.size(); j++){
         displayed[j]->Draw();
-        if(options[j].selected){
-            displayed[j]->DisplayRectangle(1.0);
-        }
     }
 
 }
@@ -133,7 +130,6 @@ void SubMenu::Update()
                         options[i].selected = false;
                         opSelected = false;
                     }else{
-                        displayed[i]->DisplayRectangle(1.0);
                         options[i].selected = true;
                         opSelected = true;
                         options[selectedI].selected = false;

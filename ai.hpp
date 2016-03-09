@@ -58,8 +58,10 @@ class AI
         bool barracksConstructionInitiated;
         int struct_x;
         int struct_y;
+        int militiaCreations;
         std::vector<Character*> enemies;
         Character* enemy_target;
+        Character* villagerDefender;
 
 };
 

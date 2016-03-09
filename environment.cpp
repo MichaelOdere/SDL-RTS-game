@@ -21,6 +21,38 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     main = passed_main;
     startTime = SDL_GetTicks()/1000; //ensures game time corresponds to when spacebar hit on splash screen and game begins
 
+    collisionImage20 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangleGREEN.png");
+    collisionImage19= IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle19.png");
+    collisionImage18 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle18.png");
+    collisionImage17 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle17.png");
+    collisionImage16 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle16.png");
+    collisionImage15 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle15.png");
+    collisionImage14= IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle14.png");
+    collisionImage13 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle13.png");
+    collisionImage12 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle12.png");
+    collisionImage11 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle11.png");
+    collisionImage10 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle10.png");
+    collisionImage9= IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle9.png");
+    collisionImage8 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle8.png");
+    collisionImage7 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle7.png");
+    collisionImage6 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle6.png");
+    collisionImage5 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle5.png");
+    collisionImage4 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle4.png");
+    collisionImage3 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle3.png");
+    collisionImage2 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle2.png");
+    collisionImage1 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle1.png");
+    villagerImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/villager.png");
+    militiaImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/militia.png");
+    championImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/champion.png");
+    orcVillagerImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/orcVillager.png");
+    orcMilitiaImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/orcMilitia.png");
+    orcChampionImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/orcChampion.png");
+    houseImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/house.png");
+    barracksImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/barracks.png");
+    barracksImage1 = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/barracks1.png");
+    townCenterImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/towncenter.png");
+    goldImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/gold.png");
+    constructionImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle.png");
 
     goldText = new TextMessage(sdl_setup->GetRenderer(), std::to_string((int)resources), 8, 0);
     timeText = new TextMessage(sdl_setup->GetRenderer(), std::to_string((SDL_GetTicks()/1000) - startTime), 900, 0);
@@ -50,38 +82,38 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     maxMaxPop = 25; //neither team may have more than 25 units
 
     //Humans
-    selectedCharacter = new Villager(sdl_setup, "images/villager.png", 300, 200, MouseX, MouseY, this); //need to select initial character to avoid error of deselecting an unselected character below
+    selectedCharacter = new Villager(sdl_setup, villagerImage, 300, 200, MouseX, MouseY, this); //need to select initial character to avoid error of deselecting an unselected character below
     selectedCharacter->unSelect();
     characters.push_back(selectedCharacter);
-    characters.push_back(new Villager(sdl_setup, "images/villager.png", 200, 200, MouseX, MouseY, this));
-    characters.push_back(new Villager(sdl_setup, "images/villager.png", 250, 200, MouseX, MouseY, this));
+    characters.push_back(new Villager(sdl_setup, villagerImage, 200, 200, MouseX, MouseY, this));
+    characters.push_back(new Villager(sdl_setup, villagerImage, 250, 200, MouseX, MouseY, this));
 
     //Orcs
-    characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png", 650, 200, MouseX, MouseY, this));
-    characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png", 700, 200, MouseX, MouseY, this));
-    characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png", 750, 200, MouseX, MouseY, this));
+    characters.push_back(new OrcVillager(sdl_setup, orcVillagerImage, 650, 200, MouseX, MouseY, this));
+    characters.push_back(new OrcVillager(sdl_setup, orcVillagerImage, 700, 200, MouseX, MouseY, this));
+    characters.push_back(new OrcVillager(sdl_setup, orcVillagerImage, 750, 200, MouseX, MouseY, this));
 
     //Town Center placement on map
-    selectedBuilding = new TownCenter(sdl_setup, "images/towncenter.png", 100, 50, 140, 120, 1, this);
+    selectedBuilding = new TownCenter(sdl_setup, townCenterImage, 100, 50, 140, 120, 1, this);
     selectedBuilding->unSelect();
     buildings.push_back(selectedBuilding);
-    buildings.push_back(new TownCenter(sdl_setup, "images/towncenter.png", 800, 50, 140, 120, 2, this));
+    buildings.push_back(new TownCenter(sdl_setup, townCenterImage, 800, 50, 140, 120, 2, this));
 
     //Gold placement on map
-    selectedGold = new Gold(sdl_setup, 475, 550, this);
+    selectedGold = new Gold(sdl_setup, goldImage, 475, 550, this);
     selectedGold->unSelect();
     goldMines.push_back(selectedGold);
-    goldMines.push_back(new Gold(sdl_setup, 550, 550, this));
-    goldMines.push_back(new Gold(sdl_setup, 475, 475, this));
-    goldMines.push_back(new Gold(sdl_setup, 550, 475, this));
-    goldMines.push_back(new Gold(sdl_setup, 475, 400, this));
-    goldMines.push_back(new Gold(sdl_setup, 550, 400, this));
-    goldMines.push_back(new Gold(sdl_setup, 475, 175, this));
-    goldMines.push_back(new Gold(sdl_setup, 550, 175, this));
-    goldMines.push_back(new Gold(sdl_setup, 475, 100, this));
-    goldMines.push_back(new Gold(sdl_setup, 550, 100, this));
-    goldMines.push_back(new Gold(sdl_setup, 475, 25, this));
-    goldMines.push_back(new Gold(sdl_setup, 550, 25, this));
+    goldMines.push_back(new Gold(sdl_setup, goldImage, 550, 550, this));
+    goldMines.push_back(new Gold(sdl_setup, goldImage, 475, 475, this));
+    goldMines.push_back(new Gold(sdl_setup, goldImage, 550, 475, this));
+    goldMines.push_back(new Gold(sdl_setup, goldImage, 475, 400, this));
+    goldMines.push_back(new Gold(sdl_setup, goldImage, 550, 400, this));
+    goldMines.push_back(new Gold(sdl_setup, goldImage, 475, 175, this));
+    goldMines.push_back(new Gold(sdl_setup, goldImage, 550, 175, this));
+    goldMines.push_back(new Gold(sdl_setup, goldImage, 475, 100, this));
+    goldMines.push_back(new Gold(sdl_setup, goldImage, 550, 100, this));
+    goldMines.push_back(new Gold(sdl_setup, goldImage, 475, 25, this));
+    goldMines.push_back(new Gold(sdl_setup, goldImage, 550, 25, this));
 }
 
 Environment::~Environment()
@@ -114,15 +146,13 @@ void Environment::DrawBack()
             (*i)->DrawGold();
         }
     }
-
     for (std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i)
     {
-        if ((*i)->Alive())
+        if ((*i)->isAlive())
         {
             (*i)->DrawBuilding();
         }
     }
-
     for (std::list<Character*>::iterator i = characters.begin(); i != characters.end(); ++i)
     {
         if ((*i)->isAlive())
@@ -179,7 +209,7 @@ void Environment::Update()
         optionsMenu->Update();
     }
 
-    if(selectedBuilding->menuType == 4 && selectedBuilding->Alive()){ //town center selected
+    if(selectedBuilding->menuType == 4 && selectedBuilding->isAlive()){ //town center selected
         if(optionsMenu->buttonPressed){
             if (selectedBuilding->getTeam() == 1) { //check if human towncenter
                 if(optionsMenu->getWhatToMake() == 3){ //if villager selected
@@ -212,7 +242,7 @@ void Environment::Update()
         }
     }
 
-    if(selectedBuilding->menuType == 5 && selectedBuilding->Alive() && selectedBuilding->isConstructed()){ //barracks selected
+    if(selectedBuilding->menuType == 5 && selectedBuilding->isAlive() && selectedBuilding->isConstructed()){ //barracks selected
         if(optionsMenu->buttonPressed){
             if (selectedBuilding->getTeam() == 1) { //check if human barracks
                 if(optionsMenu->getWhatToMake() == 5){
@@ -277,7 +307,7 @@ void Environment::Update()
 
     for (std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i)
     {
-        if ((*i)->Alive())
+        if ((*i)->isAlive())
         {
             (*i)->Update();
             if ((*i)->getTeam() == 2) { //pass each orc building to AI to determine its next action
@@ -341,14 +371,14 @@ void Environment::Update()
             if(optionsMenu->getWhatToMake() == 1 && !buildingConstructionCollision(*MouseX-50, *MouseY-50)){
                 if (selectedCharacter->getTeam() == 1) {//check villager team
                     if(resources >= optionsMenu->getOpCost()){
-                        buildings.push_back(new House(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 50, 50, 1, this)); //initially display construction zone
+                        buildings.push_back(new House(sdl_setup, constructionImage, *MouseX-50, *MouseY-50, 50, 50, 1, this)); //initially display construction zone
                         resources = resources - optionsMenu->getOpCost();
                     }else{
                         alertInsufficientFunds();
                     }
                 } else {
                     if(orcResources >= optionsMenu->getOpCost()){
-                        buildings.push_back(new House(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 50, 50, 2, this));
+                        buildings.push_back(new House(sdl_setup, constructionImage, *MouseX-50, *MouseY-50, 50, 50, 2, this));
                         orcResources = orcResources - optionsMenu->getOpCost();
                     }else{
                         alertInsufficientFunds();
@@ -359,7 +389,7 @@ void Environment::Update()
             }else if(optionsMenu->getWhatToMake() == 2 && !buildingConstructionCollision(*MouseX-50, *MouseY-50)){
                 if (selectedCharacter->getTeam() == 1) {//check villager team
                     if(resources >= optionsMenu->getOpCost()){
-                        buildings.push_back(new Barracks(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 75, 75, 1, this));
+                        buildings.push_back(new Barracks(sdl_setup, constructionImage, *MouseX-50, *MouseY-50, 75, 75, 1, this));
                         resources = resources - optionsMenu->getOpCost();
                     }
                     else{
@@ -367,7 +397,7 @@ void Environment::Update()
                     }
                 } else {
                     if(orcResources >= optionsMenu->getOpCost()){
-                        buildings.push_back(new Barracks(sdl_setup, "images/collision_rectangle.png", *MouseX-50, *MouseY-50, 75, 75, 2, this));
+                        buildings.push_back(new Barracks(sdl_setup, constructionImage, *MouseX-50, *MouseY-50, 75, 75, 2, this));
                         orcResources = orcResources - optionsMenu->getOpCost();
                     }
                     else{
@@ -406,7 +436,7 @@ Building* Environment::CombatBuilding(Sprite* attacker, int attacker_team) //ret
 {
     for (std::vector<Building*>::iterator i = buildings.begin(); i != buildings.end(); ++i)
     {
-        if (attacker->isColliding((*i)->GetBuilding()->GetCollisionRect()) && (*i)->Alive() && (*i)->getTeam() != attacker_team) //check for collision with Building, excluding team buildings and destroyed buildings
+        if (attacker->isColliding((*i)->GetBuilding()->GetCollisionRect()) && (*i)->isAlive() && (*i)->getTeam() != attacker_team) //check for collision with Building, excluding team buildings and destroyed buildings
         {
             return (*i);
         }
@@ -448,7 +478,7 @@ bool Environment::buildingConstructionCollision(int x, int y) //Cannot build on 
 {
     for (int j = 0; j < buildings.size(); j++) //check for collision
     {
-        if (buildings[j]->Alive())
+        if (buildings[j]->isAlive())
         {
             collision_rect = buildings[j]->GetBuilding()->GetCollisionRect();
 
@@ -494,11 +524,11 @@ void Environment::createVillager(Building* passed_building, int unit) //creates 
 {
     if (unit == 1) // if human villager
     {
-        characters.push_back(new Villager(sdl_setup, "images/Villager.png",passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
+        characters.push_back(new Villager(sdl_setup, villagerImage,passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
         humanPop++;
     } else
     {
-        characters.push_back(new OrcVillager(sdl_setup, "images/orcVillager.png",passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
+        characters.push_back(new OrcVillager(sdl_setup, orcVillagerImage,passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
         orcPop++;
     }
 }
@@ -507,11 +537,11 @@ void Environment::createMilitia(Building* passed_building, int unit)
 {
     if (unit == 1) //if human militia
     {
-        characters.push_back(new Militia(sdl_setup, "images/Militia.png",passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
+        characters.push_back(new Militia(sdl_setup, militiaImage,passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
         humanPop++;
     } else
     {
-        characters.push_back(new OrcMilitia(sdl_setup, "images/orcMilitia.png",passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
+        characters.push_back(new OrcMilitia(sdl_setup, orcMilitiaImage,passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
         orcPop++;
     }
 }
@@ -520,23 +550,23 @@ void Environment::createChampion(Building* passed_building, int unit)
 {
     if (unit == 3) //if human champion
     {
-        characters.push_back(new Champion(sdl_setup, "images/Champion.png",passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
+        characters.push_back(new Champion(sdl_setup, championImage,passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
         humanPop++;
     } else
     {
-        characters.push_back(new OrcChampion(sdl_setup, "images/orcChampion.png",passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
+        characters.push_back(new OrcChampion(sdl_setup, orcChampionImage,passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
         orcPop++;
     }
 }
 
 void Environment::createHouse(int x, int y)
 {
-    buildings.push_back(new House(sdl_setup, "images/collision_rectangle.png", x, y, 50, 50, 2, this)); //initially display construction zone
+    buildings.push_back(new House(sdl_setup, constructionImage, x, y, 50, 50, 2, this)); //initially display construction zone
 }
 
 void Environment::createBarracks(int x, int y)
 {
-    buildings.push_back(new Barracks(sdl_setup, "images/collision_rectangle.png", x, y, 75, 75, 2, this)); //initially display construction zone
+    buildings.push_back(new Barracks(sdl_setup, constructionImage, x, y, 75, 75, 2, this)); //initially display construction zone
 }
 
 //Methods to pass information to AI
@@ -569,6 +599,107 @@ std::string Environment::timeHandler(int time){
     int mins = floor((int)(time/60));
     int secs = time-mins*60;
     return "Time: "+ std::to_string(mins) +":" +std::to_string(secs);
+}
+
+void Environment::displayHealthBar(Sprite* item, float health_percent)
+{
+        //display health bar corresponding to health percentage
+    if (health_percent < 0.05)
+    {
+        item->DisplayRectangle(collisionImage1);
+    }
+    else if (health_percent < 0.10)
+    {
+        item->DisplayRectangle(collisionImage2);
+    }
+    else if (health_percent < 0.15)
+    {
+        item->DisplayRectangle(collisionImage3);
+    }
+    else if (health_percent < 0.20 )
+    {
+        item->DisplayRectangle(collisionImage4);
+    }
+    else if (health_percent < 0.25 )
+    {
+        item->DisplayRectangle(collisionImage5);
+    }
+    else if (health_percent < 0.30)
+    {
+        item->DisplayRectangle(collisionImage6);
+    }
+    else if (health_percent < 0.35 )
+    {
+        item->DisplayRectangle(collisionImage7);
+    }
+    else if (health_percent < 0.40 )
+    {
+        item->DisplayRectangle(collisionImage8);
+    }
+    else if (health_percent < 0.45 )
+    {
+        item->DisplayRectangle(collisionImage9);
+    }
+    else if (health_percent < 0.50)
+    {
+        item->DisplayRectangle(collisionImage10);
+    }
+    else if (health_percent < 0.55 )
+    {
+        item->DisplayRectangle(collisionImage11);
+    }
+    else if (health_percent < 0.60 )
+    {
+        item->DisplayRectangle(collisionImage12);
+    }
+    else if (health_percent < 0.65 )
+    {
+        item->DisplayRectangle(collisionImage13);
+    }
+    else if (health_percent < 0.70)
+    {
+        item->DisplayRectangle(collisionImage14);
+    }
+    else if (health_percent < 0.75 )
+    {
+        item->DisplayRectangle(collisionImage15);
+    }
+    else if (health_percent < 0.80 )
+    {
+        item->DisplayRectangle(collisionImage16);
+    }
+    else if (health_percent < 0.85 )
+    {
+        item->DisplayRectangle(collisionImage17);
+    }
+    else if (health_percent < 0.90)
+    {
+        item->DisplayRectangle(collisionImage18);
+    }
+    else if (health_percent < 0.95 )
+    {
+        item->DisplayRectangle(collisionImage19);
+    }
+    else
+    {
+        item->DisplayRectangle(collisionImage20);
+    }
+}
+
+void Environment::changeImage(Sprite* building, int type)
+{
+    if (type == 1) //house
+    {
+        building->changeImage(houseImage); //reset image to created state
+    } else //barracks
+    {
+        building->changeImage(barracksImage1); //reset image to created state
+    }
+}
+
+void Environment::setCollisionImage(Sprite* building)
+{
+    building->setCollisionImage(collisionImage20);
 }
 
 void Environment::endGame(int loser) //tells Main game is over and declares winner

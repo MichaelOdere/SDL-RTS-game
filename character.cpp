@@ -2,11 +2,10 @@
 #include "main.hpp"
 #include <math.h>
 
-Character::Character(SDL_Setup* passed_SDL_Setup, std::string FilePath, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment) //Constructor
+Character::Character(SDL_Setup* passed_SDL_Setup, SDL_Texture* passed_image, int starting_x, int starting_y, int *passed_MouseX, int *passed_MouseY, Environment* passed_environment) //Constructor
 {
 
     environment = passed_environment;
-
     selected = false;
     alive = true;
     attacking = false;
@@ -19,7 +18,7 @@ Character::Character(SDL_Setup* passed_SDL_Setup, std::string FilePath, int star
     MouseX = passed_MouseX;
     MouseY = passed_MouseY;
 
-    unit = new Sprite(sdl_setup->GetRenderer(), FilePath.c_str(), starting_x, starting_y, 30, 40, CollisionRectangle(0,0,30,40)); //unit to move around
+    unit = new Sprite(sdl_setup->GetRenderer(), passed_image, starting_x, starting_y, 30, 40, CollisionRectangle(0,0,30,40)); //unit to move around
     unit->SetUpAnimation(9,4);
     unit->SetOrigin((unit->GetWidth())/2, (unit->GetHeight())/2); //allows for unit to stand directly over target instead of offset
 
@@ -66,7 +65,7 @@ void Character::Update()
             }
         }
 
-        if (unit->GetX() > 600 && team == 1) //if human crosses into orc territory, tell AI
+        if (unit->GetX() > 550 && team == 1) //if human crosses into orc territory, tell AI
         {
             environment->inEnemyTerritory(this);
         }
@@ -148,7 +147,7 @@ void Character::Select(){
 
     if (selected)
     {
-        unit->DisplayRectangle(health/max_health); //selection box around unit
+        environment->displayHealthBar(unit, health/max_health); //selection box around unit
 
         if (sdl_setup->GetEv()->type == SDL_MOUSEBUTTONDOWN && team == 1) //mouse button clicked
         {
@@ -194,7 +193,7 @@ void Character::Move(){
 
             for (int i = 0; i < environment->getBuildings().size(); i++) //check for collision
             {
-                if (environment->getBuildings()[i]->Alive())
+                if (environment->getBuildings()[i]->isAlive())
                 {
                     //check if colliding with building that is either constructed or on your team (prevents builder from getting stuck in completed building, cannot collide with unfinished enemy buildings)
                     if (unit->isCollidingBuilding(environment->getBuildings()[i]->GetBuilding()->GetCollisionRect()) && (environment->getBuildings()[i]->isConstructed() || environment->getBuildings()[i]->getTeam() == team))

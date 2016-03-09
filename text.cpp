@@ -51,8 +51,6 @@ SDL_Texture* TextMessage::renderText(const std::string &message, const std::stri
     return texture;
 }
 
-
-
 void TextMessage::Draw(std::string message){
     SDL_DestroyTexture(textTexture); // Free memory from previous texture
 
