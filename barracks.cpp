@@ -8,7 +8,7 @@
 Barracks::Barracks(SDL_Setup* sdl_setup, SDL_Texture* passed_image, int x, int y, int size_x, int size_y, int passed_team, Environment* passed_environment) : Building(sdl_setup, passed_image, x, y, size_x, size_y, passed_team, passed_environment)
 {
     health = 1;
-    max_health = 500;
+    max_health = 750;
 
     menuType = 5;
 
