@@ -368,7 +368,7 @@ void Environment::Update()
                 selectedCharacter->unSelect(); //unselect previously selected
             }
 
-            if(optionsMenu->getWhatToMake() == 1 && !buildingConstructionCollision(*MouseX-50, *MouseY-50)){
+            if(optionsMenu->getWhatToMake() == 1 && !buildingConstructionCollision(*MouseX-50, *MouseY-50) && *MouseX < 550){ //check if valid build zone (no collisions and not in enemy territory)
                 if (selectedCharacter->getTeam() == 1) {//check villager team
                     if(resources >= optionsMenu->getOpCost()){
                         buildings.push_back(new House(sdl_setup, constructionImage, *MouseX-50, *MouseY-50, 50, 50, 1, this)); //initially display construction zone
@@ -386,7 +386,7 @@ void Environment::Update()
                 }
                 selectedCharacter->setFollowPoint(*MouseX, *MouseY); //move villager to construction zone
 
-            }else if(optionsMenu->getWhatToMake() == 2 && !buildingConstructionCollision(*MouseX-50, *MouseY-50)){
+            }else if(optionsMenu->getWhatToMake() == 2 && !buildingConstructionCollision(*MouseX-50, *MouseY-50) && *MouseX < 550){
                 if (selectedCharacter->getTeam() == 1) {//check villager team
                     if(resources >= optionsMenu->getOpCost()){
                         buildings.push_back(new Barracks(sdl_setup, constructionImage, *MouseX-50, *MouseY-50, 75, 75, 1, this));
@@ -416,6 +416,16 @@ void Environment::Update()
             }else{
                 showMenu = true;
             }
+       }
+    }
+    if(sdl_setup->GetEv()->type == SDL_KEYDOWN){
+       if(sdl_setup->GetEv()->key.keysym.sym == SDLK_F8){
+            endGame(2);
+       }
+    }
+    if(sdl_setup->GetEv()->type == SDL_KEYDOWN){
+       if(sdl_setup->GetEv()->key.keysym.sym == SDLK_INSERT){
+            resources += 100;
        }
     }
 }

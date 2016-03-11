@@ -42,7 +42,6 @@ void Building::Update()
     {
         alive = false;
         selected = false;
-        delete Structure;
     }
     previous_health = health;
 }

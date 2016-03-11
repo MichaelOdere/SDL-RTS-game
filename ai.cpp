@@ -60,7 +60,7 @@ void AI::updateCharacter(Character* character)
             barracksConstructionInitiated = true;
         }
 
-        if (barracks == 0 && barracksConstructionInitiated && !character->isFollowing()) //send all villagers to build first barracks
+        if (barracks == 0 && barracksConstructionInitiated && !character->isFollowing() && buildingBarracks) //send all villagers to build first barracks
         {
             character->setFollowPoint(buildX-120, buildY);
         }
