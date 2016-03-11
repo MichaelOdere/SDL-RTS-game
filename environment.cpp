@@ -59,6 +59,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     populationText = new TextMessage(sdl_setup->GetRenderer(), "Population: " + std::to_string(humanPop)+"/"+std::to_string(humanMaxPop), 150, 0);
     insufficientFunds = new TextMessage(sdl_setup->GetRenderer(), "You don't have " + std::to_string(optionsMenu->getOpCost()) + " gold!", 350, 300);
     noHousing = new TextMessage(sdl_setup->GetRenderer(), "Need more houses", 350, 300);
+    busyBuilding = new TextMessage(sdl_setup->GetRenderer(), "This building is already creating", 350, 300);
 
     showMenu = true;//start with menu displayed
     optionsMenu->UpdateType(1);// 1 is main menu
@@ -196,6 +197,14 @@ void Environment::Update()
             overpopulated = false;
         }
     }
+    
+    if(alreadyCreating){
+        if(SDL_GetTicks() < brokeTime+2000){
+            busyBuilding->Draw("This building is already creating");
+        }else{
+            alreadyCreating = false;
+        }
+    }
 
     if(showMenu){
         if(selectedBuilding->selected){
@@ -222,6 +231,8 @@ void Environment::Update()
                         alertInsufficientFunds();
                     }else if(humanPop >= humanMaxPop){
                         alertNoHousing();
+                    }else if(selectedBuilding->creating){
+                        alertCreating();
                     }
                     optionsMenu->buttonPressed = false;
                 }
@@ -235,6 +246,8 @@ void Environment::Update()
                         alertInsufficientFunds();
                     }else if(humanPop >= humanMaxPop){
                         alertNoHousing();
+                    }else if(selectedBuilding->creating){
+                        alertCreating();
                     }
                     optionsMenu->buttonPressed = false;
                 }
@@ -255,6 +268,8 @@ void Environment::Update()
                         alertInsufficientFunds();
                     }else if(humanPop >= humanMaxPop){
                         alertNoHousing();
+                    }else if(selectedBuilding->creating){
+                        alertCreating();
                     }
                     optionsMenu->buttonPressed = false;
                 }else if(optionsMenu->getWhatToMake() == 7){
@@ -266,6 +281,8 @@ void Environment::Update()
                         alertInsufficientFunds();
                     }else if(humanPop >= humanMaxPop){
                         alertNoHousing();
+                    }else if(selectedBuilding->creating){
+                        alertCreating();
                     }
                     optionsMenu->buttonPressed = false;
                 }
@@ -527,6 +544,11 @@ void Environment::alertInsufficientFunds(){
 
 void Environment::alertNoHousing(){
     overpopulated = true;
+    brokeTime = SDL_GetTicks();
+}
+
+void Environment::alertCreating(){
+    alreadyCreating = true;
     brokeTime = SDL_GetTicks();
 }
 
