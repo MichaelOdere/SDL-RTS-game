@@ -1,20 +1,19 @@
+
 # SDL-RTS-game
-Real time strategy game using the SDL framework for c++
+Real-time strategy game using the SDL2 library for C++.
 
 Contributors:
         
         Sam Cordes: 
         - Gameplay
-        - Game Server
+        - AI
           
         Colin Meisner:
         - Gameplay
-        - Buildings
           
         Michael Odere:
         - Gameplay
-        - Game Server
-        - Characters
+        - HUD
           
         Zoe Olson:
         - Graphics
@@ -22,4 +21,9 @@ Contributors:
           
         Charlie Quinn:
         - Menu and HUD
-        - Economy
+        - Notifications
+        
+Required SDL2 files:
+- SDL2 Development Library: https://www.libsdl.org/download-2.0.php
+- SDL_image 2.0 Development Library: https://www.libsdl.org/projects/SDL_image/
+- SDL_ttf 2.0 Development Library: https://www.libsdl.org/projects/SDL_ttf/
