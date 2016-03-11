@@ -1,5 +1,5 @@
 
-# SDL-RTS-game
+# Man vs Orc
 Real-time strategy game using the SDL2 library for C++.
 
 Contributors:
