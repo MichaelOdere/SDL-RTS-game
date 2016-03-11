@@ -55,7 +55,7 @@ Environment::Environment(SDL_Setup* passed_sdl_setup, int *passed_MouseX, int *p
     constructionImage = IMG_LoadTexture(sdl_setup->GetRenderer(), "images/collision_rectangle.png");
 
     goldText = new TextMessage(sdl_setup->GetRenderer(), std::to_string((int)resources), 8, 0);
-    timeText = new TextMessage(sdl_setup->GetRenderer(), std::to_string((SDL_GetTicks()/1000) - startTime), 900, 0);
+    timeText = new TextMessage(sdl_setup->GetRenderer(), std::to_string((SDL_GetTicks()/1000) - startTime), 880, 0);
     populationText = new TextMessage(sdl_setup->GetRenderer(), "Population: " + std::to_string(humanPop)+"/"+std::to_string(humanMaxPop), 150, 0);
     insufficientFunds = new TextMessage(sdl_setup->GetRenderer(), "You don't have " + std::to_string(optionsMenu->getOpCost()) + " gold!", 350, 300);
     noHousing = new TextMessage(sdl_setup->GetRenderer(), "Need more houses", 350, 300);
@@ -192,7 +192,7 @@ void Environment::Update()
 
     if(overpopulated){
         if(SDL_GetTicks() < brokeTime+2000){
-            noHousing->Draw("Need more houses");
+            noHousing->Draw("You need more houses!");
         }else{
             overpopulated = false;
         }
@@ -200,7 +200,7 @@ void Environment::Update()
     
     if(alreadyCreating){
         if(SDL_GetTicks() < brokeTime+2000){
-            busyBuilding->Draw("This building is already creating");
+            busyBuilding->Draw("This building is already creating!");
         }else{
             alreadyCreating = false;
         }
