@@ -30,6 +30,7 @@ void Villager::Update()
             {
                 environment->AddResources(1);
             }
+            break; //prevents villager from mining more than one gold mine
         }
     }
 

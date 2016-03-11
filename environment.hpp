@@ -72,6 +72,7 @@ class Environment
         void createChampion(Building* passed_building, int unit);
         void alertInsufficientFunds();
         void alertNoHousing();
+        void alertCreating();
         void changeImage(Sprite* building, int type);
         void setCollisionImage(Sprite* building);
         std::string timeHandler(int time);
@@ -89,6 +90,7 @@ class Environment
         bool showMenu;
         bool broke;
         bool overpopulated;
+        bool alreadyCreating;
         int startTime;
         int brokeTime;
         int brokeCost;
@@ -103,6 +105,7 @@ class Environment
         TextMessage* timeText;
         TextMessage* insufficientFunds;
         TextMessage* noHousing;
+        TextMessage* busyBuilding;
         Character* dead;
         SDL_Setup* sdl_setup;
         std::vector<Gold*> goldMines;
