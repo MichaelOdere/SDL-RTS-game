@@ -573,7 +573,7 @@ void Environment::createMilitia(Building* passed_building, int unit)
         humanPop++;
     } else
     {
-        characters.push_back(new OrcMilitia(sdl_setup, orcMilitiaImage,passed_building->getStructureX() + passed_building->getStructureW(), passed_building->getStructureY() + passed_building->getStructureH()+20, MouseX, MouseY, this));
+        characters.push_back(new OrcMilitia(sdl_setup, orcMilitiaImage,passed_building->getStructureX() + passed_building->getStructureW()-30, passed_building->getStructureY() + passed_building->getStructureH()+30, MouseX, MouseY, this));
         orcPop++;
     }
 }
