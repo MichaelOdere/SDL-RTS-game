@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="SDL-RTS-game" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/SDL-RTS-game" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="../SDL-RTS-game" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/SDL-RTS-game" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="../SDL-RTS-game" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-std=c++11" />
+			<Add directory="C:/mingw_dev_lib/include/SDL2" />
+		</Compiler>
+		<Linker>
+			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_net -lSDL2_ttf" />
+			<Add directory="C:/mingw_dev_lib/lib" />
+		</Linker>
+		<Unit filename="TownCenter.cpp" />
+		<Unit filename="TownCenter.h" />
+		<Unit filename="ai.cpp" />
+		<Unit filename="ai.hpp" />
+		<Unit filename="barracks.cpp" />
+		<Unit filename="barracks.h" />
+		<Unit filename="building.cpp" />
+		<Unit filename="building.hpp" />
+		<Unit filename="champion.cpp" />
+		<Unit filename="champion.hpp" />
+		<Unit filename="character.cpp" />
+		<Unit filename="character.hpp" />
+		<Unit filename="collision_rectangle.cpp" />
+		<Unit filename="collision_rectangle.hpp" />
+		<Unit filename="environment.cpp" />
+		<Unit filename="environment.hpp" />
+		<Unit filename="gold.cpp" />
+		<Unit filename="gold.hpp" />
+		<Unit filename="house.cpp" />
+		<Unit filename="house.hpp" />
+		<Unit filename="imports.hpp" />
+		<Unit filename="main.cpp" />
+		<Unit filename="main.hpp" />
+		<Unit filename="menuoption.cpp" />
+		<Unit filename="menuoption.hpp" />
+		<Unit filename="militia.cpp" />
+		<Unit filename="militia.hpp" />
+		<Unit filename="orc_champion.cpp" />
+		<Unit filename="orc_champion.hpp" />
+		<Unit filename="orc_militia.cpp" />
+		<Unit filename="orc_militia.hpp" />
+		<Unit filename="orc_villager.cpp" />
+		<Unit filename="orc_villager.hpp" />
+		<Unit filename="rts_game.cpp" />
+		<Unit filename="sdl_setup.cpp" />
+		<Unit filename="sdl_setup.hpp" />
+		<Unit filename="sprite.cpp" />
+		<Unit filename="sprite.hpp" />
+		<Unit filename="submenu.cpp" />
+		<Unit filename="submenu.hpp" />
+		<Unit filename="text.cpp" />
+		<Unit filename="text.hpp" />
+		<Unit filename="villager.cpp" />
+		<Unit filename="villager.hpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
